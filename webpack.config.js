@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 
 const isProductionEnvironment = process.env.NODE_ENV === 'production';
@@ -8,7 +9,11 @@ module.exports = {
   entry: './src/index.jsx',
   output: {
     filename: 'calculator.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
+    clean: true,
+  },
+  optimization: {
+    minimizer: [new TerserPlugin({ extractComments: false })],
   },
   resolve: {
     modules: [__dirname, 'src', 'node_modules'],
@@ -17,7 +22,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: require.resolve('babel-loader'),
       },
