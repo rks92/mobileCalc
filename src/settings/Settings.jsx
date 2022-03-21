@@ -13,6 +13,7 @@ import {
 import PurchasePrice from './PurchasePrice';
 import MonthlyRent from './MonthlyRent';
 import LoanDetails from './LoanDetails';
+import MonthlyCashFlow from './MonthlyCashFlow';
 
 function Settings() {
   return (
@@ -74,7 +75,7 @@ function Settings() {
             <LoanDetails />
           </TabPanel>
           <TabPanel p="0">
-            <p> Monthly Cash Flow </p>
+            <MonthlyCashFlow />
           </TabPanel>
         </TabPanels>
       </Tabs>

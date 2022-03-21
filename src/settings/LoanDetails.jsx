@@ -1,7 +1,9 @@
 import React from 'react';
 import {
   Box,
-  Flex, SimpleGrid, Spacer, Text,
+  SimpleGrid,
+  Spacer,
+  Text,
 } from '@chakra-ui/react';
 import InputLabel from '../shared/texts/InputLabel';
 import NormalCurrencyInput from '../shared/inputs/NormalCurrencyInput';
@@ -11,7 +13,7 @@ import StateSelect from './StateSelect';
 function LoanDetails() {
   return (
     <>
-      <SimpleGrid rows={6} spacing={2}>
+      <SimpleGrid rows={6} spacing="4px">
         <Row>
           <InputLabel tooltipLabel="Purchase Price" text="Purchase Price" />
           <Spacer />
@@ -52,7 +54,7 @@ function LoanDetails() {
           ADVANCED OPTIONS
         </Text>
       </Box>
-      <SimpleGrid rows={4} spacing={2}>
+      <SimpleGrid rows={4} spacing="4px">
         <Row>
           <InputLabel tooltipLabel="Closing Costs (Purchase)" text="Closing Costs (Purchase)" />
           <Spacer />
