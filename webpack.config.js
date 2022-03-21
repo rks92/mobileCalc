@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 
@@ -17,7 +18,7 @@ module.exports = {
   },
   resolve: {
     modules: [__dirname, 'src', 'node_modules'],
-    extensions: ['*', '.js', '.jsx', '.tsx', '.ts'],
+    extensions: ['*', '.js', '.jsx'],
   },
   module: {
     rules: [
@@ -30,16 +31,21 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
-      {
-        test: /\.png|svg|jpg|gif$/,
-        use: ['file-loader'],
-      },
+      // {
+      //   test: /\.png|svg|jpg|gif$/,
+      //   use: ['file-loader'],
+      // },
     ],
   },
   devtool: isProductionEnvironment ? undefined : 'source-map',
   plugins: [
     new HtmlWebpackPlugin({
       template: 'index.html',
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: 'src/assets', to: 'assets' },
+      ],
     }),
   ],
 };
