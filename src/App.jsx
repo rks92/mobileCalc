@@ -12,9 +12,9 @@ import Results from './results/Results';
 
 // eslint-disable-next-line react/prop-types
 function PageContainer({ children }) {
-  { /* 72px is the button that toggles the sections */ }
+  { /* 72px is the button that toggles the sections in mobile devices */ }
   return (
-    <Container h="calc(100vh - 72px)" overflow="auto" paddingBottom="1rem">
+    <Container h={`calc(${window.innerHeight}px - 72px)`} overflow="auto" paddingBottom="1rem">
       {children}
     </Container>
   );
