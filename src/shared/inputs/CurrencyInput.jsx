@@ -1,38 +1,38 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
-import {
-  Input,
-} from '@chakra-ui/react';
+import React from 'react';
 import PropTypes from 'prop-types';
+// eslint-disable-next-line import/no-named-default
+import { default as ReactCurrencyInput } from 'react-currency-input-field';
+import { Input } from '@chakra-ui/react';
 
-function CurrencyInput({ value, ...rest }) {
-  const [inputValue, setInputValue] = useState(value);
-  const handleChange = (event) => {
-    console.log(event.target.value);
-    setInputValue(event.target.value);
+function CurrencyInput({ value, onChange, ...restProps }) {
+  const handleChange = (newValue) => {
+    const formattedValue = Number(newValue);
+    const checkedValue = Number.isNaN(formattedValue) ? 0 : formattedValue;
+    onChange(checkedValue);
   };
+
   return (
     <Input
-      type="number"
-      value={inputValue}
-      onChange={handleChange}
-      // Common styles
+      as={ReactCurrencyInput}
+      intlConfig={{ locale: 'en-US', currency: 'USD' }}
+      placeholder="$0"
+      decimalsLimit={2}
+      onValueChange={handleChange}
       border="1px solid"
       borderColor="neutral.100"
       borderRadius="4px"
       fontSize="md"
       fontWeight="normal"
-      {...rest}
+      value={value}
+      {...restProps}
     />
   );
 }
 
 CurrencyInput.propTypes = {
-  value: PropTypes.number,
-};
-
-CurrencyInput.defaultProps = {
-  value: 0,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.number.isRequired,
 };
 
 export default CurrencyInput;

@@ -6,9 +6,9 @@ import {
   Text,
 } from '@chakra-ui/react';
 import InputLabel from '../shared/texts/InputLabel';
-import NormalCurrencyInput from '../shared/inputs/NormalCurrencyInput';
 import Row from '../shared/Row';
 import StateSelect from './StateSelect';
+import SmallCurrencyInput from '../shared/inputs/SmallCurrencyInput';
 
 function LoanDetails() {
   return (
@@ -17,32 +17,32 @@ function LoanDetails() {
         <Row>
           <InputLabel tooltipLabel="Purchase Price" text="Purchase Price" />
           <Spacer />
-          <NormalCurrencyInput />
+          <SmallCurrencyInput value={0} onChange={() => {}} />
         </Row>
         <Row>
           <InputLabel tooltipLabel="Down payment (20%)" text="Down payment (20%)" />
           <Spacer />
-          <NormalCurrencyInput />
+          <SmallCurrencyInput value={0} onChange={() => {}} />
         </Row>
         <Row>
           <InputLabel tooltipLabel="Loan (80%)" text="Loan (80%)" />
           <Spacer />
-          <NormalCurrencyInput />
+          <SmallCurrencyInput value={0} onChange={() => {}} />
         </Row>
         <Row>
           <InputLabel tooltipLabel="Interest Rate" text="Interest Rate" />
           <Spacer />
-          <NormalCurrencyInput />
+          <SmallCurrencyInput value={0} onChange={() => {}} />
         </Row>
         <Row>
           <InputLabel tooltipLabel="Length of loan" text="Length of loan" />
           <Spacer />
-          <NormalCurrencyInput />
+          <SmallCurrencyInput value={0} onChange={() => {}} />
         </Row>
         <Row>
           <InputLabel tooltipLabel="Monthly Principal & Interest" text="Monthly Principal & Interest" />
           <Spacer />
-          <NormalCurrencyInput />
+          <SmallCurrencyInput value={0} onChange={() => {}} />
         </Row>
       </SimpleGrid>
       <Box my="20px">
@@ -58,17 +58,17 @@ function LoanDetails() {
         <Row>
           <InputLabel tooltipLabel="Closing Costs (Purchase)" text="Closing Costs (Purchase)" />
           <Spacer />
-          <NormalCurrencyInput />
+          <SmallCurrencyInput value={0} onChange={() => {}} />
         </Row>
         <Row>
           <InputLabel tooltipLabel="Rehab Cost" text="Rehab Cost" />
           <Spacer />
-          <NormalCurrencyInput />
+          <SmallCurrencyInput value={0} onChange={() => {}} />
         </Row>
         <Row>
           <InputLabel tooltipLabel="After Repair Value " text="After Repair Value " />
           <Spacer />
-          <NormalCurrencyInput />
+          <SmallCurrencyInput value={0} onChange={() => {}} />
         </Row>
         <Row>
           <InputLabel tooltipLabel="Property State " text="Property State" />

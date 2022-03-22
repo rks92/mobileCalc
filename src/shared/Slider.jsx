@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Flex,
   Slider,
@@ -10,18 +10,19 @@ import {
 } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
-function SliderWithMarks({ value, min, max }) {
-  const [sliderValue, setSliderValue] = useState(value);
+function SliderWithMarks({
+  value, min, max, onChange,
+}) {
   const formatter = Intl.NumberFormat('en', { notation: 'compact' });
-
-  console.log(sliderValue);
   return (
     <>
       <Slider
         min={min}
         max={max}
         aria-label="slider-with-marks"
-        onChange={(val) => setSliderValue(val)}
+        value={value}
+        onChange={onChange}
+        focusThumbOnChange={false}
       >
         <SliderTrack
           outline="4px solid"
@@ -62,6 +63,7 @@ function SliderWithMarks({ value, min, max }) {
 
 SliderWithMarks.propTypes = {
   value: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
 };

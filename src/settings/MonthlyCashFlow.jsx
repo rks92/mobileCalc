@@ -5,86 +5,95 @@ import {
   Spacer,
 } from '@chakra-ui/react';
 import InputLabel from '../shared/texts/InputLabel';
-import NormalCurrencyInput from '../shared/inputs/NormalCurrencyInput';
+import SmallCurrencyInput from '../shared/inputs/SmallCurrencyInput';
 import Row from '../shared/Row';
 import NestedInputLabel from '../shared/texts/NestedInputLabel';
+import CurrencyText from '../shared/texts/CurrencyText';
+import { useCalculationDispatch, useCalculationState } from '../context/CalculationContext';
 
 function MonthlyCashFlow() {
-  const divider = <Divider color="primary.100" my="4px" />;
+  const dispatch = useCalculationDispatch();
+  const state = useCalculationState();
+
+  const {
+    operatingIncome, operatingExpenses, cashFlow, loanPayments, netOperatingIncome,
+  } = state;
+
+  const divider = <Divider color="primary.100" my="8px" />;
   return (
     <SimpleGrid rows={15} spacing="4px">
       <Row>
         <InputLabel tooltipLabel="Gross Rent" text="Gross Rent" />
         <Spacer />
-        <NormalCurrencyInput />
+        <SmallCurrencyInput value={0} onChange={() => {}} />
       </Row>
       <Row>
         <InputLabel tooltipLabel="Vacancy" text="Vacancy" />
         <Spacer />
-        <NormalCurrencyInput />
+        <SmallCurrencyInput value={0} onChange={() => {}} />
       </Row>
       {divider}
       <Row>
         <InputLabel tooltipLabel="Operating Income" text="Operating Income" />
         <Spacer />
-        <NormalCurrencyInput />
+        <CurrencyText text={operatingIncome.toString()} />
       </Row>
-      <Row>
+      <Row mt="12px">
         <InputLabel tooltipLabel="Operating Expenses" text="Operating Expenses" />
         <Spacer />
-        <NormalCurrencyInput />
+        <CurrencyText text={operatingExpenses.toString()} />
       </Row>
-      <Row>
+      <Row mt="8px">
         <NestedInputLabel text="Property Taxes" />
         <Spacer />
-        <NormalCurrencyInput />
+        <SmallCurrencyInput value={0} onChange={() => {}} />
       </Row>
       <Row>
         <NestedInputLabel text="Property Insurance" />
         <Spacer />
-        <NormalCurrencyInput />
+        <SmallCurrencyInput value={0} onChange={() => {}} />
       </Row>
       <Row>
         <NestedInputLabel text="Property Management" />
         <Spacer />
-        <NormalCurrencyInput />
+        <SmallCurrencyInput value={0} onChange={() => {}} />
       </Row>
       <Row>
         <NestedInputLabel text="Maintenance" />
         <Spacer />
-        <NormalCurrencyInput />
+        <SmallCurrencyInput value={0} onChange={() => {}} />
       </Row>
       <Row>
         <NestedInputLabel text="HOA Fees" />
         <Spacer />
-        <NormalCurrencyInput />
+        <SmallCurrencyInput value={0} onChange={() => {}} />
       </Row>
       <Row>
         <NestedInputLabel text="Utilities" />
         <Spacer />
-        <NormalCurrencyInput />
+        <SmallCurrencyInput value={0} onChange={() => {}} />
       </Row>
       <Row>
         <NestedInputLabel text="Other Expenses" />
         <Spacer />
-        <NormalCurrencyInput />
+        <SmallCurrencyInput value={0} onChange={() => {}} />
       </Row>
       {divider}
       <Row>
         <InputLabel tooltipLabel="Net Operating Income" text="Net Operating Income" />
         <Spacer />
-        <NormalCurrencyInput />
+        <CurrencyText text={netOperatingIncome.toString()} />
       </Row>
-      <Row>
+      <Row mt="12px">
         <InputLabel tooltipLabel="Loan Payments" text="Loan Payments" />
         <Spacer />
-        <NormalCurrencyInput />
+        <CurrencyText text={loanPayments.toString()} />
       </Row>
       {divider}
       <Row>
         <InputLabel tooltipLabel="Cash Flow" text="Cash Flow" />
         <Spacer />
-        <NormalCurrencyInput />
+        <CurrencyText fontSize="lg" text={cashFlow.toString()} />
       </Row>
     </SimpleGrid>
   );

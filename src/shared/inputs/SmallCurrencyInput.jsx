@@ -2,16 +2,17 @@
 import React from 'react';
 import CurrencyInput from './CurrencyInput';
 
-function LargeCurrencyInput(props) {
+function SmallCurrencyInput(props) {
   return (
     <CurrencyInput
       {...props}
-      size="lg"
-      fontSize="md"
+      size="sm"
+      fontSize="sm"
       fontWeight="medium"
-      color="neutral.900"
+      color="neutral.600"
+      maxW="98px"
     />
   );
 }
 
-export default LargeCurrencyInput;
+export default SmallCurrencyInput;

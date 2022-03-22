@@ -7,6 +7,7 @@ import Settings from './settings/Settings';
 import Fonts from './assets/Fonts';
 import Section from './shared/enums/Section';
 import AnnualCashFlowButton from './AnnualCashFlowButton';
+import { CalculationProvider } from './context/CalculationContext';
 
 // eslint-disable-next-line react/prop-types
 function PageContainer({ children }) {
@@ -26,26 +27,22 @@ function App() {
     setSection(newSection);
   };
 
-  const app = (
-    <>
-      <Collapse in={section === Section.Settings}>
-        <PageContainer>
-          <Settings />
-        </PageContainer>
-      </Collapse>
-      <AnnualCashFlowButton selectedSection={section} onToggle={handleToggle} value={1000} />
-      <Collapse in={section === Section.Results}>
-        <PageContainer>
-          Results
-        </PageContainer>
-      </Collapse>
-    </>
-  );
-
   return (
     <ChakraProvider theme={theme}>
-      <Fonts />
-      {app}
+      <CalculationProvider>
+        <Fonts />
+        <Collapse in={section === Section.Settings}>
+          <PageContainer>
+            <Settings />
+          </PageContainer>
+        </Collapse>
+        <AnnualCashFlowButton selectedSection={section} onToggle={handleToggle} value={1000} />
+        <Collapse in={section === Section.Results}>
+          <PageContainer>
+            Results
+          </PageContainer>
+        </Collapse>
+      </CalculationProvider>
     </ChakraProvider>
   );
 }

@@ -4,11 +4,20 @@ import {
   Text,
 } from '@chakra-ui/react';
 import InfoTooltipIcon from '../shared/InfoTooltipIcon';
-import LargeCurrencyInput from '../shared/inputs/LargeCurrencyInput';
 import SliderWithMarks from '../shared/Slider';
 import Row from '../shared/Row';
+import { CalculationAction, useCalculationDispatch, useCalculationState } from '../context/CalculationContext';
+import LargeCurrencyInput from '../shared/inputs/LargeCurrencyInput';
 
 function PurchasePrice() {
+  const dispatch = useCalculationDispatch();
+  const state = useCalculationState();
+  const { purchasePrice } = state;
+
+  const handleChange = (value) => {
+    dispatch({ type: CalculationAction.UpdatePurchasePrice, data: value });
+  };
+
   const label = (
     <Row>
       <Text color="neutral.900" fontSize="lg" fontWeight="medium">
@@ -19,10 +28,20 @@ function PurchasePrice() {
   );
 
   const input = (
-    <LargeCurrencyInput />
+    <LargeCurrencyInput
+      value={purchasePrice}
+      onChange={handleChange}
+    />
   );
 
-  const slider = <SliderWithMarks min={1000} max={1_000_000} value={50_000} />;
+  const slider = (
+    <SliderWithMarks
+      min={1000}
+      max={1_000_000}
+      value={purchasePrice}
+      onChange={handleChange}
+    />
+  );
 
   return (
     <SimpleGrid rows={3} spacing={1}>
