@@ -8,6 +8,7 @@ import Fonts from './assets/Fonts';
 import Section from './shared/enums/Section';
 import AnnualCashFlowButton from './AnnualCashFlowButton';
 import { CalculationProvider } from './context/CalculationContext';
+import Results from './results/Results';
 
 // eslint-disable-next-line react/prop-types
 function PageContainer({ children }) {
@@ -39,7 +40,7 @@ function App() {
         <AnnualCashFlowButton selectedSection={section} onToggle={handleToggle} value={1000} />
         <Collapse in={section === Section.Results}>
           <PageContainer>
-            Results
+            <Results />
           </PageContainer>
         </Collapse>
       </CalculationProvider>

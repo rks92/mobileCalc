@@ -11,7 +11,7 @@ const defaultState = {
   closingCost: 0,
   rehabCost: 0,
   afterRepairValue: 0,
-  propertyState: 0,
+  propertyState: 'Alaska',
   // Monthly Cash Flow
   grossRent: 0,
   vacancy: 0,
@@ -28,6 +28,19 @@ const defaultState = {
   loanPayments: 0, // Readonly
   cashFlow: 0, // Readonly
   annualCashFlow: 0, // Readonly, the same with cashFlow?
+  // Cash Flow
+  upFrontCashInvestment: 0, // Readonly
+  oneYearCashFlow: 0, // Readonly
+  fiveYearCashFlow: 0, // Readonly
+  tenYearCashFlow: 0, // Readonly
+  // Monthly Expenses
+  totalMonthlyExpenses: 0, // Readonly
+  // Property Metrics
+  annualNOI: 0, // Readonly
+  CashOnCashReturn: 0, // Readonly
+  CapRate: 0, // Readonly
+  fiftyPercentRule: 0, // Readonly
+  onePercentRule: 0, // Readonly
 };
 
 const CalculationAction = {

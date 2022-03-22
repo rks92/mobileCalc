@@ -1,7 +1,4 @@
-import React from 'react';
 import {
-  Divider,
-  Flex,
   SimpleGrid,
   Tab,
   TabList,
@@ -10,33 +7,23 @@ import {
   Tabs,
   Text,
 } from '@chakra-ui/react';
-import PurchasePrice from './PurchasePrice';
-import MonthlyRent from './MonthlyRent';
-import LoanDetails from './LoanDetails';
-import MonthlyCashFlow from './MonthlyCashFlow';
+import React from 'react';
+import PropertyMetrics from './PropertyMetrics';
+import CashFlow from './CashFlow';
+import MonthlyExpenses from './MonthlyExpenses';
 
-function Settings() {
+function Results() {
   return (
     <SimpleGrid rows={3} spacing={5}>
-      <PurchasePrice />
-      <MonthlyRent />
-      <Flex
-        alignContent="center"
-        alignItems="center"
-        justifyContent="flex-start"
-        flexWrap="nowrap"
-        flexDirection="row"
+      <Text
+        my="16px"
+        mx="20px"
+        color="neutral.500"
+        fontSize="xs"
+        fontWeight="medium"
       >
-        <Text
-          whiteSpace="nowrap"
-          fontSize="md"
-          color="primary.700"
-          fontWeight="normal"
-        >
-          Advanced Settings
-        </Text>
-        <Divider ml="10px" color="primary.100" />
-      </Flex>
+        VIEW DETAILED RESULTS BELOW
+      </Text>
       <Tabs variant="unstyled">
         <TabList>
           <Tab
@@ -52,7 +39,7 @@ function Settings() {
               borderColor: 'primary.100',
             }}
           >
-            Loan Details
+            Cash Flow
           </Tab>
           <Tab
             color="neutral.400"
@@ -67,20 +54,21 @@ function Settings() {
               borderColor: 'primary.100',
             }}
           >
-            Monthly Cash Flow
+            Monthly Expenses
           </Tab>
         </TabList>
         <TabPanels mt="28px">
           <TabPanel p="0">
-            <LoanDetails />
+            <CashFlow />
           </TabPanel>
           <TabPanel p="0">
-            <MonthlyCashFlow />
+            <MonthlyExpenses />
           </TabPanel>
         </TabPanels>
       </Tabs>
+      <PropertyMetrics />
     </SimpleGrid>
   );
 }
 
-export default Settings;
+export default Results;
