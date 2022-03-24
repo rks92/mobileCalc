@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Divider,
   SimpleGrid,
@@ -9,15 +9,98 @@ import SmallCurrencyInput from '../shared/inputs/SmallCurrencyInput';
 import Row from '../shared/Row';
 import NestedInputLabel from '../shared/texts/NestedInputLabel';
 import CurrencyText from '../shared/texts/CurrencyText';
-import { useCalculationDispatch, useCalculationState } from '../context/CalculationContext';
+import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
+import { taxRateByState } from '../shared/models';
 
 function MonthlyCashFlow() {
-  const dispatch = useCalculationDispatch();
-  const state = useCalculationState();
+  const dispatch = useAppDispatch();
+  const state = useAppState();
 
   const {
-    operatingIncome, operatingExpenses, cashFlow, loanPayments, netOperatingIncome,
+    vacancy,
+    operatingIncome,
+    operatingExpenses,
+    propertyTaxes,
+    propertyInsurance,
+    propertyManagement,
+    maintenance,
+    hoaFees,
+    utilities,
+    otherExpenses,
+    netOperatingIncome,
+    cashFlow,
+    monthlyRent,
+    purchasePrice,
+    propertyState,
+    monthlyPrincipalAndInterest,
   } = state;
+
+  const loanPayments = monthlyPrincipalAndInterest * -1;
+
+  const updateGrossRent = (value) => dispatch({ type: AppAction.UpdateMonthlyRent, value });
+  const updateVacancy = (value) => dispatch({ type: AppAction.UpdateVacancy, value });
+  const updateOperatingIncome = (value) => dispatch({
+    type: AppAction.UpdateOperatingIncome, value,
+  });
+  const updateOperatingExpenses = (value) => dispatch({
+    type: AppAction.UpdateOperatingExpenses, value,
+  });
+  const updatePropertyTaxes = (value) => dispatch({ type: AppAction.UpdatePropertyTaxes, value });
+  const updatePropertyInsurance = (value) => dispatch({
+    type: AppAction.UpdatePropertyInsurance, value,
+  });
+  const updatePropertyManagement = (value) => dispatch({
+    type: AppAction.UpdatePropertyManagement, value,
+  });
+  const updateMaintenance = (value) => dispatch({ type: AppAction.UpdateMaintenance, value });
+  const updateHoaFees = (value) => dispatch({ type: AppAction.UpdateHoaFees, value });
+  const updateUtilities = (value) => dispatch({ type: AppAction.UpdateUtilities, value });
+  const updateOtherExpenses = (value) => dispatch({ type: AppAction.UpdateOtherExpenses, value });
+  const updateNetOperatingIncome = (value) => dispatch({
+    type: AppAction.UpdateNetOperatingIncome, value,
+  });
+  const updateCashFlow = (value) => dispatch({ type: AppAction.UpdateCashFlow, value });
+
+  useEffect(() => {
+    updateVacancy(monthlyRent * -0.05);
+  }, [monthlyRent]);
+
+  useEffect(() => {
+    updateOperatingIncome(monthlyRent + vacancy);
+  }, [monthlyRent, vacancy]);
+
+  useEffect(() => {
+    const sumOfExpenses = propertyTaxes
+        + propertyInsurance
+        + propertyManagement
+        + maintenance
+        + hoaFees
+        + utilities
+        + otherExpenses;
+    updateOperatingExpenses(sumOfExpenses * -1);
+  }, [
+    propertyTaxes,
+    propertyInsurance,
+    propertyManagement,
+    maintenance,
+    hoaFees,
+    utilities,
+    otherExpenses,
+  ]);
+
+  useEffect(() => {
+    updatePropertyTaxes(purchasePrice * (taxRateByState[propertyState] / 100));
+  }, [purchasePrice, propertyState]);
+
+  // Net Operating Income
+  useEffect(() => {
+    updateNetOperatingIncome(operatingIncome + operatingExpenses);
+  }, [operatingIncome, operatingExpenses]);
+
+  // Cash Flow
+  useEffect(() => {
+    updateCashFlow(netOperatingIncome + loanPayments);
+  }, [netOperatingIncome, loanPayments]);
 
   const divider = <Divider color="primary.100" my="8px" />;
   return (
@@ -25,12 +108,12 @@ function MonthlyCashFlow() {
       <Row>
         <InputLabel tooltipLabel="Gross Rent" text="Gross Rent" />
         <Spacer />
-        <SmallCurrencyInput value={0} onChange={() => {}} />
+        <SmallCurrencyInput value={monthlyRent} onChange={updateGrossRent} />
       </Row>
       <Row>
         <InputLabel tooltipLabel="Vacancy" text="Vacancy" />
         <Spacer />
-        <SmallCurrencyInput value={0} onChange={() => {}} />
+        <SmallCurrencyInput value={vacancy} onChange={updateVacancy} />
       </Row>
       {divider}
       <Row>
@@ -46,37 +129,37 @@ function MonthlyCashFlow() {
       <Row mt="8px">
         <NestedInputLabel text="Property Taxes" />
         <Spacer />
-        <SmallCurrencyInput value={0} onChange={() => {}} />
+        <SmallCurrencyInput value={propertyTaxes} onChange={updatePropertyTaxes} />
       </Row>
       <Row>
         <NestedInputLabel text="Property Insurance" />
         <Spacer />
-        <SmallCurrencyInput value={0} onChange={() => {}} />
+        <SmallCurrencyInput value={propertyInsurance} onChange={updatePropertyInsurance} />
       </Row>
       <Row>
         <NestedInputLabel text="Property Management" />
         <Spacer />
-        <SmallCurrencyInput value={0} onChange={() => {}} />
+        <SmallCurrencyInput value={propertyManagement} onChange={updatePropertyManagement} />
       </Row>
       <Row>
         <NestedInputLabel text="Maintenance" />
         <Spacer />
-        <SmallCurrencyInput value={0} onChange={() => {}} />
+        <SmallCurrencyInput value={maintenance} onChange={updateMaintenance} />
       </Row>
       <Row>
         <NestedInputLabel text="HOA Fees" />
         <Spacer />
-        <SmallCurrencyInput value={0} onChange={() => {}} />
+        <SmallCurrencyInput value={hoaFees} onChange={updateHoaFees} />
       </Row>
       <Row>
         <NestedInputLabel text="Utilities" />
         <Spacer />
-        <SmallCurrencyInput value={0} onChange={() => {}} />
+        <SmallCurrencyInput value={utilities} onChange={updateUtilities} />
       </Row>
       <Row>
         <NestedInputLabel text="Other Expenses" />
         <Spacer />
-        <SmallCurrencyInput value={0} onChange={() => {}} />
+        <SmallCurrencyInput value={otherExpenses} onChange={updateOtherExpenses} />
       </Row>
       {divider}
       <Row>

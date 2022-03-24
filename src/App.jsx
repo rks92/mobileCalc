@@ -7,7 +7,7 @@ import Settings from './settings/Settings';
 import Fonts from './assets/Fonts';
 import Section from './shared/enums/Section';
 import AnnualCashFlowButton from './AnnualCashFlowButton';
-import { CalculationProvider } from './context/CalculationContext';
+import { AppProvider } from './context/AppContext';
 import Results from './results/Results';
 
 // eslint-disable-next-line react/prop-types
@@ -30,20 +30,20 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
-      <CalculationProvider>
+      <AppProvider>
         <Fonts />
         <Collapse in={section === Section.Settings}>
           <PageContainer>
             <Settings />
           </PageContainer>
         </Collapse>
-        <AnnualCashFlowButton selectedSection={section} onToggle={handleToggle} value={1000} />
+        <AnnualCashFlowButton selectedSection={section} onToggle={handleToggle} />
         <Collapse in={section === Section.Results}>
           <PageContainer>
             <Results />
           </PageContainer>
         </Collapse>
-      </CalculationProvider>
+      </AppProvider>
     </ChakraProvider>
   );
 }

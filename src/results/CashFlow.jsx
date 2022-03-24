@@ -8,12 +8,12 @@ import {
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import CurrencyText from '../shared/texts/CurrencyText';
-import { useCalculationDispatch, useCalculationState } from '../context/CalculationContext';
+import { useAppDispatch, useAppState } from '../context/AppContext';
 
 function CashFlow() {
   const divider = <Divider color="primary.100" my="12px" />;
-  const dispatch = useCalculationDispatch();
-  const state = useCalculationState();
+  const dispatch = useAppDispatch();
+  const state = useAppState();
 
   const {
     upFrontCashInvestment, oneYearCashFlow, fiveYearCashFlow, tenYearCashFlow,

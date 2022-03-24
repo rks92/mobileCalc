@@ -6,16 +6,16 @@ import {
 import InfoTooltipIcon from '../shared/InfoTooltipIcon';
 import SliderWithMarks from '../shared/Slider';
 import Row from '../shared/Row';
-import { CalculationAction, useCalculationDispatch, useCalculationState } from '../context/CalculationContext';
+import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
 import LargeCurrencyInput from '../shared/inputs/LargeCurrencyInput';
 
 function PurchasePrice() {
-  const dispatch = useCalculationDispatch();
-  const state = useCalculationState();
+  const dispatch = useAppDispatch();
+  const state = useAppState();
   const { purchasePrice } = state;
 
   const handleChange = (value) => {
-    dispatch({ type: CalculationAction.UpdatePurchasePrice, data: value });
+    dispatch({ type: AppAction.UpdatePurchasePrice, value });
   };
 
   const label = (

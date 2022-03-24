@@ -1,16 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Flex, Spacer, Text } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import Section from './shared/enums/Section';
+import { AppAction, useAppDispatch, useAppState } from './context/AppContext';
+import { formatInCurrency } from './shared/utilities';
 
-function AnnualCashFlowButton({ value, selectedSection, onToggle }) {
+function AnnualCashFlowButton({ selectedSection, onToggle }) {
+  const dispatch = useAppDispatch();
+  const state = useAppState();
+
+  const {
+    annualCashFlow,
+    cashFlow,
+  } = state;
+
+  const updateAnnualCashFlow = (value) => dispatch({
+    type: AppAction.UpdateAnnualCashFlow, value,
+  });
+
+  useEffect(() => {
+    updateAnnualCashFlow(cashFlow * 12);
+  }, [cashFlow]);
+
   const label = (
     <Flex fontSize="md">
       <Text>Annual Cash Flow:</Text>
       <Text ml="5px" fontWeight="medium">
-        $
-        {value}
+        {formatInCurrency(annualCashFlow)}
       </Text>
     </Flex>
   );
@@ -42,13 +59,8 @@ function AnnualCashFlowButton({ value, selectedSection, onToggle }) {
 }
 
 AnnualCashFlowButton.propTypes = {
-  value: PropTypes.number,
   selectedSection: PropTypes.string.isRequired,
   onToggle: PropTypes.func.isRequired,
-};
-
-AnnualCashFlowButton.defaultProps = {
-  value: 0,
 };
 
 export default AnnualCashFlowButton;

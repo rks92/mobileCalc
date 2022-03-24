@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SimpleGrid,
   Text,
@@ -6,16 +6,28 @@ import {
 import InfoTooltipIcon from '../shared/InfoTooltipIcon';
 import SliderWithMarks from '../shared/Slider';
 import Row from '../shared/Row';
-import { CalculationAction, useCalculationDispatch, useCalculationState } from '../context/CalculationContext';
+import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
 import LargeCurrencyInput from '../shared/inputs/LargeCurrencyInput';
 
 function MonthlyRent() {
-  const dispatch = useCalculationDispatch();
-  const state = useCalculationState();
-  const { monthlyRent } = state;
+  const [userHasManuallyMonthlyRent, setUserHasManuallyMonthlyRent] = useState(false);
+  const dispatch = useAppDispatch();
+  const state = useAppState();
+  const { monthlyRent, purchasePrice } = state;
+
+  useEffect(() => {
+    // Until user manually sets rent - we can assume the rent is 1/100 of total purchase price
+    if (!userHasManuallyMonthlyRent) {
+      dispatch({
+        type: AppAction.UpdateMonthlyRent,
+        value: Math.round(purchasePrice * 0.1),
+      });
+    }
+  }, [purchasePrice]);
 
   const handleChange = (value) => {
-    dispatch({ type: CalculationAction.UpdateMonthlyRent, data: value });
+    setUserHasManuallyMonthlyRent(true);
+    dispatch({ type: AppAction.UpdateMonthlyRent, value });
   };
 
   const label = (
