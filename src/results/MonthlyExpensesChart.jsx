@@ -46,7 +46,7 @@ function CustomLabel({ viewBox, value1, value2 }) {
 
 export default function MonthlyExpensesChart({ expenses, totalMonthlyExpenses }) {
   return (
-    <ResponsiveContainer width="100%" height={180} debounce={1}>
+    <ResponsiveContainer width="100%" height={180}>
       <PieChart>
         <Pie
           data={expenses}

@@ -17,7 +17,7 @@ import MonthlyCashFlow from './MonthlyCashFlow';
 
 function Settings() {
   return (
-    <SimpleGrid rows={3} spacing={5}>
+    <SimpleGrid rows={3} spacing={5} mt={6}>
       <PurchasePrice />
       <MonthlyRent />
       <Flex

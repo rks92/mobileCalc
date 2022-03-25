@@ -26,9 +26,6 @@ const defaultState = {
   cashFlow: 0,
   annualCashFlow: 0,
   upFrontCashInvestment: 0,
-  oneYearCashFlow: 0,
-  fiveYearCashFlow: 0,
-  tenYearCashFlow: 0,
 };
 
 const AppAction = {
@@ -56,6 +53,7 @@ const AppAction = {
   UpdateNetOperatingIncome: 'app/updateNetOperatingIncome',
   UpdateCashFlow: 'app/updateCashFlow',
   UpdateAnnualCashFlow: 'app/updateAnnualCashFlow',
+  UpdateUpFrontCashInvestment: 'app/upFrontCashInvestment',
 };
 
 const AppReducer = (state, action) => {
@@ -158,6 +156,10 @@ const AppReducer = (state, action) => {
 
     case AppAction.UpdateAnnualCashFlow: {
       return { ...state, annualCashFlow: action.value };
+    }
+
+    case AppAction.UpdateUpFrontCashInvestment: {
+      return { ...state, upFrontCashInvestment: action.value };
     }
 
     default: {
