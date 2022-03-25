@@ -1,23 +1,20 @@
 import React, { useReducer } from 'react';
 
 const defaultState = {
-  // Load Details --------------------------------------------------------------------------------
   purchasePrice: 100_000,
   monthlyRent: 1000,
   downPayment: 20_000,
   loan: 80_000,
   interestRate: 4.5,
   lengthOfLoan: 30,
-  // `loanPayments` is the same, usually it's `monthlyPrincipalAndInterest` * -1
   monthlyPrincipalAndInterest: 0,
-  closingCost: 0, // `purchasePrice` * 0,03 (3%) < -- assumption user can edit, saad
+  closingCost: 0,
   rehabCost: 0,
-  afterRepairValue: 0, // `purchasePrice` + `rehabCost`
-  propertyState: 'Ohio', // in expences (`propertyTaxes` * interest rate of state) / 12
-  // Monthly Cash Flow --------------------------------------------------------------------------------
-  vacancy: 0, // -(`grossRent` * 0,05 (5%)) (should be negative)
-  operatingIncome: 0, // Readonly, `grossRent` + `vacancyRate`
-  operatingExpenses: 0, // Readonly, -(`propertyTaxes` + `propertyInsurance` + `propertyManagement` + `maintenance` + `hoaFees` + `utilities` + `otherExpenses`) (should be negative)
+  afterRepairValue: 0,
+  propertyState: 'Ohio',
+  vacancy: 0,
+  operatingIncome: 0,
+  operatingExpenses: 0,
   propertyTaxes: 0,
   propertyInsurance: 120,
   propertyManagement: 0,
@@ -25,22 +22,13 @@ const defaultState = {
   hoaFees: 0,
   utilities: 0,
   otherExpenses: 0,
-  netOperatingIncome: 0, // Readonly, `operatingIncome` + `operatingExpenses`
-  cashFlow: 0, // Readonly, `netOperatingIncome` + `loanPayments`
-  annualCashFlow: 0, // Readonly, --> `cashFlow` * 12
-  // Cash Flow --------------------------------------------------------------------------------
-  upFrontCashInvestment: 0, // Readonly,
-  oneYearCashFlow: 0, // Readonly,
-  fiveYearCashFlow: 0, // Readonly,
-  tenYearCashFlow: 0, // Readonly,
-  // Monthly Expenses --------------------------------------------------------------------------------
-  totalMonthlyExpenses: 0, // Readonly, sum of all expenses
-  // Property Metrics --------------------------------------------------------------------------------
-  annualNOI: 0, // Readonly
-  CashOnCashReturn: 0, // Readonly --> `annualCashFlow` / `upFrontCashInvestment`
-  CapRate: 0, // Readonly, --> `annualNOI`/ (to megalurto apo `purchasePrice` kai `afterRepairValue`)
-  fiftyPercentRule: 0, // Readonly
-  onePercentRule: 0, // Readonly, `purchasePrice` / `grossRent` an einai > 1% einai green
+  netOperatingIncome: 0,
+  cashFlow: 0,
+  annualCashFlow: 0,
+  upFrontCashInvestment: 0,
+  oneYearCashFlow: 0,
+  fiveYearCashFlow: 0,
+  tenYearCashFlow: 0,
 };
 
 const AppAction = {

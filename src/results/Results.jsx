@@ -16,8 +16,8 @@ function Results() {
   return (
     <SimpleGrid rows={3} spacing={5}>
       <Text
-        my="16px"
-        mx="20px"
+        my={4}
+        mx={5}
         color="neutral.500"
         fontSize="xs"
         fontWeight="medium"
@@ -57,11 +57,11 @@ function Results() {
             Monthly Expenses
           </Tab>
         </TabList>
-        <TabPanels mt="28px">
-          <TabPanel p="0">
+        <TabPanels mt={7}>
+          <TabPanel p={0}>
             <CashFlow />
           </TabPanel>
-          <TabPanel p="0">
+          <TabPanel p={0}>
             <MonthlyExpenses />
           </TabPanel>
         </TabPanels>

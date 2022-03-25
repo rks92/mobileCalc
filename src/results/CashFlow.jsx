@@ -8,11 +8,10 @@ import {
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import CurrencyText from '../shared/texts/CurrencyText';
-import { useAppDispatch, useAppState } from '../context/AppContext';
+import { useAppState } from '../context/AppContext';
 
 function CashFlow() {
   const divider = <Divider color="primary.100" my="12px" />;
-  const dispatch = useAppDispatch();
   const state = useAppState();
 
   const {
@@ -21,7 +20,7 @@ function CashFlow() {
   return (
     <>
       <Center h="183px" bg="tomato">Chart</Center>
-      <SimpleGrid rows={4} spacing="4px" mt="31px">
+      <SimpleGrid rows={4} spacing="4px" mt={8}>
         <Row>
           <InputLabel tooltipLabel="Up-Front Cash Investment" text="Up-Front Cash Investment" />
           <Spacer />

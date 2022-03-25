@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 function InfoTooltipIcon({ label }) {
   return (
     <Tooltip label={label} fontSize="md">
-      <InfoOutlineIcon h="14px" w="14px" ml="10px" color="neutral.500" />
+      <InfoOutlineIcon h={3} w={3} ml={3} color="neutral.500" />
     </Tooltip>
   );
 }

@@ -35,7 +35,7 @@ function Settings() {
         >
           Advanced Settings
         </Text>
-        <Divider ml="10px" color="primary.100" />
+        <Divider ml={3} color="primary.100" />
       </Flex>
       <Tabs variant="unstyled">
         <TabList>
@@ -70,11 +70,11 @@ function Settings() {
             Monthly Cash Flow
           </Tab>
         </TabList>
-        <TabPanels mt="28px">
-          <TabPanel p="0">
+        <TabPanels mt={7}>
+          <TabPanel p={0}>
             <LoanDetails />
           </TabPanel>
-          <TabPanel p="0">
+          <TabPanel p={0}>
             <MonthlyCashFlow />
           </TabPanel>
         </TabPanels>

@@ -51,7 +51,7 @@ function AdvancedOptions() {
 
   return (
     <>
-      <Box my="20px">
+      <Box my={5}>
         <Text
           color="neutral.400"
           fontSize="xs"

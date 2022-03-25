@@ -113,7 +113,7 @@ function LoanDetails() {
           <Spacer />
           <LengthOfLoanInput value={lengthOfLoan} onChange={updateLengthOfLoan} />
         </Row>
-        <Row mt="4px">
+        <Row mt={1}>
           <InputLabel tooltipLabel="Monthly Principal & Interest" text="Monthly Principal & Interest" />
           <Spacer />
           <CurrencyText text={monthlyPrincipalAndInterest.toString()} />

@@ -4,7 +4,7 @@ import React from 'react';
 
 function NestedInputLabel({ text }) {
   return (
-    <Text ml="20px" fontSize="sm" fontWeight="normal" color="neutral.900">{text}</Text>
+    <Text ml={5} fontSize="sm" fontWeight="normal" color="neutral.900">{text}</Text>
   );
 }
 

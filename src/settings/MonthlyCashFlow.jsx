@@ -121,12 +121,12 @@ function MonthlyCashFlow() {
         <Spacer />
         <CurrencyText text={operatingIncome.toString()} />
       </Row>
-      <Row mt="12px">
+      <Row mt={3}>
         <InputLabel tooltipLabel="Operating Expenses" text="Operating Expenses" />
         <Spacer />
         <CurrencyText text={operatingExpenses.toString()} />
       </Row>
-      <Row mt="8px">
+      <Row mt={2}>
         <NestedInputLabel text="Property Taxes" />
         <Spacer />
         <SmallCurrencyInput value={propertyTaxes} onChange={updatePropertyTaxes} />
@@ -167,7 +167,7 @@ function MonthlyCashFlow() {
         <Spacer />
         <CurrencyText text={netOperatingIncome.toString()} />
       </Row>
-      <Row mt="12px">
+      <Row mt={3}>
         <InputLabel tooltipLabel="Loan Payments" text="Loan Payments" />
         <Spacer />
         <CurrencyText text={loanPayments.toString()} />

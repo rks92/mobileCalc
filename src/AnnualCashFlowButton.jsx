@@ -26,7 +26,7 @@ function AnnualCashFlowButton({ selectedSection, onToggle }) {
   const label = (
     <Flex fontSize="md">
       <Text>Annual Cash Flow:</Text>
-      <Text ml="5px" fontWeight="medium">
+      <Text ml={1} fontWeight="medium">
         {formatInCurrency(annualCashFlow)}
       </Text>
     </Flex>
