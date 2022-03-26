@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Divider,
   Flex,
@@ -16,9 +16,11 @@ import LoanDetails from './LoanDetails';
 import MonthlyCashFlow from './MonthlyCashFlow';
 
 function Settings() {
+  const [downPaymentRatio, setDownPaymentRatio] = useState(0);
+  const [loanRatio, setLoanRatio] = useState(0);
   return (
     <SimpleGrid rows={3} spacing={5} mt={6}>
-      <PurchasePrice />
+      <PurchasePrice downPaymentRatio={downPaymentRatio} loanRatio={loanRatio} />
       <MonthlyRent />
       <Flex
         alignContent="center"
@@ -72,7 +74,12 @@ function Settings() {
         </TabList>
         <TabPanels mt={7}>
           <TabPanel p={0}>
-            <LoanDetails />
+            <LoanDetails
+              downPaymentRatio={downPaymentRatio}
+              loanRatio={loanRatio}
+              setDownPaymentRatio={setDownPaymentRatio}
+              setLoanRatio={setLoanRatio}
+            />
           </TabPanel>
           <TabPanel p={0}>
             <MonthlyCashFlow />

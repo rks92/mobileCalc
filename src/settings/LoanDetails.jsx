@@ -5,6 +5,7 @@ import {
   SimpleGrid,
   Spacer,
 } from '@chakra-ui/react';
+import PropTypes from 'prop-types';
 import InputLabel from '../shared/texts/InputLabel';
 import Row from '../shared/Row';
 import SmallCurrencyInput from '../shared/inputs/SmallCurrencyInput';
@@ -14,7 +15,9 @@ import LengthOfLoanInput from './LengthOfLoanInput';
 import CurrencyText from '../shared/texts/CurrencyText';
 import { pmt, roundNumber } from '../shared/utilities';
 
-function LoanDetails() {
+function LoanDetails({
+  downPaymentRatio, setDownPaymentRatio, loanRatio, setLoanRatio,
+}) {
   const dispatch = useAppDispatch();
   const state = useAppState();
   const {
@@ -26,9 +29,59 @@ function LoanDetails() {
     monthlyPrincipalAndInterest,
   } = state;
 
-  const updatePurchasePrice = (value) => dispatch({ type: AppAction.UpdatePurchasePrice, value });
-  const updateDownPayment = (value) => dispatch({ type: AppAction.UpdateDownPayment, value });
-  const updateLoan = (value) => dispatch({ type: AppAction.UpdateLoan, value });
+  useEffect(() => {
+    const newDownPaymentRatio = downPayment / purchasePrice;
+    setDownPaymentRatio(newDownPaymentRatio);
+    const newLoanRatio = loan / purchasePrice;
+    setLoanRatio(newLoanRatio);
+  }, []);
+
+  const updatePurchasePrice = (value) => {
+    dispatch({ type: AppAction.UpdatePurchasePrice, value });
+    const newDownPayment = roundNumber(purchasePrice * downPaymentRatio);
+    dispatch({ type: AppAction.UpdateDownPayment, value: newDownPayment });
+    const newLoan = roundNumber(purchasePrice * loanRatio);
+    dispatch({ type: AppAction.UpdateLoan, value: newLoan });
+  };
+
+  const updateDownPayment = (value) => {
+    if (value >= purchasePrice) {
+      dispatch({ type: AppAction.UpdateDownPayment, value });
+      dispatch({ type: AppAction.UpdatePurchasePrice, value });
+      setDownPaymentRatio(1);
+      dispatch({ type: AppAction.UpdateLoan, value: 0 });
+      setLoanRatio(0);
+    } else {
+      const newDownPaymentRatio = value / purchasePrice;
+      setDownPaymentRatio(newDownPaymentRatio);
+      const newDownPayment = purchasePrice * newDownPaymentRatio;
+      dispatch({ type: AppAction.UpdateDownPayment, value: newDownPayment });
+      const newLoan = purchasePrice - value;
+      dispatch({ type: AppAction.UpdateLoan, value: newLoan });
+      const newLoanRatio = newLoan / purchasePrice;
+      setLoanRatio(newLoanRatio);
+    }
+  };
+
+  const updateLoan = (value) => {
+    if (value >= purchasePrice) {
+      dispatch({ type: AppAction.UpdateLoan, value });
+      dispatch({ type: AppAction.UpdatePurchasePrice, value });
+      setLoanRatio(1);
+      dispatch({ type: AppAction.UpdateDownPayment, value: 0 });
+      setDownPaymentRatio(0);
+    } else {
+      const newLoanRatio = value / purchasePrice;
+      setLoanRatio(newLoanRatio);
+      const newLoan = purchasePrice * newLoanRatio;
+      dispatch({ type: AppAction.UpdateLoan, value: newLoan });
+      const newDownPayment = purchasePrice - value;
+      dispatch({ type: AppAction.UpdateDownPayment, value: newDownPayment });
+      const newDownPaymentRatio = newDownPayment / purchasePrice;
+      setDownPaymentRatio(newDownPaymentRatio);
+    }
+  };
+
   const updateInterestRate = (value) => {
     let safeGuardedValue = value;
     if (value > 100) {
@@ -39,18 +92,8 @@ function LoanDetails() {
     }
     dispatch({ type: AppAction.UpdateInterestRate, value: safeGuardedValue });
   };
+
   const updateLengthOfLoan = (value) => dispatch({ type: AppAction.UpdateLengthOfLoan, value });
-
-  const getPercentage = (part, total) => (total === 0 ? 0 : roundNumber(part / total));
-
-  useEffect(() => {
-    const previousPurchasePrice = downPayment + loan;
-    const downPaymentPercentage = getPercentage(downPayment, previousPurchasePrice);
-    const loanPercentage = getPercentage(loan, previousPurchasePrice);
-
-    updateDownPayment(roundNumber(purchasePrice * downPaymentPercentage));
-    updateLoan(roundNumber(purchasePrice * loanPercentage));
-  }, [purchasePrice, downPayment, loan]);
 
   // Calculating Principal and Interest (monthly)
   useEffect(() => {
@@ -70,7 +113,7 @@ function LoanDetails() {
           />
         </Row>
         <Row>
-          <InputLabel tooltipLabel="Down payment" text={`Down payment (${getPercentage(downPayment, purchasePrice) * 100})%`} />
+          <InputLabel tooltipLabel="Down payment" text={`Down payment (${Math.floor(downPaymentRatio * 100)})%`} />
           <Spacer />
           <SmallCurrencyInput
             value={downPayment}
@@ -78,7 +121,7 @@ function LoanDetails() {
           />
         </Row>
         <Row>
-          <InputLabel tooltipLabel="Loan" text={`Loan (${getPercentage(loan, purchasePrice) * 100})%`} />
+          <InputLabel tooltipLabel="Loan" text={`Loan (${Math.floor(loanRatio * 100)})%`} />
           <Spacer />
           <SmallCurrencyInput
             value={loan}
@@ -123,5 +166,12 @@ function LoanDetails() {
     </>
   );
 }
+
+LoanDetails.propTypes = {
+  downPaymentRatio: PropTypes.number.isRequired,
+  setDownPaymentRatio: PropTypes.func.isRequired,
+  loanRatio: PropTypes.number.isRequired,
+  setLoanRatio: PropTypes.func.isRequired,
+};
 
 export default LoanDetails;
