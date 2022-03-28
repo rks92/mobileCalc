@@ -6,6 +6,7 @@ function LargeCurrencyInput(props) {
   return (
     <CurrencyInput
       {...props}
+      h={12}
       size="lg"
       fontSize="md"
       fontWeight="medium"

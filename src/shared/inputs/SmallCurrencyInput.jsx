@@ -6,11 +6,13 @@ function SmallCurrencyInput(props) {
   return (
     <CurrencyInput
       {...props}
+      h={8}
       size="sm"
       fontSize="sm"
       fontWeight="medium"
       color="neutral.600"
-      maxW="98px"
+      maxW="100px"
+      textAlign="right"
     />
   );
 }

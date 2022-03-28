@@ -6,17 +6,22 @@ function LengthOfLoanInput({ value, onChange }) {
   const MAX_YEARS = 30;
   return (
     <Select
+      isFullWidth
       size="sm"
       fontSize="sm"
       fontWeight="medium"
       color="neutral.600"
-      maxW="98px"
+      maxW="100px"
       placeholder="Years"
       border="1px solid"
       borderColor="neutral.100"
       borderRadius="4px"
       iconSize="18px"
       value={value}
+      style={{
+        '-webkit-padding-end': '1rem',
+        'padding-inline-end': '1rem',
+      }}
       onChange={(event) => onChange(+event.target.value)}
     >
       {

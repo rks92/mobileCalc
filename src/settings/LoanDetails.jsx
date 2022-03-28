@@ -135,19 +135,28 @@ function LoanDetails({
             size="sm"
             value={interestRate}
             onChange={(value) => { updateInterestRate(+value); }}
-            precision={2}
-            step={0.5}
-            min={0.01}
+            min={0}
             max={100}
+            borderRadius="4px"
+            border="1px solid"
+            borderColor="neutral.100"
+            variant="unstyled"
+            style={{
+              '--number-input-stepper-width': '1px', // TODO: Find a better way to remove stepper padding
+            }}
           >
             <NumberInputField
-              border="1px solid"
-              borderColor="neutral.100"
-              borderRadius="4px"
+              border={0} // It is handled by the wrapper above
+              outline={0} // It is handled by the wrapper above
+              px={2}
+              py={1}
+              h={8}
+              size="sm"
               fontSize="sm"
               fontWeight="medium"
               color="neutral.600"
-              maxW="98px"
+              maxW="100px"
+              textAlign="right"
             />
           </NumberInput>
         </Row>
