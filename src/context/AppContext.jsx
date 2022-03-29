@@ -8,7 +8,7 @@ const defaultState = {
   interestRate: 4.5,
   lengthOfLoan: 30,
   monthlyPrincipalAndInterest: 0,
-  closingCost: 0,
+  closingCosts: 0,
   rehabCost: 0,
   afterRepairValue: 0,
   propertyState: 'Ohio',
@@ -36,7 +36,7 @@ const AppAction = {
   UpdateInterestRate: 'app/updateInterestRate',
   UpdateLengthOfLoan: 'app/updateLengthOfLoan',
   UpdateMonthlyPrincipalAndInterest: 'app/updateMonthlyPrincipalAndInterest',
-  UpdateClosingCost: 'app/updateClosingCost',
+  UpdateClosingCosts: 'app/updateClosingCosts',
   UpdateRehabCost: 'app/updateRehabCost',
   UpdateAfterRepairValue: 'app/updateAfterRepairValue',
   UpdatePropertyState: 'app/updatePropertyState',
@@ -90,8 +90,8 @@ const AppReducer = (state, action) => {
       return { ...state, monthlyPrincipalAndInterest: action.value };
     }
 
-    case AppAction.UpdateClosingCost: {
-      return { ...state, closingCost: action.value };
+    case AppAction.UpdateClosingCosts: {
+      return { ...state, closingCosts: action.value };
     }
 
     case AppAction.UpdateRehabCost: {

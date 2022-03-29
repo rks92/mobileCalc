@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Box,
   Divider,
   Flex,
   SimpleGrid,
@@ -10,17 +11,33 @@ import {
   Tabs,
   Text,
 } from '@chakra-ui/react';
-import PurchasePrice from './PurchasePrice';
+import PurchasePrice from './purchase-price/PurchasePrice';
 import MonthlyRent from './MonthlyRent';
-import LoanDetails from './LoanDetails';
 import MonthlyCashFlow from './MonthlyCashFlow';
+import SimplePurchasePrice from './purchase-price/SimplePurchasePrice';
+import DownPayment from './DownPayment';
+import Loan from './Loan';
+import InterestRate from './InterestRate';
+import LengthOfLoan from './length-of-loan/LengthOfLoan';
+import MonthlyPrincipalAndInterest from './MonthlyPrincipalAndInterest';
+import ClosingCosts from './ClosingCosts';
+import RehabCost from './RehabCost';
+import AfterRepairValue from './AfterRepairValue';
+import PropertyState from './property-state/PropertyState';
 
 function Settings() {
   const [downPaymentRatio, setDownPaymentRatio] = useState(0);
   const [loanRatio, setLoanRatio] = useState(0);
+  const [purchasePrice, setPurchasePrice] = useState(0);
+
   return (
     <SimpleGrid rows={3} spacing={5} mt={6}>
-      <PurchasePrice downPaymentRatio={downPaymentRatio} loanRatio={loanRatio} />
+      <PurchasePrice
+        downPaymentRatio={downPaymentRatio}
+        loanRatio={loanRatio}
+        purchasePrice={purchasePrice}
+        setPurchasePrice={setPurchasePrice}
+      />
       <MonthlyRent />
       <Flex
         alignContent="center"
@@ -74,12 +91,42 @@ function Settings() {
         </TabList>
         <TabPanels mt={7}>
           <TabPanel p={0}>
-            <LoanDetails
-              downPaymentRatio={downPaymentRatio}
-              loanRatio={loanRatio}
-              setDownPaymentRatio={setDownPaymentRatio}
-              setLoanRatio={setLoanRatio}
-            />
+            <SimpleGrid rows={6} spacing="4px">
+              <SimplePurchasePrice
+                loanRatio={loanRatio}
+                downPaymentRatio={downPaymentRatio}
+                purchasePrice={purchasePrice}
+                setPurchasePrice={setPurchasePrice}
+              />
+              <DownPayment
+                setLoanRatio={setLoanRatio}
+                downPaymentRatio={downPaymentRatio}
+                setDownPaymentRatio={setDownPaymentRatio}
+              />
+              <Loan
+                loanRatio={loanRatio}
+                setDownPaymentRatio={setDownPaymentRatio}
+                setLoanRatio={setLoanRatio}
+              />
+              <InterestRate />
+              <LengthOfLoan />
+              <MonthlyPrincipalAndInterest />
+            </SimpleGrid>
+            <Box my={5}>
+              <Text
+                color="neutral.400"
+                fontSize="xs"
+                fontWeight="medium"
+              >
+                ADVANCED OPTIONS
+              </Text>
+            </Box>
+            <SimpleGrid rows={4} spacing="4px">
+              <ClosingCosts />
+              <RehabCost />
+              <AfterRepairValue />
+              <PropertyState />
+            </SimpleGrid>
           </TabPanel>
           <TabPanel p={0}>
             <MonthlyCashFlow />

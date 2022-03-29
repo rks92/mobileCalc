@@ -19,8 +19,8 @@ function LengthOfLoanInput({ value, onChange }) {
       iconSize="18px"
       value={value}
       style={{
-        '-webkit-padding-end': '1rem',
-        'padding-inline-end': '1rem',
+        WebkitPaddingEnd: '1rem',
+        paddingInlineEnd: '1rem',
       }}
       onChange={(event) => onChange(+event.target.value)}
     >

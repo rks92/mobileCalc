@@ -1,7 +1,7 @@
 import React from 'react';
 import { Select } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
-import { taxRateByState } from '../shared/models';
+import { taxRateByState } from '../../shared/models';
 
 function StateSelect({ value, onChange }) {
   return (
@@ -19,8 +19,8 @@ function StateSelect({ value, onChange }) {
       iconSize="18px"
       value={value}
       style={{
-        '-webkit-padding-end': '1rem',
-        'padding-inline-end': '1rem',
+        WebkitPaddingEnd: '1rem',
+        paddingInlineEnd: '1rem',
       }}
       onChange={(event) => onChange(event.target.value)}
     >
