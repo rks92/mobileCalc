@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Divider,
@@ -26,15 +26,15 @@ import AfterRepairValue from './AfterRepairValue';
 import PropertyState from './property-state/PropertyState';
 
 function Settings() {
-  const [downPaymentRatio, setDownPaymentRatio] = useState(0);
-  const [loanRatio, setLoanRatio] = useState(0);
   const [purchasePrice, setPurchasePrice] = useState(0);
+
+  useEffect(() => {
+
+  }, []);
 
   return (
     <SimpleGrid rows={3} spacing={5} mt={6}>
       <PurchasePrice
-        downPaymentRatio={downPaymentRatio}
-        loanRatio={loanRatio}
         purchasePrice={purchasePrice}
         setPurchasePrice={setPurchasePrice}
       />
@@ -93,21 +93,11 @@ function Settings() {
           <TabPanel p={0}>
             <SimpleGrid rows={6} spacing="4px">
               <SimplePurchasePrice
-                loanRatio={loanRatio}
-                downPaymentRatio={downPaymentRatio}
                 purchasePrice={purchasePrice}
                 setPurchasePrice={setPurchasePrice}
               />
-              <DownPayment
-                setLoanRatio={setLoanRatio}
-                downPaymentRatio={downPaymentRatio}
-                setDownPaymentRatio={setDownPaymentRatio}
-              />
-              <Loan
-                loanRatio={loanRatio}
-                setDownPaymentRatio={setDownPaymentRatio}
-                setLoanRatio={setLoanRatio}
-              />
+              <DownPayment />
+              <Loan />
               <InterestRate />
               <LengthOfLoan />
               <MonthlyPrincipalAndInterest />

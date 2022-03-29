@@ -10,30 +10,17 @@ import SliderWithMarks from '../../shared/Slider';
 import Row from '../../shared/Row';
 import { AppAction, useAppDispatch, useAppState } from '../../context/AppContext';
 import LargeCurrencyInput from '../../shared/inputs/LargeCurrencyInput';
-import { roundNumber } from '../../shared/utilities';
 
 function PurchasePrice({
-  downPaymentRatio, loanRatio, purchasePrice, setPurchasePrice,
+  purchasePrice, setPurchasePrice,
 }) {
   const dispatch = useAppDispatch();
   const state = useAppState();
 
-  const setStatePurchasePrice = (value, dpRatio, lRatio) => {
-    dispatch({ type: AppAction.UpdatePurchasePrice, value });
-    const newDownPayment = roundNumber(value * dpRatio);
-    dispatch({ type: AppAction.UpdateDownPayment, value: newDownPayment });
-    const newLoan = roundNumber(value * lRatio);
-    dispatch({ type: AppAction.UpdateLoan, value: newLoan });
-  };
-
   const setStatePurchasePriceDebounced = useCallback(_.debounce(
-    setStatePurchasePrice,
+    (value) => dispatch({ type: AppAction.UpdatePurchasePrice, value }),
     500,
   ), []);
-
-  useEffect(() => {
-    setStatePurchasePriceDebounced(purchasePrice, downPaymentRatio, loanRatio);
-  }, [purchasePrice]);
 
   useEffect(() => {
     if (state.purchasePrice !== purchasePrice) {
@@ -53,7 +40,10 @@ function PurchasePrice({
   const input = (
     <LargeCurrencyInput
       value={purchasePrice}
-      onChange={setPurchasePrice}
+      onChange={(value) => {
+        setPurchasePrice(value);
+        setStatePurchasePriceDebounced(value);
+      }}
     />
   );
 
@@ -62,7 +52,10 @@ function PurchasePrice({
       min={1000}
       max={1_000_000}
       value={purchasePrice}
-      onChange={setPurchasePrice}
+      onChange={(value) => {
+        setPurchasePrice(value);
+        setStatePurchasePriceDebounced(value);
+      }}
     />
   );
 
@@ -76,8 +69,6 @@ function PurchasePrice({
 }
 
 PurchasePrice.propTypes = {
-  downPaymentRatio: PropTypes.number.isRequired,
-  loanRatio: PropTypes.number.isRequired,
   purchasePrice: PropTypes.number.isRequired,
   setPurchasePrice: PropTypes.func.isRequired,
 };

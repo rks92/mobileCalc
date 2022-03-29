@@ -30,7 +30,7 @@ function CashFlow() {
     propertyManagement,
     otherExpenses,
     downPayment,
-    closingCost,
+    closingCosts,
     rehabCost,
     monthlyPrincipalAndInterest,
     upFrontCashInvestment,
@@ -38,9 +38,9 @@ function CashFlow() {
 
   // Calculating Up-front Cash Investment
   useEffect(() => {
-    const value = roundNumber(downPayment + closingCost + rehabCost);
+    const value = roundNumber(downPayment + closingCosts + rehabCost);
     dispatch({ type: AppAction.UpdateUpFrontCashInvestment, value });
-  }, [downPayment, closingCost, rehabCost]);
+  }, [downPayment, closingCosts, rehabCost]);
 
   // Calculating the future values (expenses etc.) for 30 years
   useEffect(() => {

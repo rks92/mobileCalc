@@ -1,10 +1,13 @@
 import React, { useReducer } from 'react';
+import { roundNumber } from '../shared/utilities';
 
 const defaultState = {
   purchasePrice: 100_000,
   monthlyRent: 1000,
   downPayment: 20_000,
+  downPaymentRatio: 0.2,
   loan: 80_000,
+  loanRatio: 0.8,
   interestRate: 4.5,
   lengthOfLoan: 30,
   monthlyPrincipalAndInterest: 0,
@@ -63,7 +66,12 @@ const AppReducer = (state, action) => {
 
   switch (action.type) {
     case AppAction.UpdatePurchasePrice: {
-      return { ...state, purchasePrice: action.value };
+      return {
+        ...state,
+        purchasePrice: action.value,
+        downPayment: roundNumber(action.value * state.downPaymentRatio),
+        loan: roundNumber(action.value * state.loanRatio),
+      };
     }
 
     case AppAction.UpdateMonthlyRent: {
@@ -71,11 +79,45 @@ const AppReducer = (state, action) => {
     }
 
     case AppAction.UpdateDownPayment: {
-      return { ...state, downPayment: action.value };
+      let update = {};
+      if (action.value >= state.purchasePrice) {
+        update = {
+          downPayment: action.value,
+          purchasePrice: action.value,
+          downPaymentRatio: 1,
+          loan: 0,
+          loanRatio: 0,
+        };
+      } else {
+        update = {
+          downPaymentRatio: roundNumber(action.value / state.purchasePrice),
+          downPayment: action.value,
+          loan: state.purchasePrice - action.value,
+          loanRatio: roundNumber((state.purchasePrice - action.value) / state.purchasePrice),
+        };
+      }
+      return { ...state, ...update };
     }
 
     case AppAction.UpdateLoan: {
-      return { ...state, loan: action.value };
+      let update = {};
+      if (action.value >= state.purchasePrice) {
+        update = {
+          loan: action.value,
+          purchasePrice: action.value,
+          loanRatio: 1,
+          downPayment: 0,
+          downPaymentRatio: 0,
+        };
+      } else {
+        update = {
+          loanRatio: roundNumber(action.value / state.purchasePrice),
+          loan: action.value,
+          downPayment: state.purchasePrice - action.value,
+          downPaymentRatio: roundNumber((state.purchasePrice - action.value) / state.purchasePrice),
+        };
+      }
+      return { ...state, ...update };
     }
 
     case AppAction.UpdateInterestRate: {
