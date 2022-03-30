@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import Section from './shared/enums/Section';
 import { AppAction, useAppDispatch, useAppState } from './context/AppContext';
-import { formatInCurrency } from './shared/utilities';
+import { formatInCurrency, roundNumber } from './shared/utilities';
 
 function AnnualCashFlowButton({ selectedSection, onToggle }) {
   const dispatch = useAppDispatch();
@@ -15,12 +15,10 @@ function AnnualCashFlowButton({ selectedSection, onToggle }) {
     cashFlow,
   } = state;
 
-  const updateAnnualCashFlow = (value) => dispatch({
-    type: AppAction.UpdateAnnualCashFlow, value,
-  });
-
   useEffect(() => {
-    updateAnnualCashFlow(cashFlow * 12);
+    dispatch({
+      type: AppAction.UpdateAnnualCashFlow, value: roundNumber(cashFlow * 12),
+    });
   }, [cashFlow]);
 
   const label = (

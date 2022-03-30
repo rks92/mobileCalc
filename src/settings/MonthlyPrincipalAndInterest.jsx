@@ -4,7 +4,7 @@ import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import CurrencyText from '../shared/texts/CurrencyText';
-import { pmt } from '../shared/utilities';
+import { pmt, roundNumber } from '../shared/utilities';
 
 function MonthlyPrincipalAndInterest() {
   const dispatch = useAppDispatch();
@@ -12,8 +12,10 @@ function MonthlyPrincipalAndInterest() {
 
   // Calculating Principal and Interest (monthly)
   useEffect(() => {
-    const value = pmt(state.interestRate, state.lengthOfLoan, state.loan, 0);
-    dispatch({ type: AppAction.UpdateMonthlyPrincipalAndInterest, value });
+    dispatch({
+      type: AppAction.UpdateMonthlyPrincipalAndInterest,
+      value: roundNumber(pmt(state.interestRate, state.lengthOfLoan, state.loan, 0)),
+    });
   }, [state.interestRate, state.lengthOfLoan, state.loan]);
 
   return (

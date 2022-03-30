@@ -21,7 +21,6 @@ function CashFlow() {
 
   const {
     monthlyRent,
-    vacancy,
     propertyTaxes,
     propertyInsurance,
     hoaFees,
@@ -48,66 +47,86 @@ function CashFlow() {
 
     for (let yearIndex = 0; yearIndex < 30; yearIndex += 1) {
       const year = yearIndex + 1;
+
       const isTheFirstYear = yearIndex === 0;
+
       const previousYear = isTheFirstYear ? null : calculatedYears[yearIndex - 1];
 
-      const nextMonthlyRent = isTheFirstYear
-        ? monthlyRent
-        : roundNumber(previousYear.monthlyRent + previousYear.monthlyRent * 0.03);
-      const nextVacancy = isTheFirstYear
-        ? vacancy
-        : roundNumber(previousYear.vacancy + previousYear.vacancy * 0.05);
+      const annualMonthlyRent = isTheFirstYear
+        ? monthlyRent * 12
+        : roundNumber(previousYear.annualMonthlyRent + previousYear.annualMonthlyRent * 0.03);
 
-      const netRent = roundNumber(nextMonthlyRent + nextVacancy);
+      const calculatedVacancy = roundNumber(annualMonthlyRent * 0.05 * -1);
 
-      const nextPropertyTaxes = isTheFirstYear
-        ? propertyTaxes
-        : roundNumber(previousYear.propertyTaxes + previousYear.propertyTaxes * 0.03);
-      const nextPropertyInsurance = isTheFirstYear
-        ? propertyInsurance
-        : roundNumber(previousYear.propertyInsurance + previousYear.propertyInsurance * 0.03);
-      const nextHoaFees = isTheFirstYear
-        ? hoaFees
-        : roundNumber(previousYear.hoaFees + previousYear.hoaFees * 0.03);
-      const nextMaintenance = isTheFirstYear
-        ? maintenance
-        : roundNumber(previousYear.maintenance + previousYear.maintenance * 0.03);
-      const nextUtilities = isTheFirstYear
-        ? utilities
-        : roundNumber(previousYear.utilities + previousYear.utilities * 0.03);
-      const nextPropertyManagement = isTheFirstYear
-        ? propertyManagement
-        : roundNumber(previousYear.propertyManagement + previousYear.propertyManagement * 0.03);
+      const netRent = roundNumber(annualMonthlyRent + calculatedVacancy);
 
-      const netOperatingExpenses = roundNumber(nextPropertyTaxes
-          + nextPropertyInsurance
-          + nextHoaFees
-          + nextMaintenance
-          + nextUtilities
-          + nextPropertyManagement
-          + otherExpenses); // <-- It doesn't grow yearly
+      const annualPropertyTaxes = isTheFirstYear
+        ? propertyTaxes * 12
+        : roundNumber(previousYear.annualPropertyTaxes + previousYear.annualPropertyTaxes * 0.03);
+
+      const annualPropertyInsurance = isTheFirstYear
+        ? propertyInsurance * 12
+        : roundNumber(
+          previousYear.annualPropertyInsurance + previousYear.annualPropertyInsurance * 0.03,
+        );
+
+      const annualHoaFees = isTheFirstYear
+        ? hoaFees * 12
+        : roundNumber(previousYear.annualHoaFees + previousYear.annualHoaFees * 0.03);
+
+      const annualMaintenance = isTheFirstYear
+        ? maintenance * 12
+        : roundNumber(previousYear.annualMaintenance + previousYear.annualMaintenance * 0.03);
+
+      const annualUtilities = isTheFirstYear
+        ? utilities * 12
+        : roundNumber(previousYear.annualUtilities + previousYear.annualUtilities * 0.03);
+
+      const annualPropertyManagement = isTheFirstYear
+        ? propertyManagement * 12
+        : roundNumber(
+          previousYear.annualPropertyManagement + previousYear.annualPropertyManagement * 0.03,
+        );
+
+      const annualOtherExpenses = otherExpenses * 12;
+
+      const netOperatingExpenses = roundNumber(
+        annualPropertyTaxes
+          + annualPropertyInsurance
+          + annualHoaFees
+          + annualMaintenance
+          + annualUtilities
+          + annualPropertyManagement
+          + annualOtherExpenses,
+      ); // <-- It doesn't grow yearly
 
       const netOperatingIncome = roundNumber(netRent - netOperatingExpenses);
 
-      const annualMortgage = roundNumber(monthlyPrincipalAndInterest * 12);
+      const loanPayments = -1 * monthlyPrincipalAndInterest;
+
+      const annualMortgage = roundNumber(loanPayments * 12);
 
       const cashFlowBeforeTaxes = roundNumber(netOperatingIncome + annualMortgage);
 
-      const netCumulativeCashReturn = roundNumber(upFrontCashInvestment + cashFlowBeforeTaxes);
+      const totalInvestment = upFrontCashInvestment * -1;
+
+      const netCumulativeCashReturn = isTheFirstYear
+        ? roundNumber((totalInvestment * -1) + cashFlowBeforeTaxes)
+        : roundNumber(previousYear.netCumulativeCashReturn + cashFlowBeforeTaxes);
 
       // Adding the new calculated year
       calculatedYears.push({
         year,
-        monthlyRent: nextMonthlyRent,
-        vacancy: nextVacancy,
+        annualMonthlyRent,
+        calculatedVacancy,
         netRent,
-        propertyTaxes: nextPropertyTaxes,
-        propertyInsurance: nextPropertyInsurance,
-        hoaFees: nextHoaFees,
-        maintenance: nextMaintenance,
-        utilities: nextUtilities,
-        propertyManagement: nextPropertyManagement,
-        otherExpenses,
+        annualPropertyTaxes,
+        annualPropertyInsurance,
+        annualHoaFees,
+        annualMaintenance,
+        annualUtilities,
+        annualPropertyManagement,
+        annualOtherExpenses,
         netOperatingExpenses,
         netOperatingIncome,
         annualMortgage,
@@ -119,11 +138,21 @@ function CashFlow() {
     // Updating state after calculations
     setYears(calculatedYears);
     setOneYearCashFlow(calculatedYears[0].cashFlowBeforeTaxes);
-    setFiveYearCashFlow(calculatedYears[4].cashFlowBeforeTaxes);
-    setTenYearCashFlow(calculatedYears[9].cashFlowBeforeTaxes);
+
+    let fiveYearCashFlowSum = 0;
+    let tenYearCashFlowSum = 0;
+
+    for (let yearIndex = 0; yearIndex < 10; yearIndex += 1) {
+      if (yearIndex < 5) {
+        fiveYearCashFlowSum += calculatedYears[yearIndex].cashFlowBeforeTaxes;
+      }
+      tenYearCashFlowSum += calculatedYears[yearIndex].cashFlowBeforeTaxes;
+    }
+
+    setFiveYearCashFlow(fiveYearCashFlowSum);
+    setTenYearCashFlow(tenYearCashFlowSum);
   }, [
     monthlyRent,
-    vacancy,
     propertyTaxes,
     propertyInsurance,
     hoaFees,

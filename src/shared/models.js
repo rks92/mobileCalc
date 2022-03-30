@@ -51,3 +51,5 @@ export const taxRateByState = {
   Illinois: 2.27,
   'New Jersey': 2.49,
 };
+
+export const getTaxRateMultiplierForState = (state) => taxRateByState[state] / 100;

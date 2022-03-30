@@ -10,7 +10,8 @@ import Row from '../shared/Row';
 import NestedInputLabel from '../shared/texts/NestedInputLabel';
 import CurrencyText from '../shared/texts/CurrencyText';
 import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
-import { taxRateByState } from '../shared/models';
+import { getTaxRateMultiplierForState } from '../shared/models';
+import { roundNumber } from '../shared/utilities';
 
 function MonthlyCashFlow() {
   const dispatch = useAppDispatch();
@@ -59,7 +60,6 @@ function MonthlyCashFlow() {
   const updateNetOperatingIncome = (value) => dispatch({
     type: AppAction.UpdateNetOperatingIncome, value,
   });
-  const updateCashFlow = (value) => dispatch({ type: AppAction.UpdateCashFlow, value });
 
   useEffect(() => {
     updateVacancy(monthlyRent * -0.05);
@@ -89,7 +89,7 @@ function MonthlyCashFlow() {
   ]);
 
   useEffect(() => {
-    updatePropertyTaxes(purchasePrice * (taxRateByState[propertyState] / 100));
+    updatePropertyTaxes((purchasePrice * getTaxRateMultiplierForState(propertyState)) / 12);
   }, [purchasePrice, propertyState]);
 
   // Net Operating Income
@@ -99,7 +99,10 @@ function MonthlyCashFlow() {
 
   // Cash Flow
   useEffect(() => {
-    updateCashFlow(netOperatingIncome + loanPayments);
+    dispatch({
+      type: AppAction.UpdateCashFlow,
+      value: roundNumber(netOperatingIncome + loanPayments),
+    });
   }, [netOperatingIncome, loanPayments]);
 
   const divider = <Divider color="primary.100" my="8px" />;

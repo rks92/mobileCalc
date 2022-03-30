@@ -26,7 +26,7 @@ export default function CashFlowChart({ data }) {
       >
         <CartesianGrid vertical={false} strokeDasharray="3" stroke="#CDD4E0" />
         <YAxis
-          width={30} // Hack to get all the available space
+          width={40} // Hack to get all the available space
           axisLine={false}
           tickLine={false}
           tickFormatter={tickFormatter}

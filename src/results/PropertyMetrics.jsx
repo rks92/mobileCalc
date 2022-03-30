@@ -63,7 +63,7 @@ function PropertyMetrics() {
   useEffect(() => {
     const totalAdjustedOperatingExpenses = operatingExpenses + vacancy;
     const ratio = totalAdjustedOperatingExpenses / monthlyRent;
-    const formattedFiftyPercentRule = `${roundNumber(ratio * 100)}%`;
+    const formattedFiftyPercentRule = `${Math.abs(roundNumber(ratio * 100))}%`;
     setFiftyPercentRule(formattedFiftyPercentRule);
     const color = ratio < 0.5 ? 'green.400' : 'secondary.6';
     setFiftyPercentRuleColor(color);
@@ -72,9 +72,9 @@ function PropertyMetrics() {
   // 1% Rule
   useEffect(() => {
     const ratio = monthlyRent / purchasePrice;
-    const formattedOnePercentRule = `${roundNumber(ratio * 100)}%`;
+    const formattedOnePercentRule = `${Math.abs(roundNumber(ratio * 100))}%`;
     setOnePercentRule(formattedOnePercentRule);
-    const color = ratio > 0.01 ? 'green.400' : 'secondary.6';
+    const color = ratio >= 0.01 ? 'green.400' : 'secondary.6';
     setOnePercentRuleColor(color);
   }, []);
 
