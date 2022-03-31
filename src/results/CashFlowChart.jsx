@@ -9,7 +9,7 @@ import {
   YAxis,
   ComposedChart,
   ReferenceLine,
-  ResponsiveContainer,
+  ResponsiveContainer, Legend,
 } from 'recharts';
 
 export default function CashFlowChart({ data, breakEven }) {
@@ -18,6 +18,64 @@ export default function CashFlowChart({ data, breakEven }) {
     currency: 'USD',
     notation: 'compact',
   }).format(value));
+
+  const renderLegend = (props) => {
+    const { payload } = props;
+
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignContent: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+      >
+        {payload.map((entry) => {
+          const getRectWithColor = (color, marginLeft = '0') => (
+            <div style={{
+              width: '10px', height: '10px', borderRadius: '2px', background: color, marginLeft,
+            }}
+            />
+          );
+
+          const doubleRect = (
+            <>
+              {getRectWithColor('#B3D1FF')}
+              {getRectWithColor('#0066FF')}
+            </>
+          );
+          const labelColor = entry.dataKey === 'netCumulativeCashReturn'
+            ? '#0066FF'
+            : entry.color;
+
+          const icon = entry.dataKey === 'netCumulativeCashReturn'
+            ? doubleRect
+            : getRectWithColor(entry.color, '12px');
+
+          return (
+            <div
+              style={{
+                fontSize: '10px',
+                color: labelColor,
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'nowrap',
+                alignContent: 'center',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              key={entry.value}
+            >
+              {icon}
+              <div style={{ marginLeft: '3px' }}>{entry.value}</div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
 
   return (
     <ResponsiveContainer height={230}>
@@ -52,6 +110,7 @@ export default function CashFlowChart({ data, breakEven }) {
         />
         <ReferenceLine yAxisId="left" y={0} stroke="#B4BED1" />
         <Bar
+          name="Net Cumulative Cash Flow"
           yAxisId="left"
           dataKey="netCumulativeCashReturn"
           fill="#82ca9d"
@@ -65,6 +124,7 @@ export default function CashFlowChart({ data, breakEven }) {
           ))}
         </Bar>
         <Line
+          name="Net Operating Income"
           yAxisId="right"
           dot={false}
           type="monotone"
@@ -73,6 +133,7 @@ export default function CashFlowChart({ data, breakEven }) {
           stroke="#ECAF00"
         />
         <Line
+          name="Cash Flow Before Taxes"
           yAxisId="right"
           dot={false}
           type="monotone"
@@ -94,6 +155,7 @@ export default function CashFlowChart({ data, breakEven }) {
             dx: -10,
           }}
         />
+        <Legend height={25} content={renderLegend} />
       </ComposedChart>
     </ResponsiveContainer>
   );
