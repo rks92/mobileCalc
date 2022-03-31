@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // eslint-disable-next-line import/no-named-default
 import { NumberInput, NumberInputField } from '@chakra-ui/react';
+import { isEmpty, isNil } from 'lodash';
 
 function CurrencyInput({ value, onChange, ...restProps }) {
   const formatter = new Intl.NumberFormat('en-US', {
@@ -12,14 +13,22 @@ function CurrencyInput({ value, onChange, ...restProps }) {
     maximumFractionDigits: 2,
   });
 
-  const format = (val) => formatter.format(val);
-  const parse = (currency) => parseFloat(currency.replace(/[^0-9.-]+/g, ''));
+  const format = (newValue) => formatter.format(newValue);
+
+  const parse = (currency) => {
+    const validatedNumber = isEmpty(currency) || isNil(currency) || Number.isNaN(currency)
+      ? '0'
+      : currency;
+
+    return parseFloat(validatedNumber.replace(/[^0-9.-]+/g, ''));
+  };
 
   return (
     <NumberInput
       onChange={(valueString) => onChange(parse(valueString))}
       value={format(value)}
       max={999_999_999}
+      min={0}
       border="1px solid"
       borderColor="neutral.100"
       borderRadius="4px"
