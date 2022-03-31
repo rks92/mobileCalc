@@ -22,7 +22,7 @@ function MonthlyPrincipalAndInterest() {
     <Row mt={1}>
       <InputLabel tooltipLabel="Monthly Principal & Interest" text="Monthly Principal & Interest" />
       <Spacer />
-      <CurrencyText text={state.monthlyPrincipalAndInterest.toString()} />
+      <CurrencyText value={state.monthlyPrincipalAndInterest} />
     </Row>
   );
 }

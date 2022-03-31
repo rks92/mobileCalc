@@ -132,7 +132,7 @@ function MonthlyExpenses() {
       <Divider color="primary.100" my="4px" />
       <Flex flexDirection="row" flexWrap="nowrap" alignContent="center" justifyContent="flex-end" alignItems="center">
         <Text fontSize="xs" fontWeight="medium" color="neutral.900">{'Total Monthly Expenses  = '}</Text>
-        <CurrencyText ml={1} fontSize="lg" text={totalMonthlyExpenses.toString()} />
+        <CurrencyText ml={1} fontSize="lg" value={totalMonthlyExpenses} />
       </Flex>
     </>
   );

@@ -122,12 +122,12 @@ function MonthlyCashFlow() {
       <Row>
         <InputLabel tooltipLabel="Operating Income" text="Operating Income" />
         <Spacer />
-        <CurrencyText text={operatingIncome.toString()} />
+        <CurrencyText value={operatingIncome} />
       </Row>
       <Row mt={3}>
         <InputLabel tooltipLabel="Operating Expenses" text="Operating Expenses" />
         <Spacer />
-        <CurrencyText text={operatingExpenses.toString()} />
+        <CurrencyText value={operatingExpenses} />
       </Row>
       <Row mt={2}>
         <NestedInputLabel text="Property Taxes" />
@@ -168,18 +168,18 @@ function MonthlyCashFlow() {
       <Row>
         <InputLabel tooltipLabel="Net Operating Income" text="Net Operating Income" />
         <Spacer />
-        <CurrencyText text={netOperatingIncome.toString()} />
+        <CurrencyText value={netOperatingIncome} />
       </Row>
       <Row mt={3}>
         <InputLabel tooltipLabel="Loan Payments" text="Loan Payments" />
         <Spacer />
-        <CurrencyText text={loanPayments.toString()} />
+        <CurrencyText value={loanPayments} />
       </Row>
       {divider}
       <Row>
         <InputLabel tooltipLabel="Cash Flow" text="Cash Flow" />
         <Spacer />
-        <CurrencyText fontSize="lg" text={cashFlow.toString()} />
+        <CurrencyText fontSize="lg" value={cashFlow} />
       </Row>
     </SimpleGrid>
   );

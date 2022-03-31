@@ -85,7 +85,7 @@ function PropertyMetrics() {
         <Row>
           <InputLabel tooltipLabel="Annual NOI" text="Annual NOI" textStyleOverrides={{ color: 'neutral.600' }} />
           <Spacer />
-          <CurrencyText fontSize="lg" text={annualNOI.toString()} />
+          <CurrencyText fontSize="lg" value={annualNOI} />
         </Row>
         <Row>
           <InputLabel tooltipLabel="Cash on Cash Return" text="Cash on Cash Return" textStyleOverrides={{ color: 'neutral.600' }} />
