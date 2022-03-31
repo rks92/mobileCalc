@@ -5,7 +5,7 @@ import {
 import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
-import SmallCurrencyInput from '../shared/inputs/SmallCurrencyInput';
+import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
 
 function RehabCost() {
   const dispatch = useAppDispatch();
@@ -35,7 +35,7 @@ function RehabCost() {
     <Row>
       <InputLabel tooltipLabel="Rehab Cost" text="Rehab Cost" />
       <Spacer />
-      <SmallCurrencyInput value={rehabCost} onChange={onChange} />
+      <DebouncedInlineCurrencyInput value={rehabCost} onChange={onChange} />
     </Row>
   );
 }

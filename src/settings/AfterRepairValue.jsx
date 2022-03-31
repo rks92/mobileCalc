@@ -3,7 +3,7 @@ import { Spacer } from '@chakra-ui/react';
 import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
-import SmallCurrencyInput from '../shared/inputs/SmallCurrencyInput';
+import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
 
 function AfterRepairValue() {
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ function AfterRepairValue() {
     <Row>
       <InputLabel tooltipLabel="After Repair Value " text="After Repair Value " />
       <Spacer />
-      <SmallCurrencyInput value={afterRepairValue} onChange={onChange} />
+      <DebouncedInlineCurrencyInput value={afterRepairValue} onChange={onChange} />
     </Row>
   );
 }

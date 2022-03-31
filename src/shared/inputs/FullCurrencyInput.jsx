@@ -2,7 +2,7 @@
 import React from 'react';
 import CurrencyInput from './CurrencyInput';
 
-function LargeCurrencyInput(props) {
+function FullCurrencyInput(props) {
   return (
     <CurrencyInput
       {...props}
@@ -15,4 +15,4 @@ function LargeCurrencyInput(props) {
   );
 }
 
-export default LargeCurrencyInput;
+export default FullCurrencyInput;

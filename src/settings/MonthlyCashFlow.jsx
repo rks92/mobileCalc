@@ -5,7 +5,7 @@ import {
   Spacer,
 } from '@chakra-ui/react';
 import InputLabel from '../shared/texts/InputLabel';
-import SmallCurrencyInput from '../shared/inputs/SmallCurrencyInput';
+import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
 import Row from '../shared/Row';
 import NestedInputLabel from '../shared/texts/NestedInputLabel';
 import CurrencyText from '../shared/texts/CurrencyText';
@@ -111,12 +111,12 @@ function MonthlyCashFlow() {
       <Row>
         <InputLabel tooltipLabel="Gross Rent" text="Gross Rent" />
         <Spacer />
-        <SmallCurrencyInput value={monthlyRent} onChange={updateGrossRent} />
+        <DebouncedInlineCurrencyInput value={monthlyRent} onChange={updateGrossRent} />
       </Row>
       <Row>
         <InputLabel tooltipLabel="Vacancy" text="Vacancy" />
         <Spacer />
-        <SmallCurrencyInput value={vacancy} onChange={updateVacancy} />
+        <DebouncedInlineCurrencyInput value={vacancy} onChange={updateVacancy} />
       </Row>
       {divider}
       <Row>
@@ -132,37 +132,43 @@ function MonthlyCashFlow() {
       <Row mt={2}>
         <NestedInputLabel text="Property Taxes" />
         <Spacer />
-        <SmallCurrencyInput value={propertyTaxes} onChange={updatePropertyTaxes} />
+        <DebouncedInlineCurrencyInput value={propertyTaxes} onChange={updatePropertyTaxes} />
       </Row>
       <Row>
         <NestedInputLabel text="Property Insurance" />
         <Spacer />
-        <SmallCurrencyInput value={propertyInsurance} onChange={updatePropertyInsurance} />
+        <DebouncedInlineCurrencyInput
+          value={propertyInsurance}
+          onChange={updatePropertyInsurance}
+        />
       </Row>
       <Row>
         <NestedInputLabel text="Property Management" />
         <Spacer />
-        <SmallCurrencyInput value={propertyManagement} onChange={updatePropertyManagement} />
+        <DebouncedInlineCurrencyInput
+          value={propertyManagement}
+          onChange={updatePropertyManagement}
+        />
       </Row>
       <Row>
         <NestedInputLabel text="Maintenance" />
         <Spacer />
-        <SmallCurrencyInput value={maintenance} onChange={updateMaintenance} />
+        <DebouncedInlineCurrencyInput value={maintenance} onChange={updateMaintenance} />
       </Row>
       <Row>
         <NestedInputLabel text="HOA Fees" />
         <Spacer />
-        <SmallCurrencyInput value={hoaFees} onChange={updateHoaFees} />
+        <DebouncedInlineCurrencyInput value={hoaFees} onChange={updateHoaFees} />
       </Row>
       <Row>
         <NestedInputLabel text="Utilities" />
         <Spacer />
-        <SmallCurrencyInput value={utilities} onChange={updateUtilities} />
+        <DebouncedInlineCurrencyInput value={utilities} onChange={updateUtilities} />
       </Row>
       <Row>
         <NestedInputLabel text="Other Expenses" />
         <Spacer />
-        <SmallCurrencyInput value={otherExpenses} onChange={updateOtherExpenses} />
+        <DebouncedInlineCurrencyInput value={otherExpenses} onChange={updateOtherExpenses} />
       </Row>
       {divider}
       <Row>

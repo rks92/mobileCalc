@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CurrencyInput from './CurrencyInput';
 
-function SmallCurrencyInput(props) {
+function InlineCurrencyInput(props) {
   const color = props.value < 0 ? 'secondary.6' : 'neutral.600';
   return (
     <CurrencyInput
@@ -19,9 +19,9 @@ function SmallCurrencyInput(props) {
   );
 }
 
-SmallCurrencyInput.propTypes = {
+InlineCurrencyInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.number.isRequired,
 };
 
-export default SmallCurrencyInput;
+export default InlineCurrencyInput;

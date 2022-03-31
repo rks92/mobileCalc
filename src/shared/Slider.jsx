@@ -14,6 +14,7 @@ function SliderWithMarks({
   value, min, max, onChange,
 }) {
   const formatter = Intl.NumberFormat('en', { notation: 'compact' });
+
   return (
     <>
       <Slider

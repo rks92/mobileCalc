@@ -1,37 +1,22 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import _ from 'lodash';
+import React from 'react';
 import { Spacer } from '@chakra-ui/react';
 import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
-import SmallCurrencyInput from '../shared/inputs/SmallCurrencyInput';
+import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
 
 function DownPayment() {
   const dispatch = useAppDispatch();
-  const state = useAppState();
-  const [downPayment, setDownPayment] = useState(state.downPayment);
-
-  const setStateDownPaymentDebounced = useCallback(_.debounce(
-    (value) => dispatch({ type: AppAction.UpdateDownPayment, value }),
-    500,
-  ), []);
-
-  useEffect(() => {
-    if (state.downPayment === downPayment) {
-      return;
-    }
-    setDownPayment(state.downPayment);
-  }, [state.downPayment]);
+  const { downPayment, downPaymentRatio } = useAppState();
 
   return (
     <Row>
-      <InputLabel tooltipLabel="Down payment" text={`Down payment (${Math.floor(state.downPaymentRatio * 100)})%`} />
+      <InputLabel tooltipLabel="Down payment" text={`Down payment (${Math.floor(downPaymentRatio * 100)})%`} />
       <Spacer />
-      <SmallCurrencyInput
+      <DebouncedInlineCurrencyInput
         value={downPayment}
         onChange={(value) => {
-          setDownPayment(value);
-          setStateDownPaymentDebounced(value);
+          dispatch({ type: AppAction.UpdateDownPayment, value });
         }}
       />
     </Row>

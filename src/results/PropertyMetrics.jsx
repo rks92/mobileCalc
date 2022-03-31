@@ -46,6 +46,11 @@ function PropertyMetrics() {
 
   // Cash on Cash Return
   useEffect(() => {
+    if (upFrontCashInvestment === 0) {
+      // Avoiding divide by zero. It happens, and the result is Infinity.
+      setCashOnCashReturn('0%');
+      return;
+    }
     const ratio = annualCashFlow / upFrontCashInvestment;
     const formattedCashOnCashReturn = `${roundNumber(ratio * 100)}%`;
     setCashOnCashReturn(formattedCashOnCashReturn);
@@ -54,6 +59,11 @@ function PropertyMetrics() {
   // Cap Rate
   useEffect(() => {
     const marketValue = Math.max(purchasePrice, afterRepairValue);
+    if (marketValue === 0) {
+      // Avoiding divide by zero. It happens, and the result is Infinity.
+      setCapRate('0%');
+      return;
+    }
     const ratio = annualNOI / marketValue;
     const formattedCapRate = `${roundNumber(ratio * 100)}%`;
     setCapRate(formattedCapRate);
@@ -62,6 +72,11 @@ function PropertyMetrics() {
   // 50% Rule
   useEffect(() => {
     const totalAdjustedOperatingExpenses = operatingExpenses + vacancy;
+    if (monthlyRent === 0) {
+      // Avoiding divide by zero. It happens, and the result is Infinity.
+      setFiftyPercentRuleColor('0%');
+      return;
+    }
     const ratio = totalAdjustedOperatingExpenses / monthlyRent;
     const formattedFiftyPercentRule = `${Math.abs(roundNumber(ratio * 100))}%`;
     setFiftyPercentRule(formattedFiftyPercentRule);
@@ -71,6 +86,11 @@ function PropertyMetrics() {
 
   // 1% Rule
   useEffect(() => {
+    if (purchasePrice === 0) {
+      // Avoiding divide by zero. It happens, and the result is Infinity.
+      setOnePercentRuleColor('0%');
+      return;
+    }
     const ratio = monthlyRent / purchasePrice;
     const formattedOnePercentRule = `${Math.abs(roundNumber(ratio * 100))}%`;
     setOnePercentRule(formattedOnePercentRule);

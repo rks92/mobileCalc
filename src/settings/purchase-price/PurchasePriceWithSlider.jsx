@@ -4,20 +4,19 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { debounce } from 'lodash';
-import InfoTooltipIcon from '../shared/InfoTooltipIcon';
-import SliderWithMarks from '../shared/Slider';
-import Row from '../shared/Row';
-import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
-import FullCurrencyInput from '../shared/inputs/FullCurrencyInput';
+import InfoTooltipIcon from '../../shared/InfoTooltipIcon';
+import SliderWithMarks from '../../shared/Slider';
+import Row from '../../shared/Row';
+import { AppAction, useAppDispatch, useAppState } from '../../context/AppContext';
+import FullCurrencyInput from '../../shared/inputs/FullCurrencyInput';
 
-function MonthlyRent() {
-  const [isSetManually, setIsSetManually] = useState(false);
+function PurchasePriceWithSlider() {
   const dispatch = useAppDispatch();
-  const { purchasePrice, monthlyRent: stateValue } = useAppState();
+  const { purchasePrice: stateValue } = useAppState();
   const [localValue, setLocalValue] = useState(stateValue);
 
   const debouncedOnChange = useCallback(debounce(
-    (value) => dispatch({ type: AppAction.UpdateMonthlyRent, value }),
+    (value) => dispatch({ type: AppAction.UpdatePurchasePrice, value }),
     500,
   ), []);
 
@@ -28,18 +27,10 @@ function MonthlyRent() {
     setLocalValue(stateValue);
   }, [stateValue]);
 
-  useEffect(() => {
-    // Until user manually sets rent - we can assume the rent is 1/100 of total purchase price
-    if (!isSetManually) {
-      const value = Math.round(purchasePrice * 0.01);
-      dispatch({ type: AppAction.UpdateMonthlyRent, value });
-    }
-  }, [purchasePrice]);
-
   const label = (
     <Row>
       <Text color="neutral.900" fontSize="lg" fontWeight="medium">
-        Monthly Rent
+        Purchase Price
       </Text>
       <InfoTooltipIcon label="Explain here" />
     </Row>
@@ -49,7 +40,6 @@ function MonthlyRent() {
     <FullCurrencyInput
       value={localValue}
       onChange={(value) => {
-        setIsSetManually(true);
         setLocalValue(value);
         debouncedOnChange(value);
       }}
@@ -58,11 +48,10 @@ function MonthlyRent() {
 
   const slider = (
     <SliderWithMarks
-      min={300}
-      max={10_000}
+      min={1000}
+      max={1_000_000}
       value={localValue}
       onChange={(value) => {
-        setIsSetManually(true);
         setLocalValue(value);
         debouncedOnChange(value);
       }}
@@ -78,4 +67,4 @@ function MonthlyRent() {
   );
 }
 
-export default MonthlyRent;
+export default PurchasePriceWithSlider;

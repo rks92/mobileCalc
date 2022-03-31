@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Box,
   Divider,
@@ -11,10 +11,10 @@ import {
   Tabs,
   Text,
 } from '@chakra-ui/react';
-import PurchasePrice from './purchase-price/PurchasePrice';
+import PurchasePriceWithSlider from './purchase-price/PurchasePriceWithSlider';
 import MonthlyRent from './MonthlyRent';
 import MonthlyCashFlow from './MonthlyCashFlow';
-import SimplePurchasePrice from './purchase-price/SimplePurchasePrice';
+import PurchasePrice from './purchase-price/PurchasePrice';
 import DownPayment from './DownPayment';
 import Loan from './Loan';
 import InterestRate from './InterestRate';
@@ -26,18 +26,9 @@ import AfterRepairValue from './AfterRepairValue';
 import PropertyState from './property-state/PropertyState';
 
 function Settings() {
-  const [purchasePrice, setPurchasePrice] = useState(0);
-
-  useEffect(() => {
-
-  }, []);
-
   return (
     <SimpleGrid rows={3} spacing={5} mt={6}>
-      <PurchasePrice
-        purchasePrice={purchasePrice}
-        setPurchasePrice={setPurchasePrice}
-      />
+      <PurchasePriceWithSlider />
       <MonthlyRent />
       <Flex
         alignContent="center"
@@ -92,10 +83,7 @@ function Settings() {
         <TabPanels mt={7}>
           <TabPanel p={0}>
             <SimpleGrid rows={6} spacing="4px">
-              <SimplePurchasePrice
-                purchasePrice={purchasePrice}
-                setPurchasePrice={setPurchasePrice}
-              />
+              <PurchasePrice />
               <DownPayment />
               <Loan />
               <InterestRate />

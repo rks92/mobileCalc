@@ -1,37 +1,22 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import _ from 'lodash';
+import React from 'react';
 import { Spacer } from '@chakra-ui/react';
 import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
-import SmallCurrencyInput from '../shared/inputs/SmallCurrencyInput';
+import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
 
 function Loan() {
   const dispatch = useAppDispatch();
-  const state = useAppState();
-  const [loan, setLoan] = useState(state.loan);
-
-  const setStateLoanDebounced = useCallback(_.debounce(
-    (value) => dispatch({ type: AppAction.UpdateLoan, value }),
-    500,
-  ), []);
-
-  useEffect(() => {
-    if (state.loan === loan) {
-      return;
-    }
-    setLoan(state.loan);
-  }, [state.loan]);
+  const { loan, loanRatio } = useAppState();
 
   return (
     <Row>
-      <InputLabel tooltipLabel="Loan" text={`Loan (${Math.floor(state.loanRatio * 100)})%`} />
+      <InputLabel tooltipLabel="Loan" text={`Loan (${Math.floor(loanRatio * 100)})%`} />
       <Spacer />
-      <SmallCurrencyInput
+      <DebouncedInlineCurrencyInput
         value={loan}
         onChange={(value) => {
-          setStateLoanDebounced(value);
-          setLoan(value);
+          dispatch({ type: AppAction.UpdateLoan, value });
         }}
       />
     </Row>

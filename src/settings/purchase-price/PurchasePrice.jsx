@@ -1,76 +1,28 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import {
-  SimpleGrid,
-  Text,
+  Spacer,
 } from '@chakra-ui/react';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
-import InfoTooltipIcon from '../../shared/InfoTooltipIcon';
-import SliderWithMarks from '../../shared/Slider';
+import InputLabel from '../../shared/texts/InputLabel';
 import Row from '../../shared/Row';
 import { AppAction, useAppDispatch, useAppState } from '../../context/AppContext';
-import LargeCurrencyInput from '../../shared/inputs/LargeCurrencyInput';
+import DebouncedInlineCurrencyInput from '../../shared/inputs/DebouncedInlineCurrencyInput';
 
-function PurchasePrice({
-  purchasePrice, setPurchasePrice,
-}) {
+function PurchasePrice() {
   const dispatch = useAppDispatch();
-  const state = useAppState();
-
-  const setStatePurchasePriceDebounced = useCallback(_.debounce(
-    (value) => dispatch({ type: AppAction.UpdatePurchasePrice, value }),
-    500,
-  ), []);
-
-  useEffect(() => {
-    if (state.purchasePrice !== purchasePrice) {
-      setPurchasePrice(state.purchasePrice);
-    }
-  }, [state.purchasePrice]);
-
-  const label = (
-    <Row>
-      <Text color="neutral.900" fontSize="lg" fontWeight="medium">
-        Purchase Price
-      </Text>
-      <InfoTooltipIcon label="Explain here" />
-    </Row>
-  );
-
-  const input = (
-    <LargeCurrencyInput
-      value={purchasePrice}
-      onChange={(value) => {
-        setPurchasePrice(value);
-        setStatePurchasePriceDebounced(value);
-      }}
-    />
-  );
-
-  const slider = (
-    <SliderWithMarks
-      min={1000}
-      max={1_000_000}
-      value={purchasePrice}
-      onChange={(value) => {
-        setPurchasePrice(value);
-        setStatePurchasePriceDebounced(value);
-      }}
-    />
-  );
+  const { purchasePrice } = useAppState();
 
   return (
-    <SimpleGrid rows={3} spacing={1}>
-      {label}
-      {input}
-      {slider}
-    </SimpleGrid>
+    <Row>
+      <InputLabel tooltipLabel="Purchase Price" text="Purchase Price" />
+      <Spacer />
+      <DebouncedInlineCurrencyInput
+        value={purchasePrice}
+        onChange={(value) => {
+          dispatch({ type: AppAction.UpdatePurchasePrice, value });
+        }}
+      />
+    </Row>
   );
 }
-
-PurchasePrice.propTypes = {
-  purchasePrice: PropTypes.number.isRequired,
-  setPurchasePrice: PropTypes.func.isRequired,
-};
 
 export default PurchasePrice;

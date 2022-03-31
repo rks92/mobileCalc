@@ -6,7 +6,7 @@ import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
 import { roundNumber } from '../shared/utilities';
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
-import SmallCurrencyInput from '../shared/inputs/SmallCurrencyInput';
+import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
 
 function ClosingCosts() {
   const dispatch = useAppDispatch();
@@ -34,7 +34,7 @@ function ClosingCosts() {
     <Row>
       <InputLabel tooltipLabel="Closing Costs (Purchase)" text="Closing Costs (Purchase)" />
       <Spacer />
-      <SmallCurrencyInput value={closingCosts} onChange={updateClosingCosts} />
+      <DebouncedInlineCurrencyInput value={closingCosts} onChange={updateClosingCosts} />
     </Row>
   );
 }
