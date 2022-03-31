@@ -17,6 +17,7 @@ function CashFlow() {
   const [oneYearCashFlow, setOneYearCashFlow] = useState(0);
   const [fiveYearCashFlow, setFiveYearCashFlow] = useState(0);
   const [tenYearCashFlow, setTenYearCashFlow] = useState(0);
+  const [breakEven, setBreakEven] = useState(0);
   const [years, setYears] = useState([]);
 
   const {
@@ -29,10 +30,12 @@ function CashFlow() {
     propertyManagement,
     otherExpenses,
     downPayment,
+    downPaymentRatio,
     closingCosts,
     rehabCost,
     monthlyPrincipalAndInterest,
     upFrontCashInvestment,
+    purchasePrice,
   } = state;
 
   // Calculating Up-front Cash Investment
@@ -111,7 +114,7 @@ function CashFlow() {
       const totalInvestment = upFrontCashInvestment * -1;
 
       const netCumulativeCashReturn = isTheFirstYear
-        ? roundNumber((totalInvestment * -1) + cashFlowBeforeTaxes)
+        ? roundNumber(totalInvestment + cashFlowBeforeTaxes)
         : roundNumber(previousYear.netCumulativeCashReturn + cashFlowBeforeTaxes);
 
       // Adding the new calculated year
@@ -151,6 +154,13 @@ function CashFlow() {
 
     setFiveYearCashFlow(fiveYearCashFlowSum);
     setTenYearCashFlow(tenYearCashFlowSum);
+
+    const arithmitis = closingCosts + rehabCost + (purchasePrice * downPaymentRatio);
+    const paronomastis = calculatedYears[0].cashFlowBeforeTaxes / 12;
+
+    const newBreakEven = Math.floor((arithmitis / paronomastis) / 12);
+
+    setBreakEven(newBreakEven);
   }, [
     monthlyRent,
     propertyTaxes,
@@ -162,11 +172,13 @@ function CashFlow() {
     otherExpenses,
     monthlyPrincipalAndInterest,
     upFrontCashInvestment,
+    downPaymentRatio,
+    purchasePrice,
   ]);
 
   return (
     <>
-      <CashFlowChart data={years} />
+      <CashFlowChart data={years} breakEven={breakEven} />
       <SimpleGrid rows={4} spacing="4px" mt={8}>
         <Row>
           <InputLabel tooltipLabel="Up-Front Cash Investment" text="Up-Front Cash Investment" />
