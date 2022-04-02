@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import _ from 'lodash';
-import { NumberInput, NumberInputField, Spacer } from '@chakra-ui/react';
+import {
+  NumberInput,
+  NumberInputField,
+  Spacer,
+} from '@chakra-ui/react';
+import { debounce } from 'lodash';
 import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
@@ -12,23 +16,17 @@ function InterestRate() {
 
   // Handling Interest Rate updates
   const setStateInterestRate = (value) => {
-    let safeGuardedValue = value;
-    if (value > 100) {
-      safeGuardedValue = 100;
-    }
-    if (value === 0) {
-      safeGuardedValue = 0.01; // TODO: Confirm that can be zero
-    }
-    dispatch({ type: AppAction.UpdateInterestRate, value: safeGuardedValue });
+    dispatch({ type: AppAction.UpdateInterestRate, value });
   };
 
-  const setStateInterestRateDebounced = useCallback(_.debounce(
+  const setStateInterestRateDebounced = useCallback(debounce(
     setStateInterestRate,
     500,
   ), []);
 
   useEffect(() => {
-    setStateInterestRateDebounced(interestRate);
+    const parsedInterestRate = parseFloat(interestRate);
+    setStateInterestRateDebounced(parsedInterestRate);
   }, [interestRate]);
 
   useEffect(() => {
@@ -42,29 +40,29 @@ function InterestRate() {
       <InputLabel tooltipLabel="Interest Rate" text="Interest Rate" />
       <Spacer />
       <NumberInput
-        size="sm"
-        value={interestRate}
-        onChange={(value) => { setInterestRate(+value); }}
+        precision={2}
+        step={0.01}
         min={0}
         max={100}
-        borderRadius="4px"
-        border="1px solid"
-        borderColor="neutral.100"
         variant="unstyled"
+        value={interestRate}
+        onChange={setInterestRate}
         style={{
           '--number-input-stepper-width': '1px', // TODO: Find a better way to remove stepper padding
         }}
       >
         <NumberInputField
-          border={0} // It is handled by the wrapper above
-          outline={0} // It is handled by the wrapper above
           px={2}
           py={1}
           h={8}
+          borderRadius="4px"
+          border="1px solid"
+          borderColor="neutral.100"
           size="sm"
           fontSize="sm"
           fontWeight="medium"
           color="neutral.600"
+          maxH={7}
           maxW="100px"
           textAlign="right"
         />

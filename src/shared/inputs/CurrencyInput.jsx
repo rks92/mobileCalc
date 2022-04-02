@@ -42,6 +42,7 @@ function CurrencyInput({ value, onChange, ...restProps }) {
         outline={0} // It is handled by the wrapper above
         px={2}
         py={1}
+        maxH={7}
         fontSize="md"
         fontWeight="normal"
         {...restProps}
