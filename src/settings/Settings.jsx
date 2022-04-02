@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Divider,
@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react';
 import PurchasePriceWithSlider from './purchase-price/PurchasePriceWithSlider';
 import MonthlyRent from './MonthlyRent';
-import MonthlyCashFlow from './MonthlyCashFlow';
 import PurchasePrice from './purchase-price/PurchasePrice';
 import DownPayment from './DownPayment';
 import Loan from './Loan';
@@ -24,8 +23,118 @@ import ClosingCosts from './ClosingCosts';
 import RehabCost from './RehabCost';
 import AfterRepairValue from './AfterRepairValue';
 import PropertyState from './property-state/PropertyState';
+import GrossRent from './GrossRent';
+import { Vacancy } from './Vacancy';
+import { OperatingIncome } from './OperatingIncome';
+import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
+import { getTaxRateMultiplierForState } from '../shared/models';
+import { roundNumber } from '../shared/utilities';
+import OperatingExpenses from './OperatingExpenses';
+import PropertyTaxes from './PropertyTaxes';
+import PropertyInsurance from './PropertyInsurance';
+import PropertyManagement from './PropertyManagement';
+import Maintenance from './Maintenance';
+import HoaFees from './HoaFees';
+import Utilities from './Utilities';
+import OtherExpenses from './OtherExpenses';
+import NetOperatingIncome from './NetOperatingIncome';
+import LoanPayments from './LoanPayments';
+import CashFlow from './CashFlow';
 
 function Settings() {
+  const dispatch = useAppDispatch();
+  const state = useAppState();
+
+  const {
+    vacancy,
+    operatingIncome,
+    operatingExpenses,
+    propertyTaxes,
+    propertyInsurance,
+    propertyManagement,
+    maintenance,
+    hoaFees,
+    utilities,
+    otherExpenses,
+    netOperatingIncome,
+    cashFlow,
+    monthlyRent,
+    purchasePrice,
+    propertyState,
+    monthlyPrincipalAndInterest,
+  } = state;
+
+  const loanPayments = monthlyPrincipalAndInterest * -1;
+
+  const updateGrossRent = (value) => dispatch({ type: AppAction.UpdateMonthlyRent, value });
+  const updateVacancy = (value) => dispatch({ type: AppAction.UpdateVacancy, value });
+  const updateOperatingIncome = (value) => dispatch({
+    type: AppAction.UpdateOperatingIncome, value,
+  });
+  const updateOperatingExpenses = (value) => dispatch({
+    type: AppAction.UpdateOperatingExpenses, value,
+  });
+  const updatePropertyTaxes = (value) => dispatch({ type: AppAction.UpdatePropertyTaxes, value });
+  const updatePropertyInsurance = (value) => dispatch({
+    type: AppAction.UpdatePropertyInsurance, value,
+  });
+  const updatePropertyManagement = (value) => dispatch({
+    type: AppAction.UpdatePropertyManagement, value,
+  });
+  const updateMaintenance = (value) => dispatch({ type: AppAction.UpdateMaintenance, value });
+  const updateHoaFees = (value) => dispatch({ type: AppAction.UpdateHoaFees, value });
+  const updateUtilities = (value) => dispatch({ type: AppAction.UpdateUtilities, value });
+  const updateOtherExpenses = (value) => dispatch({ type: AppAction.UpdateOtherExpenses, value });
+  const updateNetOperatingIncome = (value) => dispatch({
+    type: AppAction.UpdateNetOperatingIncome, value,
+  });
+
+  useEffect(() => {
+    updateVacancy(monthlyRent * -0.05);
+  }, [monthlyRent]);
+
+  useEffect(() => {
+    updateOperatingIncome(monthlyRent + vacancy);
+  }, [monthlyRent, vacancy]);
+
+  useEffect(() => {
+    const sumOfExpenses = propertyTaxes
+        + propertyInsurance
+        + propertyManagement
+        + maintenance
+        + hoaFees
+        + utilities
+        + otherExpenses;
+    updateOperatingExpenses(sumOfExpenses * -1);
+  }, [
+    propertyTaxes,
+    propertyInsurance,
+    propertyManagement,
+    maintenance,
+    hoaFees,
+    utilities,
+    otherExpenses,
+  ]);
+
+  useEffect(() => {
+    updatePropertyTaxes((purchasePrice * getTaxRateMultiplierForState(propertyState)) / 12);
+  }, [purchasePrice, propertyState]);
+
+  // Net Operating Income
+  useEffect(() => {
+    updateNetOperatingIncome(operatingIncome + operatingExpenses);
+  }, [operatingIncome, operatingExpenses]);
+
+  // Cash Flow
+  useEffect(() => {
+    dispatch({
+      type: AppAction.UpdateCashFlow,
+      value: roundNumber(netOperatingIncome + loanPayments),
+    });
+  }, [netOperatingIncome, loanPayments]);
+
+  const divider = <Divider color="primary.100" my="8px" />;
+
   return (
     <SimpleGrid rows={3} spacing={5} mt={6}>
       <PurchasePriceWithSlider />
@@ -107,7 +216,25 @@ function Settings() {
             </SimpleGrid>
           </TabPanel>
           <TabPanel p={0}>
-            <MonthlyCashFlow />
+            <SimpleGrid rows={15} spacing="4px">
+              <GrossRent value={monthlyRent} onChange={updateGrossRent} />
+              <Vacancy value={vacancy} onChange={updateVacancy} />
+              {divider}
+              <OperatingIncome value={operatingIncome} />
+              <OperatingExpenses value={operatingExpenses} />
+              <PropertyTaxes value={propertyTaxes} onChange={updatePropertyTaxes} />
+              <PropertyInsurance value={propertyInsurance} onChange={updatePropertyInsurance} />
+              <PropertyManagement value={propertyManagement} onChange={updatePropertyManagement} />
+              <Maintenance value={maintenance} onChange={updateMaintenance} />
+              <HoaFees value={hoaFees} onChange={updateHoaFees} />
+              <Utilities value={utilities} onChange={updateUtilities} />
+              <OtherExpenses value={otherExpenses} onChange={updateOtherExpenses} />
+              {divider}
+              <NetOperatingIncome value={netOperatingIncome} />
+              <LoanPayments value={loanPayments} />
+              {divider}
+              <CashFlow value={cashFlow} />
+            </SimpleGrid>
           </TabPanel>
         </TabPanels>
       </Tabs>
