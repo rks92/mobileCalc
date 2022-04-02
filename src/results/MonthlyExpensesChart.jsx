@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import PropTypes from 'prop-types';
-import { formatInCurrency } from '../shared/utilities';
+import { formatInDollars } from '../shared/utilities';
 
 // eslint-disable-next-line react/prop-types
 function CustomLabel({ viewBox, value1, value2 }) {
@@ -54,7 +54,7 @@ export default function MonthlyExpensesChart({ expenses, totalMonthlyExpenses })
           innerRadius={60}
           outerRadius={90}
         >
-          <Label position="center" content={<CustomLabel value1={formatInCurrency(totalMonthlyExpenses)} value2="Monthly Expenses" />} />
+          <Label position="center" content={<CustomLabel value1={formatInDollars(totalMonthlyExpenses)} value2="Monthly Expenses" />} />
           {expenses.map((expense) => (
             <Cell key={expense.text.replaceAll(' ', '_')} stroke={expense.color} fill={expense.color} />
           ))}

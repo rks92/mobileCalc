@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import Section from './shared/enums/Section';
 import { AppAction, useAppDispatch, useAppState } from './context/AppContext';
-import { formatInCurrency, roundNumber } from './shared/utilities';
+import { formatInDollars, roundNumber } from './shared/utilities';
 
 function AnnualCashFlowButton({ selectedSection, onToggle }) {
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ function AnnualCashFlowButton({ selectedSection, onToggle }) {
     <Flex fontSize="md">
       <Text>Annual Cash Flow:</Text>
       <Text ml={1} fontWeight="medium">
-        {formatInCurrency(annualCashFlow)}
+        {formatInDollars(annualCashFlow, 0)}
       </Text>
     </Flex>
   );

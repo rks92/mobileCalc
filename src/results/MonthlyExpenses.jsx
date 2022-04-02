@@ -7,7 +7,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Row from '../shared/Row';
-import { formatInCurrency } from '../shared/utilities';
+import { formatInDollars } from '../shared/utilities';
 import { useAppState } from '../context/AppContext';
 import CurrencyText from '../shared/texts/CurrencyText';
 import MonthlyExpensesChart from './MonthlyExpensesChart';
@@ -25,7 +25,7 @@ function Label({ text }) {
 Label.propTypes = { text: PropTypes.string.isRequired };
 
 function Value({ value }) {
-  return <Text fontSize="sm" fontWeight="medium" color="neutral.600">{formatInCurrency(value)}</Text>;
+  return <Text fontSize="sm" fontWeight="medium" color="neutral.600">{formatInDollars(value)}</Text>;
 }
 
 Value.propTypes = { value: PropTypes.number.isRequired };

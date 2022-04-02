@@ -183,25 +183,25 @@ function CashFlow() {
         <Row>
           <InputLabel tooltipLabel="Up-Front Cash Investment" text="Up-Front Cash Investment" />
           <Spacer />
-          <CurrencyText fontSize="lg" value={upFrontCashInvestment} />
+          <CurrencyText fontSize="lg" value={upFrontCashInvestment} maximumFractionDigits={0} />
         </Row>
         <Divider color="primary.100" my="12px" />
         <Row>
           <InputLabel tooltipLabel="1 Year Cash Flow" text="1 Year Cash Flow" />
           <Spacer />
-          <CurrencyText fontSize="lg" value={oneYearCashFlow} />
+          <CurrencyText fontSize="lg" value={oneYearCashFlow} maximumFractionDigits={0} />
         </Row>
         <Divider color="primary.100" my="12px" />
         <Row>
           <InputLabel tooltipLabel="5 Year Cash Flow" text="5 Year Cash Flow" />
           <Spacer />
-          <CurrencyText fontSize="lg" value={fiveYearCashFlow} />
+          <CurrencyText fontSize="lg" value={fiveYearCashFlow} maximumFractionDigits={0} />
         </Row>
         <Divider color="primary.100" my="12px" />
         <Row>
           <InputLabel tooltipLabel="10 Year Cash Flow" text="10 Year Cash Flow" />
           <Spacer />
-          <CurrencyText fontSize="lg" value={tenYearCashFlow} />
+          <CurrencyText fontSize="lg" value={tenYearCashFlow} maximumFractionDigits={0} />
         </Row>
       </SimpleGrid>
     </>
