@@ -11,9 +11,9 @@ import {
   Tabs,
   Text,
 } from '@chakra-ui/react';
-import PurchasePriceWithSlider from './purchase-price/PurchasePriceWithSlider';
-import MonthlyRent from './MonthlyRent';
-import PurchasePrice from './purchase-price/PurchasePrice';
+import PurchasePriceWithSlider from './sliders/PurchasePriceWithSlider';
+import MonthlyRent from './sliders/MonthlyRent';
+import PurchasePrice from './PurchasePrice';
 import DownPayment from './DownPayment';
 import Loan from './Loan';
 import InterestRate from './InterestRate';
@@ -40,6 +40,7 @@ import OtherExpenses from './OtherExpenses';
 import NetOperatingIncome from './NetOperatingIncome';
 import LoanPayments from './LoanPayments';
 import CashFlow from './CashFlow';
+import Sliders from './sliders/Sliders';
 
 function Settings() {
   const dispatch = useAppDispatch();
@@ -137,8 +138,7 @@ function Settings() {
 
   return (
     <SimpleGrid rows={3} spacing={5} mt={6}>
-      <PurchasePriceWithSlider />
-      <MonthlyRent />
+      <Sliders />
       <Flex
         alignContent="center"
         alignItems="center"

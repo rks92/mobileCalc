@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import _ from 'lodash';
 import { Spacer } from '@chakra-ui/react';
+import { debounce } from 'lodash';
 import { AppAction, useAppDispatch, useAppState } from '../../context/AppContext';
 import Row from '../../shared/Row';
 import InputLabel from '../../shared/texts/InputLabel';
@@ -14,7 +14,7 @@ function LengthOfLoan() {
   // handling Length of Loan updates
   const setStateLengthOfLoan = (value) => dispatch({ type: AppAction.UpdateLengthOfLoan, value });
 
-  const setStateLengthOfLoanDebounced = useCallback(_.debounce(
+  const setStateLengthOfLoanDebounced = useCallback(debounce(
     setStateLengthOfLoan,
     500,
   ), []);

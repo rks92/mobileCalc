@@ -2,10 +2,10 @@ import React from 'react';
 import {
   Spacer,
 } from '@chakra-ui/react';
-import InputLabel from '../../shared/texts/InputLabel';
-import Row from '../../shared/Row';
-import { AppAction, useAppDispatch, useAppState } from '../../context/AppContext';
-import DebouncedInlineCurrencyInput from '../../shared/inputs/DebouncedInlineCurrencyInput';
+import InputLabel from '../shared/texts/InputLabel';
+import Row from '../shared/Row';
+import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
+import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
 
 function PurchasePrice() {
   const dispatch = useAppDispatch();

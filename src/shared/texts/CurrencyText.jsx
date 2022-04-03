@@ -13,7 +13,7 @@ function CurrencyText({
     maximumFractionDigits,
   });
 
-  const color = value > 0 ? 'neutral.900' : 'secondary.6';
+  const color = value >= 0 ? 'neutral.900' : 'secondary.6';
 
   const formattedText = formatter.format(value);
 
