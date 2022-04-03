@@ -11,8 +11,6 @@ import {
   Tabs,
   Text,
 } from '@chakra-ui/react';
-import PurchasePriceWithSlider from './sliders/PurchasePriceWithSlider';
-import MonthlyRent from './sliders/MonthlyRent';
 import PurchasePrice from './PurchasePrice';
 import DownPayment from './DownPayment';
 import Loan from './Loan';
@@ -24,8 +22,8 @@ import RehabCost from './RehabCost';
 import AfterRepairValue from './AfterRepairValue';
 import PropertyState from './property-state/PropertyState';
 import GrossRent from './GrossRent';
-import { Vacancy } from './Vacancy';
-import { OperatingIncome } from './OperatingIncome';
+import Vacancy from './Vacancy';
+import OperatingIncome from './OperatingIncome';
 import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
 import { getTaxRateMultiplierForState } from '../shared/models';
 import { roundNumber } from '../shared/utilities';

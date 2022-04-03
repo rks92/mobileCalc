@@ -9,8 +9,90 @@ import {
   YAxis,
   ComposedChart,
   ReferenceLine,
-  ResponsiveContainer, Legend,
+  ResponsiveContainer, Legend, Tooltip,
 } from 'recharts';
+import { formatInDollars } from '../shared/utilities';
+
+function CustomTooltip({ active, payload, label }) {
+  if (active && payload && payload.length) {
+    return (
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'auto',
+        gridTemplateRows: 'auto',
+        gridTemplateAreas: `
+           "header"
+           "row-0" 
+           "row-1"
+           "row-2"
+          `,
+        gap: '10px',
+        background: '#FAFCFF',
+        borderRadius: '3px',
+        padding: '10px',
+        boxShadow: `
+           0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+           0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+           0 12.5px 10px rgba(0, 0, 0, 0.06),
+           0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+           0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+           0 100px 80px rgba(0, 0, 0, 0.12)
+          `,
+      }}
+      >
+        <div style={{
+          gridArea: 'header',
+          color: '#0A4296',
+          fontSize: '14px',
+          fontWeight: '600',
+          fontFamily: 'Graphik',
+          textAlign: 'center',
+        }}
+        >
+          {`Year ${label}`}
+        </div>
+        {
+            payload.map((field, index) => {
+              let labelColor = field.color;
+
+              if (field.dataKey === 'netCumulativeCashReturn') {
+                labelColor = field.value > 0 ? '#0066FF' : '#B3D1FF';
+              }
+
+              return (
+                <div
+                  key={field.dataKey}
+                  style={{
+                    gridArea: `row-${index}`,
+                  }}
+                >
+                  <div style={{
+                    fontSize: '12px',
+                    fontWeight: '500',
+                    fontFamily: 'Graphik',
+                    color: labelColor,
+                  }}
+                  >
+                    {`${field.name}: `}
+                  </div>
+                  <div style={{
+                    fontSize: '12px',
+                    fontFamily: 'Graphik',
+                    fontWeight: '500',
+                    color: field.value > 0 ? '#042765' : '#E24916',
+                  }}
+                  >
+                    {formatInDollars(field.value)}
+                  </div>
+                </div>
+              );
+            })
+          }
+      </div>
+    );
+  }
+  return null;
+}
 
 export default function CashFlowChart({ data, breakEven }) {
   const tickFormatter = (value) => (new Intl.NumberFormat('en-US', {
@@ -123,6 +205,7 @@ export default function CashFlowChart({ data, breakEven }) {
             />
           ))}
         </Bar>
+        <Tooltip content={<CustomTooltip />} />
         <Line
           name="Net Operating Income"
           yAxisId="right"

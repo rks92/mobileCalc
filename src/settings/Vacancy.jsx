@@ -5,17 +5,17 @@ import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
 
-export function Vacancy(props) {
+export default function Vacancy({ value, onChange }) {
   return (
     <Row>
       <InputLabel tooltipLabel="Vacancy" text="Vacancy" />
       <Spacer />
-      <DebouncedInlineCurrencyInput value={props.value} onChange={props.onChange} />
+      <DebouncedInlineCurrencyInput value={value} onChange={onChange} />
     </Row>
   );
 }
 
 Vacancy.propTypes = {
-  value: PropTypes.any,
-  onChange: PropTypes.func,
+  value: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
 };

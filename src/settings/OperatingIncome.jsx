@@ -5,14 +5,14 @@ import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import CurrencyText from '../shared/texts/CurrencyText';
 
-export function OperatingIncome(props) {
+export default function OperatingIncome({ value }) {
   return (
     <Row>
       <InputLabel tooltipLabel="Operating Income" text="Operating Income" />
       <Spacer />
-      <CurrencyText value={props.value} />
+      <CurrencyText value={value} />
     </Row>
   );
 }
 
-OperatingIncome.propTypes = { value: PropTypes.any };
+OperatingIncome.propTypes = { value: PropTypes.number.isRequired };
