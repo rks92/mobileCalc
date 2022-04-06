@@ -8,7 +8,7 @@ import CurrencyText from '../shared/texts/CurrencyText';
 export default function NetOperatingIncome({ value }) {
   return (
     <Row>
-      <InputLabel tooltipLabel="Net Operating Income" text="Net Operating Income" />
+      <InputLabel tooltipLabel="Monthly NOI = Net Operating Income - Net Operating Expenses" text="Net Operating Income" />
       <Spacer />
       <CurrencyText value={value} />
     </Row>

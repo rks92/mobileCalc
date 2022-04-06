@@ -13,7 +13,7 @@ function PurchasePrice() {
 
   return (
     <Row>
-      <InputLabel tooltipLabel="Purchase Price" text="Purchase Price" />
+      <InputLabel tooltipLabel="The amount you're paying to purchase the property" text="Purchase Price" />
       <Spacer />
       <DebouncedInlineCurrencyInput
         value={purchasePrice}

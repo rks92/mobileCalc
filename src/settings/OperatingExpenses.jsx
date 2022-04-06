@@ -8,7 +8,7 @@ import CurrencyText from '../shared/texts/CurrencyText';
 export default function OperatingExpenses({ value }) {
   return (
     <Row mt={3}>
-      <InputLabel tooltipLabel="Operating Expenses" text="Operating Expenses" />
+      <InputLabel tooltipLabel="All expenses you will pay while renting out a property, excluding loan payments" text="Operating Expenses" />
       <Spacer />
       <CurrencyText value={value} />
     </Row>

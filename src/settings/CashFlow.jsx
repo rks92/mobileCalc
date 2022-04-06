@@ -8,7 +8,7 @@ import CurrencyText from '../shared/texts/CurrencyText';
 export default function CashFlow({ value }) {
   return (
     <Row>
-      <InputLabel tooltipLabel="Cash Flow" text="Cash Flow" />
+      <InputLabel tooltipLabel="The total MONTHLY net amount you will receive from a rental property as income" text="Cash Flow" />
       <Spacer />
       <CurrencyText fontSize="lg" value={value} />
     </Row>

@@ -20,7 +20,10 @@ function MonthlyPrincipalAndInterest() {
 
   return (
     <Row mt={1}>
-      <InputLabel tooltipLabel="Monthly Principal & Interest" text="Monthly Principal & Interest" />
+      <InputLabel
+        tooltipLabel="Total principal and interest required to repay your loan (excludes escrow)"
+        text="Monthly Principal & Interest"
+      />
       <Spacer />
       <CurrencyText value={state.monthlyPrincipalAndInterest} maximumFractionDigits={0} />
     </Row>

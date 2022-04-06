@@ -15,7 +15,7 @@ export default function PurchasePriceWithSlider({ value, onChange }) {
       <Text color="neutral.900" fontSize="lg" fontWeight="medium">
         Purchase Price
       </Text>
-      <InfoTooltipIcon label="Explain here" />
+      <InfoTooltipIcon label="The amount you're paying to purchase the property" />
     </Row>
   );
 

@@ -19,7 +19,10 @@ function AfterRepairValue() {
 
   return (
     <Row>
-      <InputLabel tooltipLabel="After Repair Value " text="After Repair Value " />
+      <InputLabel
+        tooltipLabel="The estimated market value of the property after its rehab is complete"
+        text="After Repair Value "
+      />
       <Spacer />
       <DebouncedInlineCurrencyInput value={afterRepairValue} onChange={onChange} />
     </Row>

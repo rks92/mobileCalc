@@ -103,27 +103,47 @@ function PropertyMetrics() {
       <Text fontSize="md" fontWeight="medium" color="neutral.900">Property metrics</Text>
       <SimpleGrid rows={5} spacing={4} mt={3}>
         <Row>
-          <InputLabel tooltipLabel="Annual NOI" text="Annual NOI" textStyleOverrides={{ color: 'neutral.600' }} />
+          <InputLabel
+            tooltipLabel="Annual NOI = 1 year Net Operating Income - 1 year Net Operating Expenses"
+            text="Annual NOI"
+            textStyleOverrides={{ color: 'neutral.600' }}
+          />
           <Spacer />
           <CurrencyText fontSize="lg" value={annualNOI} maximumFractionDigits={0} />
         </Row>
         <Row>
-          <InputLabel tooltipLabel="Cash on Cash Return" text="Cash on Cash Return" textStyleOverrides={{ color: 'neutral.600' }} />
+          <InputLabel
+            tooltipLabel="Cash on Cash Return = Annual Cash flow (net) / total cash invested"
+            text="Cash on Cash Return"
+            textStyleOverrides={{ color: 'neutral.600' }}
+          />
           <Spacer />
           <LargeText fontSize="lg" text={cashOnCashReturn} color="neutral.900" />
         </Row>
         <Row>
-          <InputLabel tooltipLabel="Cap Rate" text="Cap Rate" textStyleOverrides={{ color: 'neutral.600' }} />
+          <InputLabel
+            tooltipLabel="Cap rate = net operating income / current home value"
+            text="Cap Rate"
+            textStyleOverrides={{ color: 'neutral.600' }}
+          />
           <Spacer />
           <LargeText fontSize="lg" text={capRate} color="neutral.900" />
         </Row>
         <Row>
-          <InputLabel tooltipLabel="50% Rule" text="50% Rule" textStyleOverrides={{ color: 'neutral.600' }} />
+          <InputLabel
+            tooltipLabel="Operating expenses < Gross Rental Income x 50%"
+            text="50% Rule"
+            textStyleOverrides={{ color: 'neutral.600' }}
+          />
           <Spacer />
           <LargeText fontSize="lg" text={fiftyPercentRule} color={fiftyPercentRuleColor} />
         </Row>
         <Row>
-          <InputLabel tooltipLabel="1% Rule" text="1% Rule" textStyleOverrides={{ color: 'neutral.600' }} />
+          <InputLabel
+            tooltipLabel="Gross Monthly Rental Income > 1% x Purchase Price"
+            text="1% Rule"
+            textStyleOverrides={{ color: 'neutral.600' }}
+          />
           <Spacer />
           <LargeText fontSize="lg" text={onePercentRule} color={onePercentRuleColor} />
         </Row>

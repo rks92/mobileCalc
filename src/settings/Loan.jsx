@@ -11,7 +11,10 @@ function Loan() {
 
   return (
     <Row>
-      <InputLabel tooltipLabel="Loan" text={`Loan (${Math.floor(loanRatio * 100)})%`} />
+      <InputLabel
+        tooltipLabel="The portion of the property's purchase price that is being financed"
+        text={`Loan (${Math.floor(loanRatio * 100)})%`}
+      />
       <Spacer />
       <DebouncedInlineCurrencyInput
         value={loan}

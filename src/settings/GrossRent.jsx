@@ -8,7 +8,7 @@ import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurren
 export default function GrossRent({ value, onChange }) {
   return (
     <Row>
-      <InputLabel tooltipLabel="Gross Rent" text="Gross Rent" />
+      <InputLabel tooltipLabel="The total rent collected per month" text="Gross Rent" />
       <Spacer />
       <DebouncedInlineCurrencyInput value={value} onChange={onChange} />
     </Row>

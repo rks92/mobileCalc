@@ -181,25 +181,37 @@ function CashFlow() {
       <CashFlowChart data={years} breakEven={breakEven} />
       <SimpleGrid rows={4} spacing="4px" mt={8}>
         <Row>
-          <InputLabel tooltipLabel="Up-Front Cash Investment" text="Up-Front Cash Investment" />
+          <InputLabel
+            tooltipLabel="The total amount of cash needed to buy the property: 20% of purchase price + Closing costs + Rehab costs"
+            text="Up-Front Cash Investment"
+          />
           <Spacer />
           <CurrencyText fontSize="lg" value={upFrontCashInvestment} maximumFractionDigits={0} />
         </Row>
         <Divider color="primary.100" my="12px" />
         <Row>
-          <InputLabel tooltipLabel="1 Year Cash Flow" text="1 Year Cash Flow" />
+          <InputLabel
+            tooltipLabel="The total net amount of cash you will receive from the rental property after 1 year (12 months)"
+            text="1 Year Cash Flow"
+          />
           <Spacer />
           <CurrencyText fontSize="lg" value={oneYearCashFlow} maximumFractionDigits={0} />
         </Row>
         <Divider color="primary.100" my="12px" />
         <Row>
-          <InputLabel tooltipLabel="5 Year Cash Flow" text="5 Year Cash Flow" />
+          <InputLabel
+            tooltipLabel="The total net amount of cash you will receive from the rental property after 5 years (60 months)"
+            text="5 Year Cash Flow"
+          />
           <Spacer />
           <CurrencyText fontSize="lg" value={fiveYearCashFlow} maximumFractionDigits={0} />
         </Row>
         <Divider color="primary.100" my="12px" />
         <Row>
-          <InputLabel tooltipLabel="10 Year Cash Flow" text="10 Year Cash Flow" />
+          <InputLabel
+            tooltipLabel="The total net amount of cash you will receive from the rental property after 10 years (120 months)"
+            text="10 Year Cash Flow"
+          />
           <Spacer />
           <CurrencyText fontSize="lg" value={tenYearCashFlow} maximumFractionDigits={0} />
         </Row>

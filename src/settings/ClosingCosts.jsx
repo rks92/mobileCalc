@@ -32,7 +32,10 @@ function ClosingCosts() {
 
   return (
     <Row>
-      <InputLabel tooltipLabel="Closing Costs (Purchase)" text="Closing Costs (Purchase)" />
+      <InputLabel
+        tooltipLabel="We assume closings costs are 3% of total purchase price"
+        text="Closing Costs (Purchase)"
+      />
       <Spacer />
       <DebouncedInlineCurrencyInput value={closingCosts} onChange={updateClosingCosts} />
     </Row>

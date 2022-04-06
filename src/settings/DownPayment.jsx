@@ -11,7 +11,10 @@ function DownPayment() {
 
   return (
     <Row>
-      <InputLabel tooltipLabel="Down payment" text={`Down payment (${Math.floor(downPaymentRatio * 100)})%`} />
+      <InputLabel
+        tooltipLabel="The amount of cash you are investing (less 80% loan)"
+        text={`Down payment (${Math.floor(downPaymentRatio * 100)})%`}
+      />
       <Spacer />
       <DebouncedInlineCurrencyInput
         value={downPayment}

@@ -15,7 +15,7 @@ export default function MonthlyRent({ value, onChange, setMonthlyRentIsSetManual
       <Text color="neutral.900" fontSize="lg" fontWeight="medium">
         Monthly Rent
       </Text>
-      <InfoTooltipIcon label="Explain here" />
+      <InfoTooltipIcon label="The amount of total monthly rent" />
     </Row>
   );
 

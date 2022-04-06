@@ -33,7 +33,10 @@ function RehabCost() {
 
   return (
     <Row>
-      <InputLabel tooltipLabel="Rehab Cost" text="Rehab Cost" />
+      <InputLabel
+        tooltipLabel="The amount required to do repairs to get the property rental ready"
+        text="Rehab Cost"
+      />
       <Spacer />
       <DebouncedInlineCurrencyInput value={rehabCost} onChange={onChange} />
     </Row>

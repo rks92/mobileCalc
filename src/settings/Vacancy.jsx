@@ -8,7 +8,10 @@ import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurren
 export default function Vacancy({ value, onChange }) {
   return (
     <Row>
-      <InputLabel tooltipLabel="Vacancy" text="Vacancy" />
+      <InputLabel
+        tooltipLabel="The total rent portion you lose due to vacancy during a rent period (we assume 5%)"
+        text="Vacancy"
+      />
       <Spacer />
       <DebouncedInlineCurrencyInput value={value} onChange={onChange} />
     </Row>

@@ -8,7 +8,7 @@ import CurrencyText from '../shared/texts/CurrencyText';
 export default function LoanPayments({ value }) {
   return (
     <Row mt={3}>
-      <InputLabel tooltipLabel="Loan Payments" text="Loan Payments" />
+      <InputLabel tooltipLabel="Total principal and interest required to repay your loan (excludes escrow)" text="Loan Payments" />
       <Spacer />
       <CurrencyText value={value} />
     </Row>
