@@ -31,6 +31,7 @@ export default function PurchasePriceWithSlider({ value, onChange }) {
       min={1000}
       max={1_000_000}
       value={value}
+      step={100}
       onChange={onChange}
     />
   );

@@ -11,13 +11,14 @@ import {
 import PropTypes from 'prop-types';
 
 function SliderWithMarks({
-  value, min, max, onChange,
+  value, min, max, onChange, step,
 }) {
   const formatter = Intl.NumberFormat('en', { notation: 'compact' });
 
   return (
     <>
       <Slider
+        step={step}
         min={min}
         max={max}
         aria-label="slider-with-marks"
@@ -67,6 +68,11 @@ SliderWithMarks.propTypes = {
   onChange: PropTypes.func.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
+  step: PropTypes.number,
+};
+
+SliderWithMarks.defaultProps = {
+  step: 1,
 };
 
 export default SliderWithMarks;
