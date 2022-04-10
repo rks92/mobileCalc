@@ -30,7 +30,7 @@ function LengthOfLoan({ dispatch, lengthOfLoan: stateLengthOfLoan }) {
 
   return (
     <Row>
-      <InputLabel tooltipLabel="Length of loan" text="Length of loan" />
+      <InputLabel text="Length of loan" />
       <Spacer />
       <LengthOfLoanInput value={localLengthOfLoan} onChange={setLocalLengthOfLoan} />
     </Row>

@@ -36,7 +36,7 @@ function InterestRate({ dispatch, interestRate: stateInterestRate }) {
 
   return (
     <Row>
-      <InputLabel tooltipLabel="Interest Rate" text="Interest Rate" />
+      <InputLabel text="Interest Rate" />
       <Spacer />
       <NumberInput
         precision={2}

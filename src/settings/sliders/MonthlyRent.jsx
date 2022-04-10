@@ -33,6 +33,7 @@ export default function MonthlyRent({ value, onChange, setMonthlyRentIsSetManual
     <SliderWithMarks
       min={300}
       max={10_000}
+      step={100}
       value={value}
       onChange={(newValue) => {
         setMonthlyRentIsSetManually(true);

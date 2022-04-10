@@ -6,22 +6,24 @@ import InfoTooltipIcon from '../InfoTooltipIcon';
 import Row from '../Row';
 
 function InputLabel({ text, tooltipLabel, textStyleOverrides }) {
+  const tooltipIcon = tooltipLabel ? <InfoTooltipIcon label={tooltipLabel} /> : null;
   return (
     <Row>
       <Text fontSize="sm" fontWeight="medium" color="neutral.900" {...textStyleOverrides}>{text}</Text>
-      <InfoTooltipIcon label={tooltipLabel} />
+      {tooltipIcon}
     </Row>
   );
 }
 
 InputLabel.propTypes = {
   text: PropTypes.string.isRequired,
-  tooltipLabel: PropTypes.string.isRequired,
+  tooltipLabel: PropTypes.string,
   textStyleOverrides: PropTypes.oneOfType([PropTypes.object]),
 };
 
 InputLabel.defaultProps = {
   textStyleOverrides: {},
+  tooltipLabel: '',
 };
 
 export default InputLabel;

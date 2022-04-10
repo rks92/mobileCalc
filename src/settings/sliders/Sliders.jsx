@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { debounce } from 'lodash';
+import { throttle } from 'lodash';
 import * as PropTypes from 'prop-types';
 import PurchasePriceWithSlider from './PurchasePriceWithSlider';
 import MonthlyRent from './MonthlyRent';
@@ -10,14 +10,14 @@ export default function Sliders({ purchasePrice, monthlyRent, dispatch }) {
   const [localPurchasePrice, setLocalPurchasePrice] = useState(purchasePrice);
   const [localMonthlyRent, setLocalMonthlyRent] = useState(monthlyRent);
 
-  const debouncedSetPurchasePrice = useCallback(debounce(
+  const debouncedSetPurchasePrice = useCallback(throttle(
     (value) => dispatch({ type: AppAction.UpdatePurchasePrice, value }),
-    500,
+    100,
   ), []);
 
-  const debouncedSetMonthlyRent = useCallback(debounce(
+  const debouncedSetMonthlyRent = useCallback(throttle(
     (value) => dispatch({ type: AppAction.UpdateMonthlyRent, value }),
-    500,
+    100,
   ), []);
 
   useEffect(() => {
