@@ -8,11 +8,9 @@ import {
   Text,
 } from '@chakra-ui/react';
 import React from 'react';
-import PropertyMetrics from './PropertyMetrics';
-import CashFlow from './CashFlow';
-import MonthlyExpenses from './MonthlyExpenses';
+import PropTypes from 'prop-types';
 
-function Results() {
+function Results({ cashFlow, monthlyExpenses, propertyMetrics }) {
   return (
     <SimpleGrid rows={3} spacing={5}>
       <Text
@@ -59,16 +57,22 @@ function Results() {
         </TabList>
         <TabPanels mt={7}>
           <TabPanel p={0}>
-            <CashFlow />
+            {cashFlow}
           </TabPanel>
           <TabPanel p={0}>
-            <MonthlyExpenses />
+            {monthlyExpenses}
           </TabPanel>
         </TabPanels>
       </Tabs>
-      <PropertyMetrics />
+      {propertyMetrics}
     </SimpleGrid>
   );
 }
+
+Results.propTypes = {
+  cashFlow: PropTypes.element.isRequired,
+  monthlyExpenses: PropTypes.element.isRequired,
+  propertyMetrics: PropTypes.element.isRequired,
+};
 
 export default Results;

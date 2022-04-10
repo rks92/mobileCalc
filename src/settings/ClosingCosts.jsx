@@ -2,19 +2,15 @@ import React, { useEffect, useState } from 'react';
 import {
   Spacer,
 } from '@chakra-ui/react';
-import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
+import PropTypes from 'prop-types';
 import { roundNumber } from '../shared/utilities';
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
+import { AppAction } from '../appReducer';
 
-function ClosingCosts() {
-  const dispatch = useAppDispatch();
-  const state = useAppState();
+function ClosingCosts({ closingCosts, purchasePrice, dispatch }) {
   const [isManuallyUpdated, setIsManuallyUpdated] = useState(false);
-  const {
-    closingCosts, purchasePrice,
-  } = state;
 
   const updateClosingCosts = (value, isManualUpdate = false) => {
     if (isManualUpdate) {
@@ -41,5 +37,11 @@ function ClosingCosts() {
     </Row>
   );
 }
+
+ClosingCosts.propTypes = {
+  closingCosts: PropTypes.number.isRequired,
+  purchasePrice: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default ClosingCosts;

@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import CurrencyText from '../shared/texts/CurrencyText';
-import { useAppState } from '../context/AppContext';
 import { roundNumber } from '../shared/utilities';
 
 function LargeText({ text, color }) {
@@ -16,8 +15,16 @@ function LargeText({ text, color }) {
 
 LargeText.propTypes = { text: PropTypes.string.isRequired, color: PropTypes.string.isRequired };
 
-function PropertyMetrics() {
-  const state = useAppState();
+function PropertyMetrics({
+  netOperatingIncome,
+  annualCashFlow,
+  upFrontCashInvestment,
+  purchasePrice,
+  afterRepairValue,
+  monthlyRent,
+  vacancy,
+  operatingExpenses,
+}) {
   const green = 'green.400';
   const red = 'secondary.6';
   const [annualNOI, setAnnualNOI] = useState(0);
@@ -27,17 +34,6 @@ function PropertyMetrics() {
   const [fiftyPercentRuleColor, setFiftyPercentRuleColor] = useState(green);
   const [onePercentRule, setOnePercentRule] = useState('0.00%');
   const [onePercentRuleColor, setOnePercentRuleColor] = useState(red);
-
-  const {
-    netOperatingIncome,
-    annualCashFlow,
-    upFrontCashInvestment,
-    purchasePrice,
-    afterRepairValue,
-    monthlyRent,
-    vacancy,
-    operatingExpenses,
-  } = state;
 
   // Annual NOI
   useEffect(() => {
@@ -151,5 +147,16 @@ function PropertyMetrics() {
     </Box>
   );
 }
+
+PropertyMetrics.propTypes = {
+  netOperatingIncome: PropTypes.number.isRequired,
+  annualCashFlow: PropTypes.number.isRequired,
+  upFrontCashInvestment: PropTypes.number.isRequired,
+  purchasePrice: PropTypes.number.isRequired,
+  afterRepairValue: PropTypes.number.isRequired,
+  monthlyRent: PropTypes.number.isRequired,
+  vacancy: PropTypes.number.isRequired,
+  operatingExpenses: PropTypes.number.isRequired,
+};
 
 export default PropertyMetrics;

@@ -11,6 +11,7 @@ import {
   Tabs,
   Text,
 } from '@chakra-ui/react';
+import * as PropTypes from 'prop-types';
 import PurchasePrice from './PurchasePrice';
 import DownPayment from './DownPayment';
 import Loan from './Loan';
@@ -24,7 +25,6 @@ import PropertyState from './property-state/PropertyState';
 import GrossRent from './GrossRent';
 import Vacancy from './Vacancy';
 import OperatingIncome from './OperatingIncome';
-import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
 import { getTaxRateMultiplierForState } from '../shared/models';
 import { roundNumber } from '../shared/utilities';
 import OperatingExpenses from './OperatingExpenses';
@@ -39,61 +39,46 @@ import NetOperatingIncome from './NetOperatingIncome';
 import LoanPayments from './LoanPayments';
 import CashFlow from './CashFlow';
 import Sliders from './sliders/Sliders';
+import { AppAction } from '../appReducer';
 
-function Settings() {
-  const dispatch = useAppDispatch();
-  const state = useAppState();
-
-  const {
-    vacancy,
-    operatingIncome,
-    operatingExpenses,
-    propertyTaxes,
-    propertyInsurance,
-    propertyManagement,
-    maintenance,
-    hoaFees,
-    utilities,
-    otherExpenses,
-    netOperatingIncome,
-    cashFlow,
-    monthlyRent,
-    purchasePrice,
-    propertyState,
-    monthlyPrincipalAndInterest,
-  } = state;
-
+function Settings({
+  vacancy,
+  operatingIncome,
+  operatingExpenses,
+  propertyTaxes,
+  propertyInsurance,
+  propertyManagement,
+  maintenance,
+  hoaFees,
+  utilities,
+  otherExpenses,
+  netOperatingIncome,
+  cashFlow,
+  monthlyRent,
+  purchasePrice,
+  propertyState,
+  monthlyPrincipalAndInterest,
+  interestRate,
+  lengthOfLoan,
+  loan,
+  loanRatio,
+  downPayment,
+  downPaymentRatio,
+  closingCosts,
+  rehabCost,
+  afterRepairValue,
+  dispatch,
+}) {
   const loanPayments = monthlyPrincipalAndInterest * -1;
 
-  const updateGrossRent = (value) => dispatch({ type: AppAction.UpdateMonthlyRent, value });
-  const updateVacancy = (value) => dispatch({ type: AppAction.UpdateVacancy, value });
-  const updateOperatingIncome = (value) => dispatch({
-    type: AppAction.UpdateOperatingIncome, value,
-  });
-  const updateOperatingExpenses = (value) => dispatch({
-    type: AppAction.UpdateOperatingExpenses, value,
-  });
-  const updatePropertyTaxes = (value) => dispatch({ type: AppAction.UpdatePropertyTaxes, value });
-  const updatePropertyInsurance = (value) => dispatch({
-    type: AppAction.UpdatePropertyInsurance, value,
-  });
-  const updatePropertyManagement = (value) => dispatch({
-    type: AppAction.UpdatePropertyManagement, value,
-  });
-  const updateMaintenance = (value) => dispatch({ type: AppAction.UpdateMaintenance, value });
-  const updateHoaFees = (value) => dispatch({ type: AppAction.UpdateHoaFees, value });
-  const updateUtilities = (value) => dispatch({ type: AppAction.UpdateUtilities, value });
-  const updateOtherExpenses = (value) => dispatch({ type: AppAction.UpdateOtherExpenses, value });
-  const updateNetOperatingIncome = (value) => dispatch({
-    type: AppAction.UpdateNetOperatingIncome, value,
-  });
-
   useEffect(() => {
-    updateVacancy(monthlyRent * -0.05);
+    dispatch({ type: AppAction.UpdateVacancy, value: monthlyRent * -0.05 });
   }, [monthlyRent]);
 
   useEffect(() => {
-    updateOperatingIncome(monthlyRent + vacancy);
+    dispatch({
+      type: AppAction.UpdateOperatingIncome, value: monthlyRent + vacancy,
+    });
   }, [monthlyRent, vacancy]);
 
   useEffect(() => {
@@ -104,7 +89,9 @@ function Settings() {
         + hoaFees
         + utilities
         + otherExpenses;
-    updateOperatingExpenses(sumOfExpenses * -1);
+    dispatch({
+      type: AppAction.UpdateOperatingExpenses, value: sumOfExpenses * -1,
+    });
   }, [
     propertyTaxes,
     propertyInsurance,
@@ -116,12 +103,17 @@ function Settings() {
   ]);
 
   useEffect(() => {
-    updatePropertyTaxes((purchasePrice * getTaxRateMultiplierForState(propertyState)) / 12);
+    dispatch({
+      type: AppAction.UpdatePropertyTaxes,
+      value: (purchasePrice * getTaxRateMultiplierForState(propertyState)) / 12,
+    });
   }, [purchasePrice, propertyState]);
 
   // Net Operating Income
   useEffect(() => {
-    updateNetOperatingIncome(operatingIncome + operatingExpenses);
+    dispatch({
+      type: AppAction.UpdateNetOperatingIncome, value: operatingIncome + operatingExpenses,
+    });
   }, [operatingIncome, operatingExpenses]);
 
   // Cash Flow
@@ -136,7 +128,7 @@ function Settings() {
 
   return (
     <SimpleGrid rows={3} spacing={5} mt={6}>
-      <Sliders />
+      <Sliders purchasePrice={purchasePrice} monthlyRent={monthlyRent} dispatch={dispatch} />
       <Flex
         alignContent="center"
         alignItems="center"
@@ -190,12 +182,22 @@ function Settings() {
         <TabPanels mt={7}>
           <TabPanel p={0}>
             <SimpleGrid rows={6} spacing="4px">
-              <PurchasePrice />
-              <DownPayment />
-              <Loan />
-              <InterestRate />
-              <LengthOfLoan />
-              <MonthlyPrincipalAndInterest />
+              <PurchasePrice purchasePrice={purchasePrice} dispatch={dispatch} />
+              <DownPayment
+                dispatch={dispatch}
+                downPaymentRatio={downPaymentRatio}
+                downPayment={downPayment}
+              />
+              <Loan dispatch={dispatch} loan={loan} loanRatio={loanRatio} />
+              <InterestRate dispatch={dispatch} interestRate={interestRate} />
+              <LengthOfLoan dispatch={dispatch} lengthOfLoan={lengthOfLoan} />
+              <MonthlyPrincipalAndInterest
+                interestRate={interestRate}
+                lengthOfLoan={lengthOfLoan}
+                loan={loan}
+                monthlyPrincipalAndInterest={monthlyPrincipalAndInterest}
+                dispatch={dispatch}
+              />
             </SimpleGrid>
             <Box my={5}>
               <Text
@@ -207,26 +209,61 @@ function Settings() {
               </Text>
             </Box>
             <SimpleGrid rows={4} spacing="4px">
-              <ClosingCosts />
-              <RehabCost />
-              <AfterRepairValue />
-              <PropertyState />
+              <ClosingCosts
+                dispatch={dispatch}
+                purchasePrice={purchasePrice}
+                closingCosts={closingCosts}
+              />
+              <RehabCost purchasePrice={purchasePrice} dispatch={dispatch} rehabCost={rehabCost} />
+              <AfterRepairValue dispatch={dispatch} afterRepairValue={afterRepairValue} />
+              <PropertyState dispatch={dispatch} propertyState={propertyState} />
             </SimpleGrid>
           </TabPanel>
           <TabPanel p={0}>
             <SimpleGrid rows={15} spacing="4px">
-              <GrossRent value={monthlyRent} onChange={updateGrossRent} />
-              <Vacancy value={vacancy} onChange={updateVacancy} />
+              <GrossRent
+                value={monthlyRent}
+                onChange={(value) => dispatch({ type: AppAction.UpdateMonthlyRent, value })}
+              />
+              <Vacancy
+                value={vacancy}
+                onChange={(value) => dispatch({ type: AppAction.UpdateVacancy, value })}
+              />
               {divider}
               <OperatingIncome value={operatingIncome} />
               <OperatingExpenses value={operatingExpenses} />
-              <PropertyTaxes value={propertyTaxes} onChange={updatePropertyTaxes} />
-              <PropertyInsurance value={propertyInsurance} onChange={updatePropertyInsurance} />
-              <PropertyManagement value={propertyManagement} onChange={updatePropertyManagement} />
-              <Maintenance value={maintenance} onChange={updateMaintenance} />
-              <HoaFees value={hoaFees} onChange={updateHoaFees} />
-              <Utilities value={utilities} onChange={updateUtilities} />
-              <OtherExpenses value={otherExpenses} onChange={updateOtherExpenses} />
+              <PropertyTaxes
+                value={propertyTaxes}
+                onChange={(value) => dispatch({ type: AppAction.UpdatePropertyTaxes, value })}
+              />
+              <PropertyInsurance
+                value={propertyInsurance}
+                onChange={(value) => dispatch({
+                  type: AppAction.UpdatePropertyInsurance, value,
+                })}
+              />
+              <PropertyManagement
+                value={propertyManagement}
+                onChange={(value) => dispatch({
+                  type: AppAction.UpdatePropertyManagement, value,
+                })}
+              />
+              <Maintenance
+                value={maintenance}
+                onChange={(value) => dispatch({ type: AppAction.UpdateMaintenance, value })}
+              />
+              <HoaFees
+                value={hoaFees}
+                onChange={(value) => dispatch({ type: AppAction.UpdateHoaFees, value })}
+              />
+              <Utilities
+                value={utilities}
+                onChange={(value) => dispatch({ type: AppAction.UpdateUtilities, value })}
+              />
+              <OtherExpenses
+                value={otherExpenses}
+                onChange={(value) => dispatch({ type: AppAction.UpdateOtherExpenses, value })}
+              />
               {divider}
               <NetOperatingIncome value={netOperatingIncome} />
               <LoanPayments value={loanPayments} />
@@ -239,5 +276,34 @@ function Settings() {
     </SimpleGrid>
   );
 }
+
+Settings.propTypes = {
+  vacancy: PropTypes.number.isRequired,
+  operatingIncome: PropTypes.number.isRequired,
+  operatingExpenses: PropTypes.number.isRequired,
+  propertyTaxes: PropTypes.number.isRequired,
+  propertyInsurance: PropTypes.number.isRequired,
+  propertyManagement: PropTypes.number.isRequired,
+  maintenance: PropTypes.number.isRequired,
+  hoaFees: PropTypes.number.isRequired,
+  utilities: PropTypes.number.isRequired,
+  otherExpenses: PropTypes.number.isRequired,
+  netOperatingIncome: PropTypes.number.isRequired,
+  cashFlow: PropTypes.number.isRequired,
+  monthlyRent: PropTypes.number.isRequired,
+  purchasePrice: PropTypes.number.isRequired,
+  propertyState: PropTypes.string.isRequired,
+  monthlyPrincipalAndInterest: PropTypes.number.isRequired,
+  interestRate: PropTypes.number.isRequired,
+  lengthOfLoan: PropTypes.number.isRequired,
+  loan: PropTypes.number.isRequired,
+  downPayment: PropTypes.number.isRequired,
+  downPaymentRatio: PropTypes.number.isRequired,
+  loanRatio: PropTypes.number.isRequired,
+  closingCosts: PropTypes.number.isRequired,
+  rehabCost: PropTypes.number.isRequired,
+  afterRepairValue: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default Settings;

@@ -3,18 +3,16 @@ import { Flex, Spacer, Text } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import Section from './shared/enums/Section';
-import { AppAction, useAppDispatch, useAppState } from './context/AppContext';
 import { formatInDollars, roundNumber } from './shared/utilities';
+import { AppAction } from './appReducer';
 
-function AnnualCashFlowButton({ selectedSection, onToggle }) {
-  const dispatch = useAppDispatch();
-  const state = useAppState();
-
-  const {
-    annualCashFlow,
-    cashFlow,
-  } = state;
-
+function AnnualCashFlowButton({
+  selectedSection,
+  onToggle,
+  annualCashFlow,
+  cashFlow,
+  dispatch,
+}) {
   useEffect(() => {
     dispatch({
       type: AppAction.UpdateAnnualCashFlow, value: roundNumber(cashFlow * 12),
@@ -59,6 +57,9 @@ function AnnualCashFlowButton({ selectedSection, onToggle }) {
 AnnualCashFlowButton.propTypes = {
   selectedSection: PropTypes.string.isRequired,
   onToggle: PropTypes.func.isRequired,
+  annualCashFlow: PropTypes.number.isRequired,
+  cashFlow: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default AnnualCashFlowButton;

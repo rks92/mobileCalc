@@ -1,17 +1,12 @@
 import React from 'react';
 import { Spacer } from '@chakra-ui/react';
-import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
+import PropTypes from 'prop-types';
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
+import { AppAction } from '../appReducer';
 
-function AfterRepairValue() {
-  const dispatch = useAppDispatch();
-  const state = useAppState();
-  const {
-    afterRepairValue,
-  } = state;
-
+function AfterRepairValue({ afterRepairValue, dispatch }) {
   const onChange = (value) => dispatch({
     type: AppAction.UpdateAfterRepairValue,
     value,
@@ -28,5 +23,10 @@ function AfterRepairValue() {
     </Row>
   );
 }
+
+AfterRepairValue.propTypes = {
+  afterRepairValue: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default AfterRepairValue;

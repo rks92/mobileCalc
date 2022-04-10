@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import {
   ChakraProvider, Collapse, Container,
 } from '@chakra-ui/react';
@@ -7,14 +7,16 @@ import Settings from './settings/Settings';
 import Fonts from './assets/Fonts';
 import Section from './shared/enums/Section';
 import AnnualCashFlowButton from './AnnualCashFlowButton';
-import { AppProvider } from './context/AppContext';
 import Results from './results/Results';
 import { trigger } from './shared/events';
 import useHasTouchScreen from './shared/hooks/useHasTouchScreen';
+import { initialState, reducer } from './appReducer';
+import CashFlow from './results/CashFlow';
+import MonthlyExpenses from './results/MonthlyExpenses';
+import PropertyMetrics from './results/PropertyMetrics';
 
 // eslint-disable-next-line react/prop-types
 function PageContainer({ children }) {
-  { /* 72px is the button that toggles the sections in mobile devices */ }
   return (
     <Container h={`calc(${window.innerHeight}px - 72px)`} overflow="auto" paddingBottom="1rem">
       {children}
@@ -23,41 +25,118 @@ function PageContainer({ children }) {
 }
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [section, setSection] = useState(Section.Settings);
   const hasTouchScreen = useHasTouchScreen();
-
   const handleToggle = () => {
     if (hasTouchScreen) trigger('popover:close'); // For some reason it doesnt triggers the onTouchStart event
 
     const newSection = section === Section.Settings ? Section.Results : Section.Settings;
     setSection(newSection);
   };
-
   const handleTouchStart = (event) => {
     if (event.target.closest('div[role="tooltip"]')) return;
     if (hasTouchScreen) trigger('popover:close');
   };
 
+  const cashFlow = (
+    <CashFlow
+      closingCosts={state.closingCosts}
+      dispatch={dispatch}
+      purchasePrice={state.purchasePrice}
+      propertyInsurance={state.propertyInsurance}
+      monthlyRent={state.monthlyRent}
+      propertyTaxes={state.propertyTaxes}
+      downPayment={state.downPayment}
+      downPaymentRatio={state.downPaymentRatio}
+      hoaFees={state.hoaFees}
+      maintenance={state.maintenance}
+      monthlyPrincipalAndInterest={state.monthlyPrincipalAndInterest}
+      otherExpenses={state.otherExpenses}
+      propertyManagement={state.propertyManagement}
+      upFrontCashInvestment={state.upFrontCashInvestment}
+      utilities={state.utilities}
+      rehabCost={state.rehabCost}
+    />
+  );
+
+  const monthlyExpenses = (
+    <MonthlyExpenses
+      utilities={state.utilities}
+      propertyManagement={state.propertyManagement}
+      monthlyPrincipalAndInterest={state.monthlyPrincipalAndInterest}
+      otherExpenses={state.otherExpenses}
+      maintenance={state.maintenance}
+      hoaFees={state.hoaFees}
+      propertyTaxes={state.propertyTaxes}
+      propertyInsurance={state.propertyInsurance}
+    />
+  );
+
+  const propertyMetrics = (
+    <PropertyMetrics
+      operatingExpenses={state.operatingExpenses}
+      monthlyRent={state.monthlyRent}
+      vacancy={state.vacancy}
+      netOperatingIncome={state.netOperatingIncome}
+      upFrontCashInvestment={state.upFrontCashInvestment}
+      annualCashFlow={state.annualCashFlow}
+      afterRepairValue={state.afterRepairValue}
+      purchasePrice={state.purchasePrice}
+    />
+  );
+
   return (
     <ChakraProvider theme={theme}>
-      <AppProvider>
-        <Fonts />
-        <Collapse in={section === Section.Settings} onTouchStart={handleTouchStart}>
-          <PageContainer>
-            <Settings />
-          </PageContainer>
-        </Collapse>
-        <AnnualCashFlowButton
-          selectedSection={section}
-          onToggle={handleToggle}
-          event
-        />
-        <Collapse in={section === Section.Results} onTouchStart={handleTouchStart}>
-          <PageContainer>
-            <Results />
-          </PageContainer>
-        </Collapse>
-      </AppProvider>
+      <Fonts />
+      <Collapse in={section === Section.Settings} onTouchStart={handleTouchStart}>
+        <PageContainer>
+          <Settings
+            dispatch={dispatch}
+            vacancy={state.vacancy}
+            operatingIncome={state.operatingIncome}
+            operatingExpenses={state.operatingExpenses}
+            propertyTaxes={state.propertyTaxes}
+            propertyInsurance={state.propertyInsurance}
+            propertyManagement={state.propertyManagement}
+            maintenance={state.maintenance}
+            hoaFees={state.hoaFees}
+            utilities={state.utilities}
+            otherExpenses={state.otherExpenses}
+            netOperatingIncome={state.netOperatingIncome}
+            cashFlow={state.cashFlow}
+            monthlyRent={state.monthlyRent}
+            purchasePrice={state.purchasePrice}
+            propertyState={state.propertyState}
+            monthlyPrincipalAndInterest={state.monthlyPrincipalAndInterest}
+            interestRate={state.interestRate}
+            lengthOfLoan={state.lengthOfLoan}
+            downPayment={state.downPayment}
+            downPaymentRatio={state.downPaymentRatio}
+            loan={state.loan}
+            loanRatio={state.loanRatio}
+            closingCosts={state.closingCosts}
+            rehabCost={state.rehabCost}
+            afterRepairValue={state.afterRepairValue}
+          />
+        </PageContainer>
+      </Collapse>
+      <AnnualCashFlowButton
+        selectedSection={section}
+        onToggle={handleToggle}
+        annualCashFlow={state.annualCashFlow}
+        cashFlow={state.cashFlow}
+        dispatch={dispatch}
+      />
+      <Collapse in={section === Section.Results} onTouchStart={handleTouchStart}>
+        <PageContainer>
+          <Results
+            cashFlow={cashFlow}
+            monthlyExpenses={monthlyExpenses}
+            propertyMetrics={propertyMetrics}
+          />
+        </PageContainer>
+      </Collapse>
     </ChakraProvider>
   );
 }

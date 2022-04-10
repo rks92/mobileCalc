@@ -5,14 +5,13 @@ import {
   Spacer,
 } from '@chakra-ui/react';
 import { debounce } from 'lodash';
-import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
+import PropTypes from 'prop-types';
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
+import { AppAction } from '../appReducer';
 
-function InterestRate() {
-  const dispatch = useAppDispatch();
-  const state = useAppState();
-  const [interestRate, setInterestRate] = useState(0);
+function InterestRate({ dispatch, interestRate: stateInterestRate }) {
+  const [localInterestRate, setLocalInterestRate] = useState(0);
 
   // Handling Interest Rate updates
   const setStateInterestRate = (value) => {
@@ -25,15 +24,15 @@ function InterestRate() {
   ), []);
 
   useEffect(() => {
-    const parsedInterestRate = parseFloat(interestRate);
+    const parsedInterestRate = parseFloat(localInterestRate);
     setStateInterestRateDebounced(parsedInterestRate);
-  }, [interestRate]);
+  }, [localInterestRate]);
 
   useEffect(() => {
-    if (state.interestRate !== interestRate) {
-      setInterestRate(state.interestRate);
+    if (stateInterestRate !== localInterestRate) {
+      setLocalInterestRate(stateInterestRate);
     }
-  }, [state.interestRate]);
+  }, [stateInterestRate]);
 
   return (
     <Row>
@@ -45,8 +44,8 @@ function InterestRate() {
         min={0}
         max={100}
         variant="unstyled"
-        value={interestRate}
-        onChange={setInterestRate}
+        value={localInterestRate}
+        onChange={setLocalInterestRate}
         style={{
           '--number-input-stepper-width': '1px', // TODO: Find a better way to remove stepper padding
         }}
@@ -70,5 +69,10 @@ function InterestRate() {
     </Row>
   );
 }
+
+InterestRate.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  interestRate: PropTypes.number.isRequired,
+};
 
 export default InterestRate;

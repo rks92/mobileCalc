@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { debounce } from 'lodash';
-import { AppAction, useAppDispatch, useAppState } from '../../context/AppContext';
+import * as PropTypes from 'prop-types';
 import PurchasePriceWithSlider from './PurchasePriceWithSlider';
 import MonthlyRent from './MonthlyRent';
+import { AppAction } from '../../appReducer';
 
-export default function Sliders() {
-  const dispatch = useAppDispatch();
-  const { purchasePrice, monthlyRent } = useAppState();
+export default function Sliders({ purchasePrice, monthlyRent, dispatch }) {
   const [monthlyRentIsSetManually, setMonthlyRentIsSetManually] = useState(false);
   const [localPurchasePrice, setLocalPurchasePrice] = useState(purchasePrice);
   const [localMonthlyRent, setLocalMonthlyRent] = useState(monthlyRent);
@@ -45,3 +44,9 @@ export default function Sliders() {
     </>
   );
 }
+
+Sliders.propTypes = {
+  purchasePrice: PropTypes.number.isRequired,
+  monthlyRent: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};

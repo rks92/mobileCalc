@@ -4,39 +4,37 @@ import {
   SimpleGrid,
   Spacer,
 } from '@chakra-ui/react';
+import PropTypes from 'prop-types';
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import CurrencyText from '../shared/texts/CurrencyText';
-import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
 import { roundNumber } from '../shared/utilities';
 import CashFlowChart from './CashFlowChart';
+import { AppAction } from '../appReducer';
 
-function CashFlow() {
-  const state = useAppState();
-  const dispatch = useAppDispatch();
+function CashFlow({
+  dispatch,
+  monthlyRent,
+  propertyTaxes,
+  propertyInsurance,
+  hoaFees,
+  maintenance,
+  utilities,
+  propertyManagement,
+  otherExpenses,
+  downPayment,
+  downPaymentRatio,
+  closingCosts,
+  rehabCost,
+  monthlyPrincipalAndInterest,
+  upFrontCashInvestment,
+  purchasePrice,
+}) {
   const [oneYearCashFlow, setOneYearCashFlow] = useState(0);
   const [fiveYearCashFlow, setFiveYearCashFlow] = useState(0);
   const [tenYearCashFlow, setTenYearCashFlow] = useState(0);
   const [breakEven, setBreakEven] = useState(0);
   const [years, setYears] = useState([]);
-
-  const {
-    monthlyRent,
-    propertyTaxes,
-    propertyInsurance,
-    hoaFees,
-    maintenance,
-    utilities,
-    propertyManagement,
-    otherExpenses,
-    downPayment,
-    downPaymentRatio,
-    closingCosts,
-    rehabCost,
-    monthlyPrincipalAndInterest,
-    upFrontCashInvestment,
-    purchasePrice,
-  } = state;
 
   // Calculating Up-front Cash Investment
   useEffect(() => {
@@ -219,5 +217,24 @@ function CashFlow() {
     </>
   );
 }
+
+CashFlow.propTypes = {
+  monthlyRent: PropTypes.number.isRequired,
+  propertyTaxes: PropTypes.number.isRequired,
+  propertyInsurance: PropTypes.number.isRequired,
+  hoaFees: PropTypes.number.isRequired,
+  maintenance: PropTypes.number.isRequired,
+  utilities: PropTypes.number.isRequired,
+  propertyManagement: PropTypes.number.isRequired,
+  otherExpenses: PropTypes.number.isRequired,
+  downPayment: PropTypes.number.isRequired,
+  downPaymentRatio: PropTypes.number.isRequired,
+  closingCosts: PropTypes.number.isRequired,
+  rehabCost: PropTypes.number.isRequired,
+  monthlyPrincipalAndInterest: PropTypes.number.isRequired,
+  upFrontCashInvestment: PropTypes.number.isRequired,
+  purchasePrice: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default CashFlow;

@@ -2,15 +2,13 @@ import React from 'react';
 import {
   Spacer,
 } from '@chakra-ui/react';
+import PropTypes from 'prop-types';
 import InputLabel from '../shared/texts/InputLabel';
 import Row from '../shared/Row';
-import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
 import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
+import { AppAction } from '../appReducer';
 
-function PurchasePrice() {
-  const dispatch = useAppDispatch();
-  const { purchasePrice } = useAppState();
-
+function PurchasePrice({ purchasePrice, dispatch }) {
   return (
     <Row>
       <InputLabel tooltipLabel="The amount you're paying to purchase the property" text="Purchase Price" />
@@ -24,5 +22,10 @@ function PurchasePrice() {
     </Row>
   );
 }
+
+PurchasePrice.propTypes = {
+  purchasePrice: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default PurchasePrice;

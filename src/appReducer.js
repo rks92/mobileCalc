@@ -1,7 +1,6 @@
-import React, { useReducer } from 'react';
-import { roundNumber } from '../shared/utilities';
+import { roundNumber } from './shared/utilities';
 
-const defaultState = {
+export const initialState = {
   purchasePrice: 100_000,
   monthlyRent: 1000,
   downPayment: 20_000,
@@ -31,7 +30,7 @@ const defaultState = {
   upFrontCashInvestment: 0,
 };
 
-const AppAction = {
+export const AppAction = {
   UpdatePurchasePrice: 'app/updatePurchasePrice',
   UpdateMonthlyRent: 'app/updateMonthlyRent',
   UpdateDownPayment: 'app/updateDownPayment',
@@ -59,7 +58,7 @@ const AppAction = {
   UpdateUpFrontCashInvestment: 'app/upFrontCashInvestment',
 };
 
-const AppReducer = (state, action) => {
+export const reducer = (state, action) => {
   if (!('value' in action)) {
     console.error('Action is missing "value" property!');
   }
@@ -209,41 +208,4 @@ const AppReducer = (state, action) => {
       throw new Error(`Unhandled action type: ${errorMessage}`);
     }
   }
-};
-
-const AppStateContext = React.createContext(undefined);
-AppStateContext.displayName = 'AppStateContext';
-const AppDispatchContext = React.createContext(undefined);
-
-// eslint-disable-next-line react/prop-types
-function AppProvider({ children }) {
-  const [state, dispatch] = useReducer(AppReducer, defaultState);
-
-  return (
-    <AppStateContext.Provider value={state}>
-      <AppDispatchContext.Provider value={dispatch}>
-        {children}
-      </AppDispatchContext.Provider>
-    </AppStateContext.Provider>
-  );
-}
-
-const useAppState = () => {
-  const context = React.useContext(AppStateContext);
-  if (context === undefined) {
-    throw new Error('useAppState must be used within a AppProvider');
-  }
-  return context;
-};
-
-const useAppDispatch = () => {
-  const context = React.useContext(AppDispatchContext);
-  if (context === undefined) {
-    throw new Error('useAppDispatch must be used within a AppProvider');
-  }
-  return context;
-};
-
-export {
-  AppProvider, useAppState, useAppDispatch, AppAction,
 };

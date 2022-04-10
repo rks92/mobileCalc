@@ -1,14 +1,12 @@
 import React from 'react';
 import { Spacer } from '@chakra-ui/react';
-import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
+import PropTypes from 'prop-types';
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
+import { AppAction } from '../appReducer';
 
-function DownPayment() {
-  const dispatch = useAppDispatch();
-  const { downPayment, downPaymentRatio } = useAppState();
-
+function DownPayment({ downPaymentRatio, downPayment, dispatch }) {
   return (
     <Row>
       <InputLabel
@@ -25,5 +23,11 @@ function DownPayment() {
     </Row>
   );
 }
+
+DownPayment.propTypes = {
+  downPaymentRatio: PropTypes.number.isRequired,
+  downPayment: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default DownPayment;

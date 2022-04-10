@@ -2,25 +2,19 @@ import React, { useEffect } from 'react';
 import {
   Spacer,
 } from '@chakra-ui/react';
-import { AppAction, useAppDispatch, useAppState } from '../context/AppContext';
+import PropTypes from 'prop-types';
 import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
+import { AppAction } from '../appReducer';
 
-function RehabCost() {
-  const dispatch = useAppDispatch();
-  const state = useAppState();
-
+function RehabCost({ rehabCost, purchasePrice, dispatch }) {
   const onChange = (value) => dispatch({ type: AppAction.UpdateRehabCost, value });
 
   const updateAfterRepairValue = (value) => dispatch({
     type: AppAction.UpdateAfterRepairValue,
     value,
   });
-
-  const {
-    rehabCost, purchasePrice,
-  } = state;
 
   useEffect(() => {
     // Rehab cost should be set
@@ -42,5 +36,11 @@ function RehabCost() {
     </Row>
   );
 }
+
+RehabCost.propTypes = {
+  rehabCost: PropTypes.number.isRequired,
+  purchasePrice: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default RehabCost;

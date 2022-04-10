@@ -8,7 +8,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Row from '../shared/Row';
 import { formatInDollars } from '../shared/utilities';
-import { useAppState } from '../context/AppContext';
 import CurrencyText from '../shared/texts/CurrencyText';
 import MonthlyExpensesChart from './MonthlyExpensesChart';
 
@@ -30,21 +29,18 @@ function Value({ value }) {
 
 Value.propTypes = { value: PropTypes.number.isRequired };
 
-function MonthlyExpenses() {
-  const state = useAppState();
+function MonthlyExpenses({
+  propertyTaxes,
+  propertyInsurance,
+  propertyManagement,
+  maintenance,
+  hoaFees,
+  utilities,
+  otherExpenses,
+  monthlyPrincipalAndInterest,
+}) {
   const [totalMonthlyExpenses, setTotalMonthlyExpenses] = useState(0);
   const [expenses, setExpenses] = useState([]);
-
-  const {
-    propertyTaxes,
-    propertyInsurance,
-    propertyManagement,
-    maintenance,
-    hoaFees,
-    utilities,
-    otherExpenses,
-    monthlyPrincipalAndInterest,
-  } = state;
 
   useEffect(() => {
     // Calculate Total Monthly Expenses
@@ -137,5 +133,16 @@ function MonthlyExpenses() {
     </>
   );
 }
+
+MonthlyExpenses.propTypes = {
+  propertyTaxes: PropTypes.number.isRequired,
+  propertyInsurance: PropTypes.number.isRequired,
+  propertyManagement: PropTypes.number.isRequired,
+  maintenance: PropTypes.number.isRequired,
+  hoaFees: PropTypes.number.isRequired,
+  utilities: PropTypes.number.isRequired,
+  otherExpenses: PropTypes.number.isRequired,
+  monthlyPrincipalAndInterest: PropTypes.number.isRequired,
+};
 
 export default MonthlyExpenses;
