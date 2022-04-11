@@ -129,7 +129,7 @@ function Settings({
 
   return (
     <SimpleGrid rows={3} spacing={5} mt={6}>
-      <VisuallyHidden>v1.1</VisuallyHidden>
+      <VisuallyHidden>v1.2</VisuallyHidden>
       <Sliders dispatch={dispatch} />
       <Flex
         alignContent="center"

@@ -18,12 +18,12 @@ export default function Sliders({
 
   const throttledSetPurchasePrice = useCallback(debounce(
     (value) => dispatch({ type: AppAction.UpdatePurchasePrice, value }),
-    500,
+    100,
   ), []);
 
   const throttledSetMonthlyRent = useCallback(debounce(
     (value) => dispatch({ type: AppAction.UpdateMonthlyRent, value }),
-    500,
+    100,
   ), []);
 
   useEffect(() => {
