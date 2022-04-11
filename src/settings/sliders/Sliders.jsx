@@ -5,31 +5,43 @@ import PurchasePriceWithSlider from './PurchasePriceWithSlider';
 import MonthlyRent from './MonthlyRent';
 import { AppAction } from '../../appReducer';
 
-export default function Sliders({ purchasePrice, monthlyRent, dispatch }) {
+export default function Sliders({
+  purchasePrice: statePurchasePrice,
+  monthlyRent: stateMonthlyRent,
+  dispatch,
+}) {
   const [monthlyRentIsSetManually, setMonthlyRentIsSetManually] = useState(false);
-  const [localPurchasePrice, setLocalPurchasePrice] = useState(purchasePrice);
-  const [localMonthlyRent, setLocalMonthlyRent] = useState(monthlyRent);
+  const [localPurchasePrice, setLocalPurchasePrice] = useState(statePurchasePrice);
+  const [localMonthlyRent, setLocalMonthlyRent] = useState(stateMonthlyRent);
 
-  const debouncedSetPurchasePrice = useCallback(throttle(
+  const throttledSetPurchasePrice = useCallback(throttle(
     (value) => dispatch({ type: AppAction.UpdatePurchasePrice, value }),
-    100,
+    500,
   ), []);
 
-  const debouncedSetMonthlyRent = useCallback(throttle(
+  const throttledSetMonthlyRent = useCallback(throttle(
     (value) => dispatch({ type: AppAction.UpdateMonthlyRent, value }),
-    100,
+    500,
   ), []);
 
   useEffect(() => {
-    debouncedSetMonthlyRent(localMonthlyRent);
+    throttledSetMonthlyRent(localMonthlyRent);
   }, [localMonthlyRent]);
 
+  // useEffect(() => {
+  //   if (localPurchasePrice !== statePurchasePrice) setLocalPurchasePrice(statePurchasePrice);
+  // }, [statePurchasePrice]);
+  //
+  // useEffect(() => {
+  //   if (localMonthlyRent !== stateMonthlyRent) setLocalMonthlyRent(stateMonthlyRent);
+  // }, [stateMonthlyRent]);
+
   useEffect(() => {
-    debouncedSetPurchasePrice(localPurchasePrice);
+    throttledSetPurchasePrice(localPurchasePrice);
     if (!monthlyRentIsSetManually) {
       const newMonthlyRent = Math.round(localPurchasePrice * 0.01);
       setLocalMonthlyRent(newMonthlyRent);
-      debouncedSetMonthlyRent(newMonthlyRent);
+      throttledSetMonthlyRent(newMonthlyRent);
     }
   }, [localPurchasePrice]);
 
