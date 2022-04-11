@@ -1,25 +1,27 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { throttle } from 'lodash';
+import React, {
+  useCallback,
+  useEffect, useState,
+} from 'react';
 import * as PropTypes from 'prop-types';
+import { debounce } from 'lodash';
 import PurchasePriceWithSlider from './PurchasePriceWithSlider';
 import MonthlyRent from './MonthlyRent';
 import { AppAction } from '../../appReducer';
+import { INITIAL_MONTHLY_RENT, INITIAL_PURCHASE_PRICE } from '../../shared/models';
 
-function Sliders({
-  purchasePrice: statePurchasePrice,
-  monthlyRent: stateMonthlyRent,
+export default function Sliders({
   dispatch,
 }) {
   const [monthlyRentIsSetManually, setMonthlyRentIsSetManually] = useState(false);
-  const [localPurchasePrice, setLocalPurchasePrice] = useState(statePurchasePrice);
-  const [localMonthlyRent, setLocalMonthlyRent] = useState(stateMonthlyRent);
+  const [localPurchasePrice, setLocalPurchasePrice] = useState(INITIAL_PURCHASE_PRICE);
+  const [localMonthlyRent, setLocalMonthlyRent] = useState(INITIAL_MONTHLY_RENT);
 
-  const throttledSetPurchasePrice = useCallback(throttle(
+  const throttledSetPurchasePrice = useCallback(debounce(
     (value) => dispatch({ type: AppAction.UpdatePurchasePrice, value }),
     500,
   ), []);
 
-  const throttledSetMonthlyRent = useCallback(throttle(
+  const throttledSetMonthlyRent = useCallback(debounce(
     (value) => dispatch({ type: AppAction.UpdateMonthlyRent, value }),
     500,
   ), []);
@@ -50,15 +52,5 @@ function Sliders({
 }
 
 Sliders.propTypes = {
-  purchasePrice: PropTypes.number.isRequired,
-  monthlyRent: PropTypes.number.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
-
-export default React.memo(
-  Sliders,
-  (prevProps, nextProps) => (
-    prevProps.purchasePrice === nextProps.purchasePrice
-        && prevProps.monthlyRent === nextProps.monthlyRent
-  ),
-);

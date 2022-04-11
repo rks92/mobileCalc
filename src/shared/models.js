@@ -53,3 +53,6 @@ export const taxRateByState = {
 };
 
 export const getTaxRateMultiplierForState = (state) => taxRateByState[state] / 100;
+
+export const INITIAL_PURCHASE_PRICE = 100_000;
+export const INITIAL_MONTHLY_RENT = 1000;

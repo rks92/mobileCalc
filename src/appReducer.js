@@ -1,8 +1,9 @@
 import { roundNumber } from './shared/utilities';
+import { INITIAL_MONTHLY_RENT, INITIAL_PURCHASE_PRICE } from './shared/models';
 
 export const initialState = {
-  purchasePrice: 100_000,
-  monthlyRent: 1000,
+  purchasePrice: INITIAL_PURCHASE_PRICE,
+  monthlyRent: INITIAL_MONTHLY_RENT,
   downPayment: 20_000,
   downPaymentRatio: 0.2,
   loan: 80_000,

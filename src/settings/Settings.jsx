@@ -10,6 +10,7 @@ import {
   TabPanels,
   Tabs,
   Text,
+  VisuallyHidden,
 } from '@chakra-ui/react';
 import * as PropTypes from 'prop-types';
 import PurchasePrice from './PurchasePrice';
@@ -128,7 +129,8 @@ function Settings({
 
   return (
     <SimpleGrid rows={3} spacing={5} mt={6}>
-      <Sliders purchasePrice={purchasePrice} monthlyRent={monthlyRent} dispatch={dispatch} />
+      <VisuallyHidden>v1.1</VisuallyHidden>
+      <Sliders dispatch={dispatch} />
       <Flex
         alignContent="center"
         alignItems="center"
