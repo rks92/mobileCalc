@@ -28,14 +28,6 @@ export default function Sliders({
     throttledSetMonthlyRent(localMonthlyRent);
   }, [localMonthlyRent]);
 
-  // useEffect(() => {
-  //   if (localPurchasePrice !== statePurchasePrice) setLocalPurchasePrice(statePurchasePrice);
-  // }, [statePurchasePrice]);
-  //
-  // useEffect(() => {
-  //   if (localMonthlyRent !== stateMonthlyRent) setLocalMonthlyRent(stateMonthlyRent);
-  // }, [stateMonthlyRent]);
-
   useEffect(() => {
     throttledSetPurchasePrice(localPurchasePrice);
     if (!monthlyRentIsSetManually) {
