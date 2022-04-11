@@ -9,7 +9,6 @@ module.exports = {
   mode: isProductionEnvironment ? 'production' : 'development',
   entry: './src/index.jsx',
   output: {
-    filename: 'calculator.js',
     path: path.resolve(__dirname, 'build'),
     clean: true,
   },

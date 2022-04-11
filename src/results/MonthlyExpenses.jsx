@@ -1,5 +1,7 @@
 import {
-  Box, Divider, Flex,
+  Box,
+  Divider,
+  Flex,
   SimpleGrid,
   Spacer,
   Text,
@@ -11,21 +13,24 @@ import { formatInDollars } from '../shared/utilities';
 import CurrencyText from '../shared/texts/CurrencyText';
 import MonthlyExpensesChart from './MonthlyExpensesChart';
 
-function Color({ color }) {
-  return <Box bg={color} h="12px" w="12px" borderRadius="50%" />;
-}
+const Color = React.memo(
+  ({ color }) => <Box bg={color} h="12px" w="12px" borderRadius="50%" />,
+  (prevProps, nextProps) => prevProps.color === nextProps.color,
+);
 
 Color.propTypes = { color: PropTypes.string.isRequired };
 
-function Label({ text }) {
-  return <Text fontSize="sm" fontWeight="medium" color="neutral.900" ml={2}>{text}</Text>;
-}
+const Label = React.memo(
+  ({ text }) => <Text fontSize="sm" fontWeight="medium" color="neutral.900" ml={2}>{text}</Text>,
+  (prevProps, nextProps) => prevProps.text === nextProps.text,
+);
 
 Label.propTypes = { text: PropTypes.string.isRequired };
 
-function Value({ value }) {
-  return <Text fontSize="sm" fontWeight="medium" color="neutral.600">{formatInDollars(value)}</Text>;
-}
+const Value = React.memo(
+  ({ value }) => <Text fontSize="sm" fontWeight="medium" color="neutral.600">{formatInDollars(value)}</Text>,
+  (prevProps, nextProps) => prevProps.value === nextProps.value,
+);
 
 Value.propTypes = { value: PropTypes.number.isRequired };
 

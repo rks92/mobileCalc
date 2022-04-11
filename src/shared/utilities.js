@@ -1,4 +1,4 @@
-import { isNaN } from 'lodash';
+import { isNaN, isNumber } from 'lodash';
 
 /**
  * {@link https://stackoverflow.com/questions/2283566/how-can-i-round-a-number-in-javascript-tofixed-returns-a-string}
@@ -29,3 +29,21 @@ export const formatInDollars = (amount, maximumFractionDigits = 2) => new Intl.N
   'en-US',
   { style: 'currency', currency: 'USD', maximumFractionDigits },
 ).format(amount);
+
+/**
+ * Bad explanation follows:
+ * Given an array, this function calculates the sum of an array item's property.
+ * The property has to be of type number
+ * @param {array} arr The array
+ * @param {string} property The name of the property
+ * @return {number} The sum of property values
+ */
+export const getSumOfArrayProperty = (arr, property) => (arr || [])
+  .map((arrayItem) => {
+    if (!isNumber(arrayItem[property])) {
+      throw new Error('The array item\'s property is not a number!');
+    }
+
+    return arrayItem[property];
+  })
+  .reduce((prev, next) => prev + next, 0);
