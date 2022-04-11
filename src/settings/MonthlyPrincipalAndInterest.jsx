@@ -38,4 +38,12 @@ MonthlyPrincipalAndInterest.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-export default MonthlyPrincipalAndInterest;
+export default React.memo(
+  MonthlyPrincipalAndInterest,
+  (prevProps, nextProps) => (
+    prevProps.interestRate === nextProps.interestRate
+    && prevProps.lengthOfLoan === nextProps.lengthOfLoan
+    && prevProps.loan === nextProps.loan
+    && prevProps.monthlyPrincipalAndInterest === nextProps.monthlyPrincipalAndInterest
+  ),
+);

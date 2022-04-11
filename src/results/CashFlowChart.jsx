@@ -94,7 +94,7 @@ function CustomTooltip({ active, payload, label }) {
   return null;
 }
 
-export default function CashFlowChart({ data, breakEven }) {
+function CashFlowChart({ data, breakEven }) {
   const tickFormatter = (value) => (new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -243,3 +243,8 @@ export default function CashFlowChart({ data, breakEven }) {
     </ResponsiveContainer>
   );
 }
+
+export default React.memo(
+  CashFlowChart,
+  (prevProps, nextProps) => prevProps.breakEven === nextProps.breakEven,
+);

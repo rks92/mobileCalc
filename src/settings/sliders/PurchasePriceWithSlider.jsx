@@ -9,7 +9,7 @@ import SliderWithMarks from '../../shared/Slider';
 import Row from '../../shared/Row';
 import FullCurrencyInput from '../../shared/inputs/FullCurrencyInput';
 
-export default function PurchasePriceWithSlider({ value, onChange }) {
+function PurchasePriceWithSlider({ value, onChange }) {
   const label = (
     <Row>
       <Text color="neutral.900" fontSize="lg" fontWeight="medium">
@@ -49,3 +49,8 @@ PurchasePriceWithSlider.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };
+
+export default React.memo(
+  PurchasePriceWithSlider,
+  (prevProps, nextProps) => prevProps.value === nextProps.value,
+);

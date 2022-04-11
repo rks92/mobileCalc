@@ -5,7 +5,7 @@ import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import CurrencyText from '../shared/texts/CurrencyText';
 
-export default function LoanPayments({ value }) {
+function LoanPayments({ value }) {
   return (
     <Row mt={3}>
       <InputLabel tooltipLabel="Total principal and interest required to repay your loan (excludes escrow)" text="Loan Payments" />
@@ -16,3 +16,8 @@ export default function LoanPayments({ value }) {
 }
 
 LoanPayments.propTypes = { value: PropTypes.number.isRequired };
+
+export default React.memo(
+  LoanPayments,
+  (prevProps, nextProps) => prevProps.value === nextProps.value,
+);

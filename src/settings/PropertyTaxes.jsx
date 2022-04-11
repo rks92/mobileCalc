@@ -5,7 +5,7 @@ import Row from '../shared/Row';
 import NestedInputLabel from '../shared/texts/NestedInputLabel';
 import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
 
-export default function PropertyTaxes({ value, onChange }) {
+function PropertyTaxes({ value, onChange }) {
   return (
     <Row mt={2}>
       <NestedInputLabel text="Property Taxes" />
@@ -19,3 +19,8 @@ PropertyTaxes.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };
+
+export default React.memo(
+  PropertyTaxes,
+  (prevProps, nextProps) => prevProps.value === nextProps.value,
+);

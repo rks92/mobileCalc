@@ -44,4 +44,10 @@ ClosingCosts.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-export default ClosingCosts;
+export default React.memo(
+  ClosingCosts,
+  (prevProps, nextProps) => (
+    prevProps.closingCosts === nextProps.closingCosts
+      && prevProps.purchasePrice === nextProps.purchasePrice
+  ),
+);

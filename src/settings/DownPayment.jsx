@@ -30,4 +30,10 @@ DownPayment.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-export default DownPayment;
+export default React.memo(
+  DownPayment,
+  (prevProps, nextProps) => (
+    prevProps.downPayment === nextProps.downPayment
+        && prevProps.downPaymentRatio === nextProps.downPaymentRatio
+  ),
+);

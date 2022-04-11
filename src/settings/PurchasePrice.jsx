@@ -28,4 +28,7 @@ PurchasePrice.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-export default PurchasePrice;
+export default React.memo(
+  PurchasePrice,
+  (prevProps, nextProps) => prevProps.purchasePrice === nextProps.purchasePrice,
+);

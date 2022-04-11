@@ -9,7 +9,7 @@ import SliderWithMarks from '../../shared/Slider';
 import Row from '../../shared/Row';
 import FullCurrencyInput from '../../shared/inputs/FullCurrencyInput';
 
-export default function MonthlyRent({ value, onChange, setMonthlyRentIsSetManually }) {
+function MonthlyRent({ value, onChange, setMonthlyRentIsSetManually }) {
   const label = (
     <Row>
       <Text color="neutral.900" fontSize="lg" fontWeight="medium">
@@ -56,3 +56,11 @@ MonthlyRent.propTypes = {
   onChange: PropTypes.func.isRequired,
   setMonthlyRentIsSetManually: PropTypes.func.isRequired,
 };
+
+export default React.memo(
+  MonthlyRent,
+  (prevProps, nextProps) => (
+    prevProps.value === nextProps.value
+      && prevProps.setMonthlyRentIsSetManually === nextProps.setMonthlyRentIsSetManually
+  ),
+);

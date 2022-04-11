@@ -5,7 +5,7 @@ import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
 
-export default function Vacancy({ value, onChange }) {
+function Vacancy({ value, onChange }) {
   return (
     <Row>
       <InputLabel
@@ -22,3 +22,8 @@ Vacancy.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };
+
+export default React.memo(
+  Vacancy,
+  (prevProps, nextProps) => prevProps.value === nextProps.value,
+);

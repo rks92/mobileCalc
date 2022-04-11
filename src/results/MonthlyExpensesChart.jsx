@@ -88,7 +88,7 @@ function CustomLabel({ viewBox, value1, value2 }) {
   );
 }
 
-export default function MonthlyExpensesChart({ expenses, totalMonthlyExpenses }) {
+function MonthlyExpensesChart({ expenses, totalMonthlyExpenses }) {
   return (
     <ResponsiveContainer width="100%" height={180}>
       <PieChart>
@@ -117,3 +117,8 @@ MonthlyExpensesChart.propTypes = {
   })).isRequired,
   totalMonthlyExpenses: PropTypes.number.isRequired,
 };
+
+export default React.memo(
+  MonthlyExpensesChart,
+  (prevProps, nextProps) => prevProps.totalMonthlyExpenses === nextProps.totalMonthlyExpenses,
+);

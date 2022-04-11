@@ -75,4 +75,7 @@ InterestRate.propTypes = {
   interestRate: PropTypes.number.isRequired,
 };
 
-export default InterestRate;
+export default React.memo(
+  InterestRate,
+  (prevProps, nextProps) => prevProps.interestRate === nextProps.interestRate,
+);

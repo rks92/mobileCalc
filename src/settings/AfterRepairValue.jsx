@@ -29,4 +29,7 @@ AfterRepairValue.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-export default AfterRepairValue;
+export default React.memo(
+  AfterRepairValue,
+  (prevProps, nextProps) => prevProps.afterRepairValue === nextProps.afterRepairValue,
+);

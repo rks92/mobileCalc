@@ -159,4 +159,16 @@ PropertyMetrics.propTypes = {
   operatingExpenses: PropTypes.number.isRequired,
 };
 
-export default PropertyMetrics;
+export default React.memo(
+  PropertyMetrics,
+  (prevProps, nextProps) => (
+    prevProps.netOperatingIncome === nextProps.netOperatingIncome
+        && prevProps.annualCashFlow === nextProps.annualCashFlow
+        && prevProps.upFrontCashInvestment === nextProps.upFrontCashInvestment
+        && prevProps.purchasePrice === nextProps.purchasePrice
+        && prevProps.afterRepairValue === nextProps.afterRepairValue
+        && prevProps.monthlyRent === nextProps.monthlyRent
+        && prevProps.vacancy === nextProps.vacancy
+        && prevProps.operatingExpenses === nextProps.operatingExpenses
+  ),
+);

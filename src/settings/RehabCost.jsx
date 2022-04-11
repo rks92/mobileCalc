@@ -43,4 +43,10 @@ RehabCost.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-export default RehabCost;
+export default React.memo(
+  RehabCost,
+  (prevProps, nextProps) => (
+    prevProps.rehabCost === nextProps.rehabCost
+      && prevProps.purchasePrice === nextProps.purchasePrice
+  ),
+);

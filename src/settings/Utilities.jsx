@@ -5,7 +5,7 @@ import Row from '../shared/Row';
 import NestedInputLabel from '../shared/texts/NestedInputLabel';
 import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
 
-export default function Utilities({ value, onChange }) {
+function Utilities({ value, onChange }) {
   return (
     <Row>
       <NestedInputLabel text="Utilities" />
@@ -19,3 +19,8 @@ Utilities.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };
+
+export default React.memo(
+  Utilities,
+  (prevProps, nextProps) => prevProps.value === nextProps.value,
+);

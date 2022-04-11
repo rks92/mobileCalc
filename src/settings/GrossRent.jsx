@@ -5,7 +5,7 @@ import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
 
-export default function GrossRent({ value, onChange }) {
+function GrossRent({ value, onChange }) {
   return (
     <Row>
       <InputLabel tooltipLabel="The total rent collected per month" text="Gross Rent" />
@@ -19,3 +19,8 @@ GrossRent.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };
+
+export default React.memo(
+  GrossRent,
+  (prevProps, nextProps) => prevProps.value === nextProps.value,
+);

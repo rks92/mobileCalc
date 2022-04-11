@@ -237,4 +237,23 @@ CashFlow.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-export default CashFlow;
+export default React.memo(
+  CashFlow,
+  (prevProps, nextProps) => (
+    prevProps.monthlyRent === nextProps.monthlyRent
+          && prevProps.propertyTaxes === nextProps.propertyTaxes
+          && prevProps.propertyInsurance === nextProps.propertyInsurance
+          && prevProps.hoaFees === nextProps.hoaFees
+          && prevProps.maintenance === nextProps.maintenance
+          && prevProps.utilities === nextProps.utilities
+          && prevProps.propertyManagement === nextProps.propertyManagement
+          && prevProps.otherExpenses === nextProps.otherExpenses
+          && prevProps.downPayment === nextProps.downPayment
+          && prevProps.downPaymentRatio === nextProps.downPaymentRatio
+          && prevProps.closingCosts === nextProps.closingCosts
+          && prevProps.rehabCost === nextProps.rehabCost
+          && prevProps.monthlyPrincipalAndInterest === nextProps.monthlyPrincipalAndInterest
+          && prevProps.upFrontCashInvestment === nextProps.upFrontCashInvestment
+          && prevProps.purchasePrice === nextProps.purchasePrice
+  ),
+);

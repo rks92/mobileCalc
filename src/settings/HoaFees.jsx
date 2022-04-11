@@ -5,7 +5,7 @@ import Row from '../shared/Row';
 import NestedInputLabel from '../shared/texts/NestedInputLabel';
 import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
 
-export default function HoaFees({ value, onChange }) {
+function HoaFees({ value, onChange }) {
   return (
     <Row>
       <NestedInputLabel text="HOA Fees" />
@@ -19,3 +19,8 @@ HoaFees.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };
+
+export default React.memo(
+  HoaFees,
+  (prevProps, nextProps) => prevProps.value === nextProps.value,
+);

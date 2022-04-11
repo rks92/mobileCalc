@@ -145,4 +145,16 @@ MonthlyExpenses.propTypes = {
   monthlyPrincipalAndInterest: PropTypes.number.isRequired,
 };
 
-export default MonthlyExpenses;
+export default React.memo(
+  MonthlyExpenses,
+  (prevProps, nextProps) => (
+    prevProps.propertyTaxes === nextProps.propertyTaxes
+    && prevProps.propertyInsurance === nextProps.propertyInsurance
+    && prevProps.propertyManagement === nextProps.propertyManagement
+    && prevProps.maintenance === nextProps.maintenance
+    && prevProps.hoaFees === nextProps.hoaFees
+    && prevProps.utilities === nextProps.utilities
+    && prevProps.otherExpenses === nextProps.otherExpenses
+    && prevProps.monthlyPrincipalAndInterest === nextProps.monthlyPrincipalAndInterest
+  ),
+);

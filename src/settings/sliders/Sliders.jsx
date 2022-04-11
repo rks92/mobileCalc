@@ -5,7 +5,7 @@ import PurchasePriceWithSlider from './PurchasePriceWithSlider';
 import MonthlyRent from './MonthlyRent';
 import { AppAction } from '../../appReducer';
 
-export default function Sliders({
+function Sliders({
   purchasePrice: statePurchasePrice,
   monthlyRent: stateMonthlyRent,
   dispatch,
@@ -54,3 +54,11 @@ Sliders.propTypes = {
   monthlyRent: PropTypes.number.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
+
+export default React.memo(
+  Sliders,
+  (prevProps, nextProps) => (
+    prevProps.purchasePrice === nextProps.purchasePrice
+        && prevProps.monthlyRent === nextProps.monthlyRent
+  ),
+);

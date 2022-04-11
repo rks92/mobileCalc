@@ -30,4 +30,10 @@ Loan.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-export default Loan;
+export default React.memo(
+  Loan,
+  (prevProps, nextProps) => (
+    prevProps.loanRatio === nextProps.loanRatio
+      && prevProps.loan === nextProps.loan
+  ),
+);

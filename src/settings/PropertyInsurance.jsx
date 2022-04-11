@@ -5,7 +5,7 @@ import Row from '../shared/Row';
 import NestedInputLabel from '../shared/texts/NestedInputLabel';
 import DebouncedInlineCurrencyInput from '../shared/inputs/DebouncedInlineCurrencyInput';
 
-export default function PropertyInsurance({ value, onChange }) {
+function PropertyInsurance({ value, onChange }) {
   return (
     <Row>
       <NestedInputLabel text="Property Insurance" />
@@ -22,3 +22,8 @@ PropertyInsurance.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };
+
+export default React.memo(
+  PropertyInsurance,
+  (prevProps, nextProps) => prevProps.value === nextProps.value,
+);

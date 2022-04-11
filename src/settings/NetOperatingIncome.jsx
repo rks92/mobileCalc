@@ -5,7 +5,7 @@ import Row from '../shared/Row';
 import InputLabel from '../shared/texts/InputLabel';
 import CurrencyText from '../shared/texts/CurrencyText';
 
-export default function NetOperatingIncome({ value }) {
+function NetOperatingIncome({ value }) {
   return (
     <Row>
       <InputLabel tooltipLabel="Monthly NOI = Net Operating Income - Net Operating Expenses" text="Net Operating Income" />
@@ -16,3 +16,8 @@ export default function NetOperatingIncome({ value }) {
 }
 
 NetOperatingIncome.propTypes = { value: PropTypes.number.isRequired };
+
+export default React.memo(
+  NetOperatingIncome,
+  (prevProps, nextProps) => prevProps.value === nextProps.value,
+);
