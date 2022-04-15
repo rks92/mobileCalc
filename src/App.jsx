@@ -18,7 +18,25 @@ import PropertyMetrics from './results/PropertyMetrics';
 // eslint-disable-next-line react/prop-types
 function PageContainer({ children }) {
   return (
-    <Container h={`calc(${window.innerHeight}px - 72px)`} overflow="auto" paddingBottom="1rem">
+    <Container
+      h={`calc(${window.innerHeight}px - 72px)`}
+      overflow="auto"
+      paddingBottom="1rem"
+      css={{
+        '&::-webkit-scrollbar': {
+          width: '17px',
+        },
+        '&::-webkit-scrollbar-track': {
+          backgroundColor: 'transparent',
+        },
+        '&::-webkit-scrollbar-thumb': {
+          background: '#c1c1c1',
+          borderRadius: '20px',
+          border: '5px solid transparent',
+          backgroundClip: 'content-box',
+        },
+      }}
+    >
       {children}
     </Container>
   );
@@ -89,7 +107,10 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       <Fonts />
-      <Collapse in={section === Section.Settings} onTouchStart={handleTouchStart}>
+      <Collapse
+        in={section === Section.Settings}
+        onTouchStart={handleTouchStart}
+      >
         <PageContainer>
           <Settings
             dispatch={dispatch}
