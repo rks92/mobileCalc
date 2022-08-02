@@ -54,6 +54,21 @@ function Results({ cashFlow, monthlyExpenses, propertyMetrics }) {
           >
             Monthly Expenses
           </Tab>
+          <Tab
+            color="neutral.400"
+            borderRadius="0px 4px 4px 0px"
+            border="1px"
+            borderColor="neutral.100"
+            fontSize="sm"
+            fontWeight="medium"
+            _selected={{
+              color: 'primary.500',
+              bg: 'primary.100',
+              borderColor: 'primary.100',
+            }}
+          >
+            Save On Insurance
+          </Tab>
         </TabList>
         <TabPanels mt={7}>
           <TabPanel p={0}>
