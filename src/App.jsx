@@ -14,6 +14,7 @@ import { initialState, reducer } from './appReducer';
 import CashFlow from './results/CashFlow';
 import MonthlyExpenses from './results/MonthlyExpenses';
 import PropertyMetrics from './results/PropertyMetrics';
+import SaveOnInsurance from './results/saveOnInsurance';
 
 // eslint-disable-next-line react/prop-types
 function PageContainer({ children }) {
@@ -91,6 +92,19 @@ function App() {
     />
   );
 
+  const saveOnInsurance = (
+    <SaveOnInsurance
+      utilities={state.utilities}
+      propertyManagement={state.propertyManagement}
+      monthlyPrincipalAndInterest={state.monthlyPrincipalAndInterest}
+      otherExpenses={state.otherExpenses}
+      maintenance={state.maintenance}
+      hoaFees={state.hoaFees}
+      propertyTaxes={state.propertyTaxes}
+      propertyInsurance={state.propertyInsurance}
+    />
+  );
+
   const propertyMetrics = (
     <PropertyMetrics
       operatingExpenses={state.operatingExpenses}
@@ -154,6 +168,7 @@ function App() {
           <Results
             cashFlow={cashFlow}
             monthlyExpenses={monthlyExpenses}
+            saveOnInsurance={saveOnInsurance}
             propertyMetrics={propertyMetrics}
           />
         </PageContainer>
