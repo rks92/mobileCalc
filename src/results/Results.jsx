@@ -10,7 +10,7 @@ import {
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Results({ cashFlow, monthlyExpenses, propertyMetrics }) {
+function Results({ cashFlow, monthlyExpenses, saveOnInsurance, propertyMetrics }) {
   return (
     <SimpleGrid rows={3} spacing={5}>
       <Text
@@ -76,6 +76,9 @@ function Results({ cashFlow, monthlyExpenses, propertyMetrics }) {
           </TabPanel>
           <TabPanel p={0}>
             {monthlyExpenses}
+          </TabPanel>
+          <TabPanel>
+            {saveOnInsurance}
           </TabPanel>
         </TabPanels>
       </Tabs>
