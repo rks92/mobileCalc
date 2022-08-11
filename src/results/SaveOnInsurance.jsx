@@ -12,7 +12,8 @@ import Row from '../shared/Row';
 import { formatInDollars } from '../shared/utilities';
 import CurrencyText from '../shared/texts/CurrencyText';
 import MonthlyExpensesChart from './MonthlyExpensesChart';
-// import { MagnificPopup } from 'react-magnific-popup'
+// import { MagnificPopup } from 'react-magnific-popup';
+import './SaveOnInsuranceStyles.css';
 
 const Color = React.memo(
   ({ color }) => <Box bg={color} h="12px" w="12px" borderRadius="50%" />,
