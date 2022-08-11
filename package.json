@@ -23,7 +23,7 @@
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-magnific-popup": "^1.0.1",
+    "react-magnific-popup": "git@github.com:bodunadebiyi/react-magnific-popup.git#af0e3911d3595cf9a919314f6224f743092d0874",
     "recharts": "^2.1.9"
   },
   "devDependencies": {

@@ -12,7 +12,7 @@ import Row from '../shared/Row';
 import { formatInDollars } from '../shared/utilities';
 import CurrencyText from '../shared/texts/CurrencyText';
 import MonthlyExpensesChart from './MonthlyExpensesChart';
-// import { MagnificPopup } from 'react-magnific-popup';
+import { Popup, MagnificPopup } from 'react-magnific-popup';
 import './SaveOnInsuranceStyles.css';
 
 const Color = React.memo(
@@ -48,17 +48,59 @@ function SaveOnInsurance({}) {
   	// <script src="<?php bloginfo('template_url') ?>/widgets/obie-form/obie-form-autocomplete-init.js"></script>
 	// <script src="<?php bloginfo('template_url') ?>/widgets/obie-form/obie-form.js"></script>
   // });
-  const script = document.createElement("script");
-  script.src = "https://static.obierisk.com/sdk/obie.js";
-  script.async = true;
-  document.body.appendChild(script);
+  const jquery = document.createElement("script");
+  jquery.src = "https://code.jquery.com/jquery-3.6.0.slim.min.js";
+  jquery.async = false;
+  document.body.appendChild(jquery);
+
+  const obieScript = document.createElement("script");
+  obieScript.src = "https://static.obierisk.com/sdk/obie.js";
+  obieScript.async = true;
+  document.body.appendChild(obieScript);
 
   const gmapsScript = document.createElement("script");
   gmapsScript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAPXiZqQFEjY4PEkY8vu22hVCFQppGTW4Q&amp;libraries=places";
   gmapsScript.async = true;
-  document.body.appendChild(script);
+  document.body.appendChild(gmapsScript);
+
+  const magnificPopupScript = document.createElement("script");
+  magnificPopupScript.src = "https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js";
+  magnificPopupScript.async = true;
+  document.body.appendChild(magnificPopupScript);
+
+  const magnificPopupStyle = document.createElement("style");
+  magnificPopupStyle.src = "https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css";
+  magnificPopupStyle.async = true;
+  document.body.appendChild(magnificPopupStyle);
+
+  MagnificPopup.trigger('.mfp-hide', 'open');
 
   // useEffect(() => {})
+
+	// const magnificScr = "$(\".insurance-popup-link\").magnificPopup({\
+	// 	type: \"inline\",\
+	// 	midClick: true,\
+	// 	callbacks: {\
+	// 		open: function() {\
+	// 			Obie.init({\
+	// 			    partnerId: \"69214a56-7199-48a2-861d-27518409407c\",\
+	// 			    sandbox: false\
+	// 			});\
+	// 			initializeAutocomplete();\
+	// 		},\
+	// 	},\
+	// });"
+
+	// const magnificInputScript = document.createElement("script");
+	// magnificInputScript.src = magnificScr;
+	// magnificInputScript.async = true;
+	// document.body.appendChild(magnificInputScript);
+
+	const formConfig = {
+		type: 'inline',
+		preloader: false,
+		focus: '#location'
+	}
   return (
     <>
       <div className="tabcontent12" id="save-on-insurance">
@@ -72,48 +114,59 @@ function SaveOnInsurance({}) {
 					<li>No phone call or hassle required</li>
 				</ul>
 				<a id="insurance-content-quote1" href="#insurance-modal-wrap" className="open-popup-link primary-cta-button tertiary-button">Get an Instant Quote</a>
+				{/* <Popup
+					className="popup-with-form open-popup-link primary-cta-button tertiary-button"
+					href="#insurance-modal-wrap"
+					config={formConfig}
+					>
+					
+					Get an Instant Quote
+				</Popup> */}
 			</div>
 			<div className="save-on-insurance-image">
 				<img src="https://www.baselane.com/wp-content/uploads/2022/07/Content.png" srcSet="https://www.baselane.com/wp-content/uploads/2022/07/Content.png 1x, https://www.baselane.com/wp-content/uploads/2022/07/Content@2x.png 2x" alt="" />
+				
 			</div>
 		</div>
+		
+		<div>
+			<div id="insurance-modal-wrap" className="mfp-hide">
+				<div className="insurance-modal">
+					<div className="obie-form">
+						<form method="post" name="obie-form">
+							<h3>Get an Instant Insurance Quote</h3>
+							<div className="form-item">
+								<input type="text" id="location" name="obie-property-address" className="obie-property-address" placeholder="Enter property address" required />
+							</div>
+							<div className="form-item">
+								<input type="email" id="email" name="obie-email" className="obie-email" required placeholder="What's your email?" />
+							</div>
+							<button type="submit" className="tertiary-button obie-form__button-submit">Get an Instant Quote</button>
+						</form>
+					</div>
 
-		<div id="insurance-modal-wrap" className="mfp-hide">
-			<div className="insurance-modal">
-				<div className="obie-form">
-					<form method="post" name="obie-form">
-						<h3>Get an Instant Insurance Quote</h3>
-						<div className="form-item">
-							<input type="text" id="location" name="obie-property-address" className="obie-property-address" placeholder="Enter property address" required />
-						</div>
-						<div className="form-item">
-							<input type="email" id="email" name="obie-email" className="obie-email" required placeholder="What's your email?" />
-						</div>
-						<button type="submit" className="tertiary-button obie-form__button-submit">Get an Instant Quote</button>
-					</form>
-				</div>
+					<div className="obie-loading obie-loading--dark">
+						<div className="lds-dual-ring"></div>
+					</div>
 
-				<div className="obie-loading obie-loading--dark">
-					<div className="lds-dual-ring"></div>
-				</div>
-
-				<div className="obie-results hide">
-					<div className="obie-form-result">
-						<div className="obie-result-box">
-							<span className="obie-result-title">Property Insurance Estimate</span>
-							<p id="obie-results-value"></p>
-							<a javascript="href:;" id="obie-toggle-modal" name="modal-button" className="tertiary-button">Click here to insure your property</a>
-							<p id="obie-results-address"></p>
-							<img 
-								src="https://www.baselane.com/wp-content/uploads/2021/12/Logo-Badge-White-BG.svg" 
-								className="powered-by-obie" 
-								height="32" alt="Powered by Obie">
-							</img>
+					<div className="obie-results hide">
+						<div className="obie-form-result">
+							<div className="obie-result-box">
+								<span className="obie-result-title">Property Insurance Estimate</span>
+								<p id="obie-results-value"></p>
+								<a javascript="href:;" id="obie-toggle-modal" name="modal-button" className="tertiary-button">Click here to insure your property</a>
+								<p id="obie-results-address"></p>
+								<img 
+									src="https://www.baselane.com/wp-content/uploads/2021/12/Logo-Badge-White-BG.svg" 
+									className="powered-by-obie" 
+									height="32" alt="Powered by Obie">
+								</img>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		  </div>
 	</div>
       {/*<SimpleGrid rows={8} spacing="10px" mt={5}>
         {
