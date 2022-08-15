@@ -12,10 +12,6 @@ import React, {
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 // import { Popup, MagnificPopup } from 'react-magnific-popup';
-import Row from '../shared/Row';
-import { formatInDollars } from '../shared/utilities';
-import CurrencyText from '../shared/texts/CurrencyText';
-import MonthlyExpensesChart from './MonthlyExpensesChart';
 import './SaveOnInsuranceStyles.css';
 
 const Color = React.memo(
@@ -31,12 +27,6 @@ const Label = React.memo(
 );
 
 Label.propTypes = { text: PropTypes.string.isRequired };
-
-const Value = React.memo(
-  ({ value }) => <Text fontSize="sm" fontWeight="medium" color="neutral.600">{formatInDollars(value)}</Text>,
-  (prevProps, nextProps) => prevProps.value === nextProps.value,
-);
-
 Value.propTypes = { value: PropTypes.number.isRequired };
 
 const obieModalStyles = {
@@ -130,9 +120,6 @@ function SaveOnInsurance({}) {
   function openObieInitModal() {
     setObieInitModalIsOpen(true);
     console.log(window.Obie);
-  }
-
-  function initObie() {
     console.log('Initializing Obie');
     window.Obie.init({
       partnerId: '69214a56-7199-48a2-861d-27518409407c',
@@ -184,7 +171,7 @@ function SaveOnInsurance({}) {
           <div id="insurance-modal-wrap" className="mfp-hide">
             <div className="insurance-modal">
               <div className="obie-form">
-                <div name="obie-form">
+                <form method='post' name="obie-form">
                   <h3>Get an Instant Insurance Quote</h3>
                   <div className="form-item">
                     <input type="text" id="location" name="obie-property-address" className="obie-property-address" placeholder="Enter property address" required />
@@ -192,8 +179,8 @@ function SaveOnInsurance({}) {
                   <div className="form-item">
                     <input type="email" id="email" name="obie-email" className="obie-email" required placeholder="What's your email?" />
                   </div>
-                  <button id="init-obie-button" onClick={initObie} className="open-popup-link primary-cta-button tertiary-button obie-form__button-submit">Get an Instant Quote</button>
-                </div>
+                  <button id="init-obie-button" type='submit' className="open-popup-link primary-cta-button tertiary-button obie-form__button-submit">Get an Instant Quote</button>
+                </form>
               </div>
 
               <div className="obie-loading obie-loading--dark">
