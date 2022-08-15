@@ -56,7 +56,7 @@ Questions:
 
 */
 
-// Modal.setAppElement('#insurance-modal-wrap');
+Modal.setAppElement('body');
 
 function SaveOnInsurance({}) {
   // componentDidMount(() => {
@@ -74,10 +74,22 @@ function SaveOnInsurance({}) {
   obieScript.async = true;
   document.body.appendChild(obieScript);
 
-  // const gmapsScript = document.createElement('script');
-  // gmapsScript.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAPXiZqQFEjY4PEkY8vu22hVCFQppGTW4Q&amp;libraries=places';
-  // gmapsScript.async = true;
-  // document.body.appendChild(gmapsScript);
+  const obieScriptTwo = document.createElement('script');
+  obieScriptTwo.src = 'https://www.baselane.com/wp-content/themes/baselane-theme/widgets/obie-form/obie-form-autocomplete-init.js';
+  obieScriptTwo.async = true;
+  document.body.appendChild(obieScriptTwo);
+
+  const obieScriptThree = document.createElement('script');
+  obieScriptThree.src = 'https://www.baselane.com/wp-content/themes/baselane-theme/widgets/obie-form/obie-form.js';
+  obieScriptThree.async = true;
+  document.body.appendChild(obieScriptThree);
+
+  const gmapsScript = document.createElement('script');
+  gmapsScript.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAPXiZqQFEjY4PEkY8vu22hVCFQppGTW4Q&amp;libraries=places';
+  gmapsScript.async = true;
+  document.body.appendChild(gmapsScript);
+
+  // window.initializeAutocomplete();
 
   // const magnificPopupScript = document.createElement('script');
   // magnificPopupScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js';
@@ -107,34 +119,35 @@ function SaveOnInsurance({}) {
   // 	},\
   // });"
 
+  // Causes issues when loaded with JS;
   // const magnificInputScript = document.createElement("script");
   // magnificInputScript.src = magnificScr;
   // magnificInputScript.async = true;
   // document.body.appendChild(magnificInputScript);
-
-  const formConfig = {
-    type: 'inline',
-    preloader: false,
-    focus: '#location',
-  };
 
   const [obieInitModalIsOpen, setObieInitModalIsOpen] = React.useState(false);
 
   function openObieInitModal() {
     setObieInitModalIsOpen(true);
     console.log(window.Obie);
+  }
+
+  function initObie() {
+    console.log('Initializing Obie');
     window.Obie.init({
       partnerId: '69214a56-7199-48a2-861d-27518409407c',
       sandbox: false,
     });
+    window.initializeAutocomplete();
   }
 
   function afterOpenObieInitModal() {
-    // references are now sync'd and can be accessed.
-    // subtitle.style.color = '#f00';
-    // window.Obie.init({
-    //
-    // })
+    /*
+    window.analytics.track('lp_lead', {
+      email: ''// get email from field below
+      sfdc_Lead_Source: "LP_Insurance",
+    }
+    */
   }
 
   function closeObieInitModal() {
@@ -171,7 +184,7 @@ function SaveOnInsurance({}) {
           <div id="insurance-modal-wrap" className="mfp-hide">
             <div className="insurance-modal">
               <div className="obie-form">
-                <form method="post" name="obie-form">
+                <div name="obie-form">
                   <h3>Get an Instant Insurance Quote</h3>
                   <div className="form-item">
                     <input type="text" id="location" name="obie-property-address" className="obie-property-address" placeholder="Enter property address" required />
@@ -179,8 +192,8 @@ function SaveOnInsurance({}) {
                   <div className="form-item">
                     <input type="email" id="email" name="obie-email" className="obie-email" required placeholder="What's your email?" />
                   </div>
-                  <button type="submit" className="open-popup-link primary-cta-button tertiary-button obie-form__button-submit">Get an Instant Quote</button>
-                </form>
+                  <button id="init-obie-button" onClick={initObie} className="open-popup-link primary-cta-button tertiary-button obie-form__button-submit">Get an Instant Quote</button>
+                </div>
               </div>
 
               <div className="obie-loading obie-loading--dark">
@@ -209,23 +222,7 @@ function SaveOnInsurance({}) {
           </div>
         </Modal>
       </div>
-      {/* <SimpleGrid rows={8} spacing="10px" mt={5}>
-        {
-          expenses.map((expense) => (
-            <Row key={expense.text.replaceAll(' ', '_')}>
-              <Color color={expense.color} />
-              <Label text={expense.text} />
-              <Spacer />
-              <Value value={expense.value} />
-            </Row>
-          ))
-        }
-      </SimpleGrid> */}
       <Divider color="primary.100" my="4px" />
-      {/* <Flex flexDirection="row" flexWrap="nowrap" alignContent="center" justifyContent="flex-end" alignItems="center">
-        <Text fontSize="xs" fontWeight="medium" color="neutral.900">{'Total Monthly Expenses  = '}</Text>
-        <CurrencyText ml={1} fontSize="lg" value={totalMonthlyExpenses} />
-      </Flex> */}
     </>
   );
 }
