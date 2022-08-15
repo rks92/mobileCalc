@@ -1492,7 +1492,7 @@ select.loan-input {
 }
 
 .tabcontent12 {
-	padding: 32px;
+	padding: 24px;
 
 	border-top: none;
 
@@ -2398,7 +2398,7 @@ li.list-group-item {
 .save-on-insurance {
 	display: block;
 	align-items: flex-start;
-	justify-content: space-between;
+	/*justify-content: space-between;*/
 	/* margin-bottom: -32px; */
 }
 
