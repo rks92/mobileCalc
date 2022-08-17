@@ -83,69 +83,69 @@ function SaveOnInsurance({}) {
   // magnificPopupStyle.async = true;
   // document.body.appendChild(magnificPopupStyle);
 
-  window.$('.open-popup-link').magnificPopup({
-    type: 'inline',
-    midClick: true,
-    callbacks: {
-      open() {
-        // eslint-disable-next-line no-console
-        console.log('Inside the callback');
-        window.Obie.init({
-          partnerId: '69214a56-7199-48a2-861d-27518409407c',
-          sandbox: false,
-        });
-        window.initializeAutocomplete();
-      },
-    },
-  });
-
-  window.$('.obie-form').submit((e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const property = document.getElementById('location').value;
-    // if (window.$('body').hasClass('page-id-12233')) {
-    window.analytics.track('lp_lead', { email, sfdc_Lead_Source: 'LP_Insurance' }, { integrations: { Salesforce: true } });
-    // } else {
-    //   window.analytics.track('lp_lead', { email, sfdc_Lead_Source: 'Marketplace_Insurance' }, { integrations: { Salesforce: true } });
-    // }
-    window.address = window.streetNumber === '' ? window.addressLine1 : `${window.streetNumber} ${window.addressLine1}`;
-    const targetUrl = `https://insurance.obierisk.com/api/instant-estimate?partnerId=69214a56-7199-48a2-861d-27518409407c&addressLine1=${encodeURIComponent(address)}&city=${city}&state=${state}&postalCode=${postalCode}`;
-    window.$.ajax({
-      method: 'GET', url: targetUrl, dataType: 'json', beforeSend() {},
-    })
-      .fail((xhr) => {
-        window.$('#obie-toggle-modal').click();
-      })
-      .done((data) => {
-        window.$('#obie-toggle-modal').click();
-      });
-  });
-
-  window.$('#obie-toggle-modal').click(() => {
-    const email = window.$('.obie-email').val();
-    let sandboxStatus;
-    let partnerIdKey;
-    // if (window.$('body').hasClass('env_prod')) {
-    //   partnerIdKey = '69214a56-7199-48a2-861d-27518409407c';
-    //   sandboxStatus = false;
-    // } else {
-    // eslint-disable-next-line prefer-const
-    partnerIdKey = '69214a56-7199-48a2-861d-27518409407c';
-    // eslint-disable-next-line prefer-const
-    sandboxStatus = false;
-    // }
-    window.Obie.open({
-      sandbox: sandboxStatus,
-      partnerId: partnerIdKey,
-      values: {
-        person: { email },
-        property: {
-          // eslint-disable-next-line max-len
-          addressLine1: window.address, city: window.city, state: window.state, postalCode: window.postalCode,
-        },
-      },
-    });
-  });
+  // window.$('.open-popup-link').magnificPopup({
+  //   type: 'inline',
+  //   midClick: true,
+  //   callbacks: {
+  //     open() {
+  //       // eslint-disable-next-line no-console
+  //       console.log('Inside the callback');
+  //       window.Obie.init({
+  //         partnerId: '69214a56-7199-48a2-861d-27518409407c',
+  //         sandbox: false,
+  //       });
+  //       window.initializeAutocomplete();
+  //     },
+  //   },
+  // });
+  //
+  // window.$('.obie-form').submit((e) => {
+  //   e.preventDefault();
+  //   const email = document.getElementById('email').value;
+  //   const property = document.getElementById('location').value;
+  //   // if (window.$('body').hasClass('page-id-12233')) {
+  //   window.analytics.track('lp_lead', { email, sfdc_Lead_Source: 'LP_Insurance' }, { integrations: { Salesforce: true } });
+  //   // } else {
+  //   //   window.analytics.track('lp_lead', { email, sfdc_Lead_Source: 'Marketplace_Insurance' }, { integrations: { Salesforce: true } });
+  //   // }
+  //   window.address = window.streetNumber === '' ? window.addressLine1 : `${window.streetNumber} ${window.addressLine1}`;
+  //   const targetUrl = `https://insurance.obierisk.com/api/instant-estimate?partnerId=69214a56-7199-48a2-861d-27518409407c&addressLine1=${encodeURIComponent(address)}&city=${city}&state=${state}&postalCode=${postalCode}`;
+  //   window.$.ajax({
+  //     method: 'GET', url: targetUrl, dataType: 'json', beforeSend() {},
+  //   })
+  //     .fail((xhr) => {
+  //       window.$('#obie-toggle-modal').click();
+  //     })
+  //     .done((data) => {
+  //       window.$('#obie-toggle-modal').click();
+  //     });
+  // });
+  //
+  // window.$('#obie-toggle-modal').click(() => {
+  //   const email = window.$('.obie-email').val();
+  //   let sandboxStatus;
+  //   let partnerIdKey;
+  //   // if (window.$('body').hasClass('env_prod')) {
+  //   //   partnerIdKey = '69214a56-7199-48a2-861d-27518409407c';
+  //   //   sandboxStatus = false;
+  //   // } else {
+  //   // eslint-disable-next-line prefer-const
+  //   partnerIdKey = '69214a56-7199-48a2-861d-27518409407c';
+  //   // eslint-disable-next-line prefer-const
+  //   sandboxStatus = false;
+  //   // }
+  //   window.Obie.open({
+  //     sandbox: sandboxStatus,
+  //     partnerId: partnerIdKey,
+  //     values: {
+  //       person: { email },
+  //       property: {
+  //         // eslint-disable-next-line max-len
+  //         addressLine1: window.address, city: window.city, state: window.state, postalCode: window.postalCode,
+  //       },
+  //     },
+  //   });
+  // });
 
   // Causes issues when loaded with JS;
   // const magnificInputScript = document.createElement("script");
