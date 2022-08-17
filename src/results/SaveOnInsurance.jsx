@@ -225,8 +225,8 @@ function SaveOnInsurance({}) {
   function triggerPopupInParentPage() {
     console.log('Triggering parent popup');
     // const obieEvent = new Event('launchObieEvent');
-    window.parent.$('body').trigger('launchObieEvent');
-    // window.parent.postMessage('openInsuranceUI', '*');
+    // window.parent.$('body').trigger('launchObieEvent');
+    window.parent.postMessage('openInsuranceUI', '*');
     console.log('Posted message');
   }
 
