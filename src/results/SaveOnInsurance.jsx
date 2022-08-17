@@ -224,7 +224,7 @@ function SaveOnInsurance({}) {
 
   function triggerPopupInParentPage() {
     console.log('Triggering parent popup');
-    window.parent.postMessage('openInsuranceUI', "*");
+    window.parent.postMessage('openInsuranceUI', '*');
   }
 
   return (
