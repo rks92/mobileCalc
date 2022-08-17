@@ -2436,7 +2436,7 @@ li.list-group-item {
 	color: #042765;
 }
 
-.save-on-insurance-text .tertiary-button {
+.tertiary-button {
         /* height: 48px;
         border-radius: 0;
         text-align: center;
@@ -2483,23 +2483,21 @@ li.list-group-item {
         margin-bottom: 32px;
     }
 
-@media (min-width: 768px) {
-	.save-on-insurance-text .tertiary-button:hover,
-	.save-on-insurance-text .tertiary-button:active,
-	.save-on-insurance-text .tertiary-button.active {
-		background-color: #0C4FDB;
-		color: #fff;
-	}
-	.save-on-insurance-text .tertiary-button:focus {
-		background-color: #0C4FDB;
-		color: #fff;
-	}
-	.save-on-insurance-text .tertiary-button.disabled,
-	.save-on-insurance-text .tertiary-button:disabled,
-	.save-on-insurance-text .tertiary-button[disabled="disabled"] {
-		background-color: #0C4FDB;
-		color: #fff;
-	}
+.tertiary-button:hover,
+.tertiary-button:active,
+.tertiary-button.active {
+	background-color: #0C4FDB;
+	color: #fff;
+}
+.tertiary-button:focus {
+	background-color: #0C4FDB;
+	color: #fff;
+}
+.tertiary-button.disabled,
+.tertiary-button:disabled,
+.tertiary-button[disabled="disabled"] {
+	background-color: #0C4FDB;
+	color: #fff;
 }
 
 .save-on-insurance-image {
