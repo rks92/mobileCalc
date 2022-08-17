@@ -130,9 +130,9 @@ function SaveOnInsurance({}) {
     //   sandboxStatus = false;
     // } else {
     // eslint-disable-next-line prefer-const
-    partnerIdKey = '3c9219c8-31d0-43e3-91b5-a871758f1f94';
+    partnerIdKey = '69214a56-7199-48a2-861d-27518409407c';
     // eslint-disable-next-line prefer-const
-    sandboxStatus = true;
+    sandboxStatus = false;
     // }
     window.Obie.open({
       sandbox: sandboxStatus,
