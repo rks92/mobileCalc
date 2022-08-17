@@ -222,6 +222,11 @@ function SaveOnInsurance({}) {
     setObieInitModalIsOpen(false);
   }
 
+  function triggerPopupInParentPage() {
+    console.log('Triggering parent popup');
+    window.parent.postMessage('openInsuranceUI', "*");
+  }
+
   return (
     <>
       <div className="tabcontent12" id="save-on-insurance">
@@ -234,7 +239,8 @@ function SaveOnInsurance({}) {
               <li>Check if you can save $100's on existing policy</li>
               <li>No phone call or hassle required</li>
             </ul>
-            <a id="insurance-content-quote1" href="#insurance-modal-wrap" className="open-popup-link primary-cta-button tertiary-button">Get an Instant Quote</a>
+            {/*<a id="insurance-content-quote1" href="#insurance-modal-wrap" className="open-popup-link primary-cta-button tertiary-button">Get an Instant Quote</a>*/}
+            <button id="triggerInsurancePopup" onClick={triggerPopupInParentPage} className="primary-cta-button tertiary-button">Get an Instant Quote</button>
           </div>
           <div className="save-on-insurance-image">
             <img src="https://www.baselane.com/wp-content/uploads/2022/07/Content.png" srcSet="https://www.baselane.com/wp-content/uploads/2022/07/Content.png 1x, https://www.baselane.com/wp-content/uploads/2022/07/Content@2x.png 2x" alt="" />
