@@ -4,27 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Baselane Rental Mortgage Calculator</title>
-<!--    <script src="assets/segment.js"></script>-->
+    <script src="assets/segment.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-<!--    <link rel="stylesheet" href="magnific-popup/magnific-popup.css">-->
-
-<!--    &lt;!&ndash; jQuery 1.7.2+ or Zepto.js 1.0+ &ndash;&gt;-->
-<!--    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
-
-    <!-- Magnific Popup core JS file -->
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" integrity="sha512-IsNh5E3eYy3tr/JiX2Yx4vsCujtkhwl7SLqgnwLNgf04Hrt9BT9SXlLlZlWx+OK4ndzAoALhsMNcCmkggjZB1w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" integrity="sha512-+EoPw+Fiwh6eSeRK7zwIKG2MA8i3rV/DGa3tdttQGgWyatG/SkncT53KHQaS5Jh9MNOT3dmFL0FjTY08And/Cw==" crossorigin="anonymous" referrerpolicy="no-referrer" />-->
-
-<!--    <script src="https://static.obierisk.com/sdk/obie.js"></script>-->
-<!--    <script src="https://www.baselane.com/wp-content/themes/baselane-theme/widgets/obie-form/obie-form-autocomplete-init.js"></script>-->
-<!--    <script src="https://www.baselane.com/wp-content/themes/baselane-theme/widgets/obie-form/obie-form.js"></script>-->
-<!--    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPXiZqQFEjY4PEkY8vu22hVCFQppGTW4Q&amp;libraries=places"></script>-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" integrity="sha512-+EoPw+Fiwh6eSeRK7zwIKG2MA8i3rV/DGa3tdttQGgWyatG/SkncT53KHQaS5Jh9MNOT3dmFL0FjTY08And/Cw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="rental_mortgage_calculator"></div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPXiZqQFEjY4PEkY8vu22hVCFQppGTW4Q&amp;libraries=places"></script>
+<script>
+    function initializeAutocomplete(){var location=document.getElementById("location");var autocomplete=new google.maps.places.Autocomplete(location,{componentRestrictions:{country:["us"]},fields:["address_components","geometry"],types:["address"],});google.maps.event.addListener(autocomplete,'place_changed',onPlaceChanged);}
+    var fullAddress="";function getCity(components_by_type,addressComponent){if(addressComponent=='locality'){return components_by_type['locality'].long_name}
+        if(addressComponent=='sublocality'){return components_by_type['sublocality'].long_name}
+        return null;}
+    function onPlaceChanged(){var place=this.getPlace();var components_by_type={};city='';state='';postalCode='';addressLine1='';streetNumber='';for(var i=0;i<place.address_components.length;i++){var c=place.address_components[i];for(var j=0;j<c.types.length;j++){components_by_type[c.types[j]]=c;}}
+        for(var i in place.address_components){var component=place.address_components[i];for(var j in component.types){const addressType=place.address_components[i].types[j];if(addressType=="street_number"){streetNumber=components_by_type['street_number'].long_name;}
+            if(addressType=="route"){addressLine1=components_by_type['route'].short_name;}
+            if(!city){city=getCity(components_by_type,addressType);}
+            if(!state&&addressType=='administrative_area_level_1'){state=components_by_type['administrative_area_level_1'].short_name;}
+            if(addressType=="country"){country=components_by_type['country'].long_name;}
+            if(addressType=="postal_code"){postalCode=components_by_type['postal_code'].long_name;}}}
+        if(!city){throw "Baselane Error: City not found";}
+        if(!state){throw "Baselane Error: State not found";}
+        fullAddress=streetNumber+" "+addressLine1+" "+city+" "+state+" "+country+" "+postalCode;}
+    var city;var state;var postalCode;var addressLine1;var streetNumber;var address;
+</script>
+<!-- Magnific Popup core JS file -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" integrity="sha512-IsNh5E3eYy3tr/JiX2Yx4vsCujtkhwl7SLqgnwLNgf04Hrt9BT9SXlLlZlWx+OK4ndzAoALhsMNcCmkggjZB1w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://static.obierisk.com/sdk/obie.js"></script>
 </body>
 
 </html>
